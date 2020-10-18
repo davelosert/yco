@@ -1,5 +1,5 @@
 import { describe, Try } from 'riteway';
-import { planSpaces } from './spacePlanner'
+import { planSpaces } from './planSpaces'
 
 describe('planSpaces()', async assert => {
   assert({
