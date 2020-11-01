@@ -1,8 +1,11 @@
-import { times, flatten, pipe, sum } from 'ramda';
+import { times, flatten, sum } from 'ramda';
 import { generateCreateCommands, generateCreateAndMoveCommands, generateDestroyCommands, } from './yabaiComands'
 
 const isMainDisplay = displayIndex => displayIndex === 0;
 const getDisplayNumberFoIndex = displayIndex => displayIndex + 1;
+
+const noActionNeeded = spaceDiff => spaceDiff === 0;
+const spaceCreationNeeded = spaceDiff => spaceDiff > 1;
 
 export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
 
@@ -22,9 +25,9 @@ export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
   }
 
   const commandsArray = spacesPlan.map((spaceDiff, displayIndex) => {
-    if (spaceDiff === 0) {
+    if (noActionNeeded(spaceDiff)) {
       return [];
-    } else if (spaceDiff > 0) {
+    } else if (spaceCreationNeeded(spaceDiff)) {
       return generateCreateSpaces(displayIndex);
     } else {
       return generateDestroyCommands(getAnticipatedIndexForDisplay(displayIndex), spaceDiff * -1);
