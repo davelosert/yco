@@ -5,7 +5,7 @@ const isMainDisplay = displayIndex => displayIndex === 0;
 const getDisplayNumberFoIndex = displayIndex => displayIndex + 1;
 
 const noActionNeeded = spaceDiff => spaceDiff === 0;
-const spaceCreationNeeded = spaceDiff => spaceDiff > 1;
+const spaceCreationNeeded = spaceDiff => spaceDiff >= 1;
 
 export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
 

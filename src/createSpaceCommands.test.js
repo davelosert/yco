@@ -1,5 +1,5 @@
 import { describe } from 'riteway';
-import { createSpaceCommands } from './createCommands'
+import { createSpaceCommands } from './createSpaceCommands'
 
 describe('createSpaceCommands()', async assert => {
   const yabaiCreateSpace = 'yabai -m space --create';
