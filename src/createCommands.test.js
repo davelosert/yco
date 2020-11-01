@@ -55,7 +55,7 @@ describe('createSpaceCommands()', async assert => {
 
   assert({
     given: 'two spaces to delete on first display',
-    should: 'return two destroy commands',
+    should: 'return only two destroy commands',
     actual: createSpaceCommands({ spacesPlan: [-2], spacesCount: [3] }),
     expected: ['yabai -m space 3 --destroy', 'yabai -m space 2 --destroy']
   });
@@ -66,4 +66,12 @@ describe('createSpaceCommands()', async assert => {
     actual: createSpaceCommands({ spacesPlan: [1, -2], spacesCount: [2, 3] }),
     expected: [yabaiCreateSpace, 'yabai -m space 6 --destroy', 'yabai -m space 5 --destroy']
   });
+
+  assert({
+    given: 'spaces to destroy on first and second display',
+    should: 'return destroy commands with anticipated index for second display',
+    actual: createSpaceCommands({ spacesPlan: [-1, -1], spacesCount: [2, 2] }),
+    expected: ['yabai -m space 2 --destroy', 'yabai -m space 3 --destroy']
+  });
+
 });
