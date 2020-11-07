@@ -10,7 +10,6 @@ const spaceCreationNeeded = spaceDiff => spaceDiff >= 1;
 export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
   const getAnticipatedIndexForDisplay = displayIndex => {
     const prevSpaceCount = sum(times(index => spacesCount[index] + spacesPlan[index], displayIndex));
-
     return prevSpaceCount + spacesCount[displayIndex];
   };
 
@@ -20,8 +19,8 @@ export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
     if (isMainDisplay(displayIndex)) {
       return generateCreateCommands(spaceDiff);
     }
-    const mainDisplayNewSpaceIndex = spacesPlan[0] + spacesCount[0] + 1;
 
+    const mainDisplayNewSpaceIndex = spacesPlan[0] + spacesCount[0] + 1;
     return generateCreateAndMoveCommands(mainDisplayNewSpaceIndex, getDisplayNumberFoIndex(displayIndex))(spaceDiff);
   };
 
