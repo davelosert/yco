@@ -24,4 +24,11 @@ describe('lookupWindows()', async assert => {
     actual: lookupWindows({plannedWindowSetup: [["TestApp"]], actualWindows: [{...testApp }, {...testApp}]}),
     expected: [[{...testApp}, {...testApp}]]
   });
+
+  assert({
+    given: 'windows on second display',
+    should: 'insert them in the second array',
+    actual: lookupWindows({plannedWindowSetup: [["App1"], ["TestApp"]], actualWindows: [{ ...testApp}]}),
+    expected: [[], [{...testApp}]]
+  });
 });
