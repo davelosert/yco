@@ -25,6 +25,7 @@
     "watch": "1.0.2"
   },
   "dependencies": {
+    "eslint": "7.13.0",
     "ramda": "0.27.1"
   }
 }

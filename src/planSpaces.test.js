@@ -1,4 +1,4 @@
-import { describe, Try } from 'riteway';
+import { describe } from 'riteway';
 import { planSpaces } from './planSpaces'
 
 describe('planSpaces()', async assert => {
