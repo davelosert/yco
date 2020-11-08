@@ -11,15 +11,15 @@ I want to make working with yabai, skhd and ubersicht easier
 
 ```JSON
 {
-  "modes": {
+  "layouts": {
     "monitor": {
       "command": "m",
       "nonManaged": "allInOneSpace",
-      "spaces": [
+      "spaces": {[
         ["iTerm2", "Code", "Firefox"],
         ["Toggl", "Google Chrome", "Slack", "Outlook"],
         ["Teams", "Spotify"]
-      ]
+      ]}
     },
     "laptop": {
       "command": "l",
