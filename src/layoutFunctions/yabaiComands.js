@@ -5,7 +5,7 @@ const yabaiDestroySpace = spaceIndex => `yabai -m space ${spaceIndex} --destroy`
 const yabaiCreateSpaceAndMove = (spaceIndex, displayIndex) => () => [yabaiCreateSpace, yabaiMoveSpaceToDisplay(spaceIndex, displayIndex)];
 
 export const generateDestroyCommands = curry((startIndex, count) => times(subtract(startIndex))(count).map(yabaiDestroySpace));
-export const generateCreateCommands = times(always(yabaiCreateSpace))
+export const generateCreateCommands = times(always(yabaiCreateSpace));
 export const generateCreateAndMoveCommands = (newSpaceIndex, displayNumber) => pipe(
   times(yabaiCreateSpaceAndMove(newSpaceIndex, displayNumber)),
   flatten
