@@ -1,6 +1,7 @@
-import { execYabai } from "./commandExecuter";
-import { getUnmanagedWindows, hydrateWindowLayout } from "./layoutFunctions/hydrateWindowLayout";
-
+import { execYabai } from './commandExecuter';
+import { getUnmanagedWindows, hydrateWindowLayout } from './layoutFunctions/hydrateWindowLayout';
+import { countSpacesPerDisplay, planSpaces } from './layoutFunctions/planSpaces';
+import { createSpaceCommands } from './layoutFunctions/createSpaceCommands';
 
 const mockConfig = {
   "layouts": {
@@ -32,6 +33,7 @@ const mockConfig = {
 
     }
   }
+};
 
 
 export const applyWindowLayout = async (desiredLayout) => {
@@ -44,8 +46,18 @@ export const applyWindowLayout = async (desiredLayout) => {
   });
 
   const unmanagedWindows = getUnmanagedWindows({hydratedWindowLayout, actualWindows});
+  hydratedWindowLayout[0].push(unmanagedWindows);
 
-  if(desiredLayout)
+  const spacesPlan = planSpaces({currentSpaces, desiredSpaces: hydratedWindowLayout});
+  const spacesCount = countSpacesPerDisplay(currentSpaces);
 
+  const commands = [
+    ...createSpaceCommands({ spacesPlan, spacesCount}),
+  ];
 
+  console.log(commands);
 };
+
+(async function start() {
+  await applyWindowLayout(mockConfig.layouts.monitor);
+})();

@@ -17,3 +17,7 @@ export const planSpaces = ({ currentSpaces, desiredSpaces }) => {
     return desiredSpacesForDisplay.length - spaces.length;
   });
 };
+
+export const countSpacesPerDisplay = (currentSpaces) => (
+  groupByDisplay(currentSpaces).map(spaces => spaces.length)
+);

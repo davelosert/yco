@@ -17,7 +17,6 @@ const getAllIdsFromFlattened = pipe(
   flatten,
   map(prop('id'))
 );
-
 export const getUnmanagedWindows = ({ hydratedWindowLayout, actualWindows: allWindows}) => {
   const managedWindowIds = getAllIdsFromFlattened(hydratedWindowLayout);
   return allWindows.filter(window => !managedWindowIds.includes(window.id));
