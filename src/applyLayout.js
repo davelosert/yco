@@ -2,6 +2,7 @@ import { execYabai } from './commandExecuter';
 import { getUnmanagedWindows, hydrateWindowLayout } from './layoutFunctions/hydrateWindowLayout';
 import { countSpacesPerDisplay, planSpaces } from './layoutFunctions/planSpaces';
 import { createSpaceCommands } from './layoutFunctions/createSpaceCommands';
+import { createWindowCommands } from './layoutFunctions/createWindowCommands';
 
 const mockConfig = {
   'layouts': {
@@ -17,11 +18,9 @@ const mockConfig = {
     'laptop': {
       'command': 'l',
       'nonManaged': 'allInOwnSpace',
-      'spaces': [
-        [
-          [['Code'], ['Firefox'], ['iTerm2'], ['Google Chrome', 'Toggl'], ['Slack'], ['Outlook']]
-        ]
-      ]
+      'spaces': [[
+          ['Code'], ['Firefox'], ['iTerm2'], ['Google Chrome', 'Toggl'], ['Slack'], ['Outlook']
+        ]]
     },
     'pairing': {
       'command': 'p',
@@ -53,11 +52,14 @@ export const applyWindowLayout = async (desiredLayout) => {
 
   const commands = [
     ...createSpaceCommands({ spacesPlan, spacesCount}),
+    ...createWindowCommands(hydratedWindowLayout)
   ];
 
   console.log(commands);
 };
 
 (async function start() {
-  await applyWindowLayout(mockConfig.layouts.monitor);
+  const layout = process.argv[2] || 'monitor';
+  console.log('Trying layout:', layout);
+  await applyWindowLayout(mockConfig.layouts[layout]);
 })();
