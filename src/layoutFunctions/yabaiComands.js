@@ -4,8 +4,15 @@ const yabaiCreateSpace = 'yabai -m space --create';
 const yabaiDestroySpace = spaceIndex => `yabai -m space ${spaceIndex} --destroy`;
 const yabaiCreateSpaceAndMove = (spaceIndex, displayIndex) => () => [yabaiCreateSpace, yabaiMoveSpaceToDisplay(spaceIndex, displayIndex)];
 
-export const generateDestroyCommands = curry((startIndex, count) => times(subtract(startIndex))(count).map(yabaiDestroySpace));
+export const getAllSpaces = () => 'yabai -m query --spaces';
+
+export const getAllWindows = () => 'yabai -m query --windows';
+
+export const generateDestroyCommands = curry(
+  (startIndex, count) => times(subtract(startIndex))(count).map(yabaiDestroySpace));
+
 export const generateCreateCommands = times(always(yabaiCreateSpace));
+
 export const generateCreateAndMoveCommands = (newSpaceIndex, displayNumber) => pipe(
   times(yabaiCreateSpaceAndMove(newSpaceIndex, displayNumber)),
   flatten
