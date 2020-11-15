@@ -4,6 +4,7 @@ import { countSpacesPerDisplay, planSpaces } from './layoutFunctions/planSpaces'
 import { createSpaceCommands } from './layoutFunctions/createSpaceCommands';
 import { createWindowCommands } from './layoutFunctions/createWindowCommands';
 import { getAllSpaces, getAllWindows } from './layoutFunctions/yabaiComands';
+import { getUnmanagedStrategy } from './layoutFunctions/planUnmanagedWindows';
 
 const mockConfig = {
   'layouts': {
@@ -12,15 +13,15 @@ const mockConfig = {
       'nonManaged': 'allInOneSpace',
       'spaces': [[
         ['iTerm2', 'Code', 'Firefox'],
-        ['Toggl', 'Google Chrome', 'Slack', 'Outlook'],
-        ['Teams', 'Spotify']
+        ['Toggl Track', 'Google Chrome', 'Slack', 'Microsoft Outlook'],
+        ['Microsoft Teams', 'Spotify']
       ]]
     },
     'laptop': {
       'command': 'l',
       'nonManaged': 'allInOwnSpace',
       'spaces': [[
-          ['Code'], ['Firefox'], ['iTerm2'], ['Google Chrome', 'Toggl'], ['Slack'], ['Outlook']
+          ['Code'], ['Firefox'], ['iTerm2'], ['Google Chrome', 'Toggl Track'], ['Slack'], ['Microsoft Outlook']
         ]]
     },
     'pairing': {
@@ -37,22 +38,26 @@ const mockConfig = {
 
 
 export const applyWindowLayout = async (desiredLayout) => {
-  const currentSpaces = await execAndParseJSONResult(getAllSpaces());
+  const actualSpaces = await execAndParseJSONResult(getAllSpaces());
   const actualWindows = await execAndParseJSONResult(getAllWindows());
 
-  const hydratedWindowLayout = hydrateWindowLayout({
+  let hydratedWindowLayout = hydrateWindowLayout({
     actualWindows,
     plannedWindowSetup: desiredLayout.spaces
   });
 
-  const unmanagedWindows = getUnmanagedWindows({hydratedWindowLayout, actualWindows});
-  hydratedWindowLayout[0].push(unmanagedWindows);
+  const unmanagedWindows = getUnmanagedWindows({ hydratedWindowLayout, actualWindows });
+  const handleUnmanagedWindows = getUnmanagedStrategy(desiredLayout.nonManaged);
+  hydratedWindowLayout = handleUnmanagedWindows({ 
+    desiredLayout: hydratedWindowLayout,
+    unmanagedWindows
+  });
 
-  const spacesPlan = planSpaces({currentSpaces, desiredSpaces: hydratedWindowLayout});
-  const spacesCount = countSpacesPerDisplay(currentSpaces);
+  const spacesPlan = planSpaces({ actualSpaces, desiredSpaces: hydratedWindowLayout });
+  const spacesCount = countSpacesPerDisplay(actualSpaces);
 
   const commands = [
-    ...createSpaceCommands({ spacesPlan, spacesCount}),
+    ...createSpaceCommands({ spacesPlan, spacesCount }),
     ...createWindowCommands(hydratedWindowLayout)
   ];
 
@@ -61,6 +66,6 @@ export const applyWindowLayout = async (desiredLayout) => {
 
 (async function start() {
   const layout = process.argv[2] || 'monitor';
-  console.log('Trying layout:', layout);
+  console.log('Applying layout:', layout);
   await applyWindowLayout(mockConfig.layouts[layout]);
 })();
