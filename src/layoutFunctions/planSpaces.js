@@ -1,4 +1,4 @@
-import { always, isNil, groupBy,  pipe , values,  } from 'ramda';
+import { always, isNil, groupBy, length, map, pipe , values  } from 'ramda';
 
 const groupByDisplay = pipe(
   groupBy(space => space.display),
@@ -10,8 +10,8 @@ const removeAllButOne = spaces => 1 - spaces.length;
 const removeNoSpaces = always(0);
 const addOrRemoveDifference = (desiredSpacesForDisplay, spaces) => desiredSpacesForDisplay.length - spaces.length;
 
-export const planSpaces = ({ currentSpaces, desiredSpaces }) => {
-  return groupByDisplay(currentSpaces).map((spacesOfDisplay, displayIndex) => {
+export const planSpaces = ({ actualSpaces, desiredSpaces }) => {
+  return groupByDisplay(actualSpaces).map((spacesOfDisplay, displayIndex) => {
     const desiredSpacesForDisplay = desiredSpaces[displayIndex];
     if(isNil(desiredSpacesForDisplay)) {
       return removeAllButOne(spacesOfDisplay);
@@ -25,6 +25,7 @@ export const planSpaces = ({ currentSpaces, desiredSpaces }) => {
   });
 };
 
-export const countSpacesPerDisplay = (currentSpaces) => (
-  groupByDisplay(currentSpaces).map(spaces => spaces.length)
-);
+export const countSpacesPerDisplay = pipe(
+    groupByDisplay,
+    map(length)
+  );
