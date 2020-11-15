@@ -8,6 +8,12 @@
     "sourceType": "module"
   },
   "rules": {
+    "space-before-blocks": "error",
+    "space-in-parens": "error",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
     "quotes": [
       "error",
       "single"
