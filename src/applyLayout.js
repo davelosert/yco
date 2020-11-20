@@ -37,7 +37,7 @@ const mockConfig = {
 };
 
 
-export const applyWindowLayout = async (desiredLayout) => {
+export const applyWindowLayout = async (desiredLayout, debug) => {
   const actualSpaces = await execAndParseJSONResult(getAllSpaces());
   const actualWindows = await execAndParseJSONResult(getAllWindows());
 
@@ -61,11 +61,16 @@ export const applyWindowLayout = async (desiredLayout) => {
     ...createWindowCommands(hydratedWindowLayout)
   ];
 
+  if(debug) {
+    console.log('The Plan:', hydratedWindowLayout);
+    console.log('The Commands: ', commands);
+  } 
   await executMultipleCommands(commands);
 };
 
 (async function start() {
   const layout = process.argv[2] || 'monitor';
+  const debug = process.argv[3] === '--debug' ; 
   console.log('Applying layout:', layout);
-  await applyWindowLayout(mockConfig.layouts[layout]);
+  await applyWindowLayout(mockConfig.layouts[layout], debug);
 })();
