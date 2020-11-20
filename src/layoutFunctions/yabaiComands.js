@@ -1,8 +1,7 @@
-import { always, curry, flatten, pipe, subtract, times } from 'ramda';
+import { always, curry, subtract, times } from 'ramda';
 
 const yabaiCreateSpace = 'yabai -m space --create';
 const yabaiDestroySpace = spaceIndex => `yabai -m space ${spaceIndex} --destroy`;
-const yabaiCreateSpaceAndMove = (spaceIndex, displayIndex) => () => [yabaiCreateSpace, yabaiMoveSpaceToDisplay(spaceIndex, displayIndex)];
 
 export const getAllSpaces = () => 'yabai -m query --spaces';
 
@@ -13,9 +12,6 @@ export const generateDestroyCommands = curry(
 
 export const generateCreateCommands = times(always(yabaiCreateSpace));
 
-export const generateCreateAndMoveCommands = (newSpaceIndex, displayNumber) => pipe(
-  times(yabaiCreateSpaceAndMove(newSpaceIndex, displayNumber)),
-  flatten
-);
+export const generateFocusDisplayCommand = displayNumber => `yabai -m display --focus ${displayNumber}`;
 
 export const yabaiMoveSpaceToDisplay = curry((spaceIndex, displayIndex) => `yabai -m space ${spaceIndex} --display ${displayIndex}`);

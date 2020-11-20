@@ -1,28 +1,16 @@
 import { flatten, sum, times } from 'ramda';
-import { generateCreateAndMoveCommands, generateCreateCommands, generateDestroyCommands } from './yabaiComands';
+import { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } from './yabaiComands';
 
-const isMainDisplay = displayIndex => displayIndex === 0;
 const getDisplayNumberFoIndex = displayIndex => displayIndex + 1;
+const generateCreateSpaces = (spaceDiff, displayIndex) => [
+    generateFocusDisplayCommand(getDisplayNumberFoIndex(displayIndex)),
+    ...generateCreateCommands(spaceDiff)
+];
 
 const noActionNeeded = spaceDiff => spaceDiff === 0;
 const spaceCreationNeeded = spaceDiff => spaceDiff >= 1;
 
 export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
-  const getAnticipatedIndexForDisplay = displayIndex => {
-    const prevSpaceCount = sum(times(index => spacesCount[index] + spacesPlan[index], displayIndex));
-    return prevSpaceCount + spacesCount[displayIndex];
-  };
-
-  const generateCreateSpaces = displayIndex => {
-    const spaceDiff = spacesPlan[displayIndex];
-
-    if (isMainDisplay(displayIndex)) {
-      return generateCreateCommands(spaceDiff);
-    }
-
-    const mainDisplayNewSpaceIndex = spacesPlan[0] + spacesCount[0] + 1;
-    return generateCreateAndMoveCommands(mainDisplayNewSpaceIndex, getDisplayNumberFoIndex(displayIndex))(spaceDiff);
-  };
 
   const commandsArray = spacesPlan.map((spaceDiff, displayIndex) => {
     if (noActionNeeded(spaceDiff)) {
@@ -30,8 +18,13 @@ export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
     }
 
     if (spaceCreationNeeded(spaceDiff)) {
-      return generateCreateSpaces(displayIndex);
+      return generateCreateSpaces(spaceDiff, displayIndex);
     }
+
+    const getAnticipatedIndexForDisplay = displayIndex => {
+      const prevSpaceCount = sum(times(index => spacesCount[index] + spacesPlan[index], displayIndex));
+      return prevSpaceCount + spacesCount[displayIndex];
+    };
 
     return generateDestroyCommands(getAnticipatedIndexForDisplay(displayIndex), spaceDiff * -1);
   });
