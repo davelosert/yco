@@ -1,6 +1,6 @@
 {
   "name": "yabai-configurator",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "main": "index.js",
   "scripts": {
