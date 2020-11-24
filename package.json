@@ -18,7 +18,7 @@
     "@babel/preset-typescript": "7.12.1",
     "@babel/register": "7.12.1",
     "@babel/runtime-corejs2": "7.12.1",
-    "assertthat": "5.2.1",
+    "assertthat": "5.2.5",
     "nyc": "15.1.0",
     "riteway": "6.2.1",
     "tap-color": "1.2.0",
