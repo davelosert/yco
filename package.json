@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel ./src --out-dir build",
-    "test": "riteway -r @babel/register 'src/**/*.test.js' | tap-color",
+    "test": "riteway -r @babel/register 'src/**/*.test.js' | tap-nirvana",
     "watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
   },
   "author": "David Losert",
@@ -18,15 +18,13 @@
     "@babel/preset-typescript": "7.12.1",
     "@babel/register": "7.12.1",
     "@babel/runtime-corejs2": "7.12.1",
-    "assertthat": "5.2.1",
+    "eslint": "7.13.0",
     "nyc": "15.1.0",
     "riteway": "6.2.1",
-    "tap-color": "1.2.0",
     "tap-nirvana": "1.1.0",
     "watch": "1.0.2"
   },
   "dependencies": {
-    "eslint": "7.13.0",
     "ramda": "0.27.1"
   }
 }
