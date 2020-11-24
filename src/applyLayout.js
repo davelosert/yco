@@ -6,36 +6,7 @@ import { createWindowCommands } from './layoutFunctions/createWindowCommands';
 import { getAllSpaces, getAllWindows } from './layoutFunctions/yabaiComands';
 import { getUnmanagedStrategy } from './layoutFunctions/planUnmanagedWindows';
 
-const mockConfig = {
-  'layouts': {
-    'monitor': {
-      'command': 'm',
-      'nonManaged': 'allInOneSpace',
-      'spaces': [[
-        ['iTerm2', 'Code', 'Firefox'],
-        ['Toggl Track', 'Google Chrome', 'Slack', 'Microsoft Outlook'],
-        ['Microsoft Teams', 'Spotify']
-      ]]
-    },
-    'laptop': {
-      'command': 'l',
-      'nonManaged': 'allInOwnSpace',
-      'spaces': [[
-          ['Code'], ['Firefox'], ['iTerm2'], ['Google Chrome', 'Toggl Track'], ['Slack'], ['Microsoft Outlook']
-        ]]
-    },
-    'pairing': {
-      'command': 'p',
-      'nonManaged' : 'leaveUntouched',
-      'spaces': [
-        [],
-        [['Code'], ['Firefox'], ['iTerm2']]
-      ]
-
-    }
-  }
-};
-
+const config = require('../exampleConfig.json');
 
 export const applyWindowLayout = async (desiredLayout, debug) => {
   const actualSpaces = await execAndParseJSONResult(getAllSpaces());
@@ -72,5 +43,5 @@ export const applyWindowLayout = async (desiredLayout, debug) => {
   const layout = process.argv[2] || 'monitor';
   const debug = process.argv[3] === '--debug' ; 
   console.log('Applying layout:', layout);
-  await applyWindowLayout(mockConfig.layouts[layout], debug);
+  await applyWindowLayout(config.layouts[layout], debug);
 })();
