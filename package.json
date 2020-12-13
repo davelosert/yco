@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "main": "index.js",
+  "bin": {
+    "yco": "./build/yco.js"
+  },
   "scripts": {
     "build": "babel ./src --out-dir build",
     "test": "riteway -r @babel/register 'src/**/*.test.js' | tap-nirvana",
