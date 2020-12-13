@@ -1,15 +1,12 @@
 import { applyWindowLayout } from '../tasks/applyLayout';
 import { buntstift } from 'buntstift';
-import { readFileSync } from 'fs';
 import { globalOptions } from '../globalOptions';
+import { getConfig } from '../getConfig';
 
 export const applyLayout = {
   name: 'applyLayout',
   description: 'Move windows to the configrued spaces of the given layout.',
-  remarks: `
-    Select a Layout to continue...
-  `,
-
+  remarks: 'yco <command-name> [--flag...]',
   optionDefinitions: [
     ...globalOptions,
     {
@@ -21,9 +18,7 @@ export const applyLayout = {
   ],
 
   async handle({ options }) {
-    console.log('Options: ', options);
-    const configRaw = await readFileSync(options.config);
-    const config = JSON.parse(configRaw);
+    const config = await getConfig(options.config);
 
     let desiredLayoutName = options.name;
     if (!desiredLayoutName) {

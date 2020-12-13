@@ -1,13 +1,12 @@
+#! /usr/bin/env node
 import { applyLayout } from './subCommands/applyLayoutCommand';
 import { buntstift } from 'buntstift';
 import { runCli } from 'command-line-interface';
 import { globalOptions } from './globalOptions';
 
-
-
-const yc = {
-  name: 'yc',
-  description: 'The Yabai-Configurator',
+const yco = {
+  name: 'yco',
+  description: 'The Yabai-Configurator.',
   remarks: `
     Select on of the commands to execute.
   `,
@@ -26,5 +25,5 @@ const yc = {
 };
 
 (async function start() {
-  await runCli({ rootCommand: yc, argv: process.argv });
+  await runCli({ rootCommand: yco, argv: process.argv });
 })();
