@@ -25,6 +25,8 @@
     "watch": "1.0.2"
   },
   "dependencies": {
+    "buntstift": "4.0.17",
+    "command-line-interface": "3.6.15",
     "ramda": "0.27.1"
   }
 }

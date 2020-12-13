@@ -6,9 +6,8 @@ import { createWindowCommands } from './layoutFunctions/createWindowCommands';
 import { getAllSpaces, getAllWindows } from './layoutFunctions/yabaiComands';
 import { getUnmanagedStrategy } from './layoutFunctions/planUnmanagedWindows';
 
-const config = require('../exampleConfig.json');
-
-export const applyWindowLayout = async (desiredLayout, debug) => {
+export const applyWindowLayout = async ({ desiredLayoutName, config, isDebugMode = false }) => {
+  const desiredLayout = config.layouts[desiredLayoutName];
   const actualSpaces = await execAndParseJSONResult(getAllSpaces());
   const actualWindows = await execAndParseJSONResult(getAllWindows());
 
@@ -19,7 +18,7 @@ export const applyWindowLayout = async (desiredLayout, debug) => {
 
   const unmanagedWindows = getUnmanagedWindows({ hydratedWindowLayout, actualWindows });
   const handleUnmanagedWindows = getUnmanagedStrategy(desiredLayout.nonManaged);
-  hydratedWindowLayout = handleUnmanagedWindows({ 
+  hydratedWindowLayout = handleUnmanagedWindows({
     desiredLayout: hydratedWindowLayout,
     unmanagedWindows
   });
@@ -32,16 +31,10 @@ export const applyWindowLayout = async (desiredLayout, debug) => {
     ...createWindowCommands(hydratedWindowLayout)
   ];
 
-  if(debug) {
+  if (isDebugMode) {
     console.log('The Plan:', hydratedWindowLayout);
     console.log('The Commands: ', commands);
-  } 
-  await executMultipleCommands(commands);
+  } else {
+    await executMultipleCommands(commands);
+  }
 };
-
-(async function start() {
-  const layout = process.argv[2] || 'monitor';
-  const debug = process.argv[3] === '--debug' ; 
-  console.log('Applying layout:', layout);
-  await applyWindowLayout(config.layouts[layout], debug);
-})();
