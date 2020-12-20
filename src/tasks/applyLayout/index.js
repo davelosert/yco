@@ -1,39 +1,20 @@
-import { execAndParseJSONResult, executMultipleCommands } from '../../shared/commandExecutor';
-import { getUnmanagedWindows, hydrateWindowLayout } from './layoutFunctions/hydrateWindowLayout';
-import { countSpacesPerDisplay, planSpaces } from './layoutFunctions/planSpaces';
-import { createSpaceCommands } from './layoutFunctions/createSpaceCommands';
-import { createWindowCommands } from './layoutFunctions/createWindowCommands';
+import { calculateCommands } from './calculateCommands';
+import { execAndParseJSONResult, executeMultipleCommands } from '../../shared/commandExecutor';
 import { getAllSpaces, getAllWindows } from './layoutFunctions/yabaiComands';
-import { getUnmanagedStrategy } from './layoutFunctions/planUnmanagedWindows';
 
-export const applyLayout = async ({ desiredLayoutName, config, isDebugMode = false }) => {
-  const desiredLayout = config.layouts[desiredLayoutName];
+export const applyLayout = async ({ layoutConfig, isDebugMode = false }) => {
   const actualSpaces = await execAndParseJSONResult(getAllSpaces());
   const actualWindows = await execAndParseJSONResult(getAllWindows());
 
-  let hydratedWindowLayout = hydrateWindowLayout({
-    actualWindows,
-    plannedWindowSetup: desiredLayout.spaces
+  const commands = calculateCommands({
+    layoutConfig,
+    actualSpaces,
+    actualWindows
   });
-
-  const unmanagedWindows = getUnmanagedWindows({ hydratedWindowLayout, actualWindows });
-  const handleUnmanagedWindows = getUnmanagedStrategy(desiredLayout.nonManaged);
-  hydratedWindowLayout = handleUnmanagedWindows({
-    desiredLayout: hydratedWindowLayout,
-    unmanagedWindows
-  });
-
-  const spacesPlan = planSpaces({ actualSpaces, desiredSpaces: hydratedWindowLayout });
-  const spacesCount = countSpacesPerDisplay(actualSpaces);
-
-  const commands = [
-    ...createSpaceCommands({ spacesPlan, spacesCount }),
-    ...createWindowCommands(hydratedWindowLayout)
-  ];
 
   if (isDebugMode) {
     console.log('The Commands: ', commands);
   } else {
-    await executMultipleCommands(commands);
+    await executeMultipleCommands(commands);
   }
 };

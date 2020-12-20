@@ -14,7 +14,7 @@ export const applyLayoutCommand = {
       description: 'Name of the layout to apply',
       type: 'string',
       alias: 'n'
-    },
+    }
   ],
 
   async handle({ options }) {
@@ -25,9 +25,15 @@ export const applyLayoutCommand = {
       desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(config.layouts));
     }
 
+
+    const layoutConfig = config.layouts[desiredLayoutName];
+    if (!layoutConfig) {
+      buntstift.error(`Layout with name '${desiredLayoutName}' does not exist in your config.`);
+      process.exit(1);
+    }
+
     applyLayout({
-      config,
-      desiredLayoutName,
+      layoutConfig,
       isDebugMode: options.debug
     });
   }

@@ -17,11 +17,11 @@ export const execAndParseJSONResult = async function (cmd) {
   return JSON.parse(result);
 };
 
-export const executMultipleCommands = async function (cmds) {
+export const executeMultipleCommands = async function (cmds) {
   for (const command of cmds) {
     try {
       await execute(command);
-    } catch(error) {
+    } catch (error) {
       console.error(`Error with command [${command}]: `, error);
       throw error;
     }
