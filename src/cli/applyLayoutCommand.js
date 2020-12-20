@@ -1,10 +1,10 @@
-import { applyWindowLayout } from '../tasks/applyLayout';
+import { applyLayout } from '../tasks/applyLayout';
 import { buntstift } from 'buntstift';
-import { globalOptions } from '../globalOptions';
+import { globalOptions } from './globalOptions';
 import { getConfig } from '../getConfig';
 
-export const applyLayout = {
-  name: 'applyLayout',
+export const applyLayoutCommand = {
+  name: 'apply-layout',
   description: 'Move windows to the configrued spaces of the given layout.',
   remarks: 'yco <command-name> [--flag...]',
   optionDefinitions: [
@@ -25,7 +25,7 @@ export const applyLayout = {
       desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(config.layouts));
     }
 
-    applyWindowLayout({
+    applyLayout({
       config,
       desiredLayoutName,
       isDebugMode: options.debug

@@ -1,4 +1,4 @@
-import { defaultConfigPath } from './getConfig';
+import { defaultConfigPath } from '../getConfig';
 
 export const globalOptions = [
   {

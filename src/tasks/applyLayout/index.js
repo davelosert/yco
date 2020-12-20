@@ -1,4 +1,4 @@
-import { execAndParseJSONResult, executMultipleCommands } from './commandExecutor';
+import { execAndParseJSONResult, executMultipleCommands } from '../../shared/commandExecutor';
 import { getUnmanagedWindows, hydrateWindowLayout } from './layoutFunctions/hydrateWindowLayout';
 import { countSpacesPerDisplay, planSpaces } from './layoutFunctions/planSpaces';
 import { createSpaceCommands } from './layoutFunctions/createSpaceCommands';
@@ -6,7 +6,7 @@ import { createWindowCommands } from './layoutFunctions/createWindowCommands';
 import { getAllSpaces, getAllWindows } from './layoutFunctions/yabaiComands';
 import { getUnmanagedStrategy } from './layoutFunctions/planUnmanagedWindows';
 
-export const applyWindowLayout = async ({ desiredLayoutName, config, isDebugMode = false }) => {
+export const applyLayout = async ({ desiredLayoutName, config, isDebugMode = false }) => {
   const desiredLayout = config.layouts[desiredLayoutName];
   const actualSpaces = await execAndParseJSONResult(getAllSpaces());
   const actualWindows = await execAndParseJSONResult(getAllWindows());
@@ -32,7 +32,6 @@ export const applyWindowLayout = async ({ desiredLayoutName, config, isDebugMode
   ];
 
   if (isDebugMode) {
-    console.log('The Plan:', hydratedWindowLayout);
     console.log('The Commands: ', commands);
   } else {
     await executMultipleCommands(commands);

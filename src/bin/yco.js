@@ -1,8 +1,8 @@
 #! /usr/bin/env node
-import { applyLayout } from './subCommands/applyLayoutCommand';
+import { applyLayoutCommand as applyLayout } from '../cli/applyLayoutCommand';
 import { buntstift } from 'buntstift';
 import { runCli } from 'command-line-interface';
-import { globalOptions } from './globalOptions';
+import { globalOptions } from '../cli/globalOptions';
 
 const yco = {
   name: 'yco',
@@ -15,7 +15,7 @@ const yco = {
   ],
 
   subcommands: {
-    applyLayout
+    [applyLayout.name]: applyLayout
   },
 
   async handle({ options }) {
