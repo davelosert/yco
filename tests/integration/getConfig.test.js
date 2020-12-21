@@ -25,8 +25,6 @@ suite('getConfig.js', () => {
     assert.deepStrictEqual(actual, configFromPath);
   });
 
-  test('loads config from $');
-
   test('defaults to read from "$HOME/.config/yabai/yco.config.json" if no config is given', async () => {
     process.env.HOME = path.join(__dirname, '..', 'fixtures', 'getConfig');
     const actual = await getConfig({});

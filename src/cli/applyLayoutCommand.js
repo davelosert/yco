@@ -18,7 +18,7 @@ export const applyLayoutCommand = {
   ],
 
   async handle({ options }) {
-    const config = await getConfig(options.config);
+    const config = await getConfig({ configPath: options.config });
 
     let desiredLayoutName = options.name;
     if (!desiredLayoutName) {
