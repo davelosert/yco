@@ -10,7 +10,7 @@ With this repository, I want to make working with yabai, skhd and ubersicht easi
 
 - [x] Configure & Switch to preconfigured window layouts (see configuration example below)
   - [x] Write a script comparing the current with the desired layout and generate `yabai` commands accordingly
-- [ ] Implement a holistic CLI Interface to execute all features
+- [x] Implement a holistic CLI Interface to execute all features
 - [ ] Publish the CLI as npm binary (for npx) and/or pkg binary
 - [ ] I3wm-Like focussing of spaces and/or windows for a shortcut, (e.g. `CMD + 1` for VSCode, `CMD + 2` for Firefox…)
   - [ ] Implement a generator to inject a custom, generated config into the SKHD-Config

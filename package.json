@@ -4,11 +4,12 @@
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "main": "index.js",
   "bin": {
-    "yco": "./build/bin/yco.js"
+    "yco": "build/bin/yco.js"
   },
   "scripts": {
     "build": "rm -rf ./build && babel ./src --out-dir build",
     "test": "riteway -r @babel/register 'src/**/*.test.js' | tap-nirvana",
+    "test:integration": "mocha tests/integration/**/*.js",
     "watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
   },
   "author": "David Losert",
@@ -22,6 +23,7 @@
     "@babel/register": "7.12.10",
     "@babel/runtime-corejs2": "7.12.5",
     "eslint": "7.16.0",
+    "mocha": "8.2.1",
     "nyc": "15.1.0",
     "riteway": "6.2.1",
     "tap-nirvana": "1.1.0",
