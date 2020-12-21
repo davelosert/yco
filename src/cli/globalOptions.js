@@ -1,5 +1,3 @@
-import { defaultConfigPath } from '../getConfig';
-
 export const globalOptions = [
   {
     name: 'debug',
@@ -11,7 +9,6 @@ export const globalOptions = [
     name: 'config',
     description: 'Path to the yc configuration file. Defaults to ~/.config/yc/config.json',
     type: 'string',
-    alias: 'c',
-    defaultValue: defaultConfigPath
+    alias: 'c'
   }
 ];

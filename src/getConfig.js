@@ -1,7 +1,6 @@
 import path from 'path';
 import { promises } from 'fs';
 
-
 const getDefaultConf = () => {
   const homeDir = process.env.HOME;
   return path.join(homeDir, '.config', 'yabai', 'yco.config.json');
