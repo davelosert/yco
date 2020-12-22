@@ -8,8 +8,10 @@
   },
   "scripts": {
     "build": "rm -rf ./build && babel ./src --out-dir build",
+    "lint": "eslint src/ test/",
     "test": "riteway -r @babel/register 'src/**/*.test.js' | tap-nirvana",
-    "test:integration": "mocha tests/integration/**/*.js",
+    "test:integration": "mocha 'tests/integration/**/*.test.js'",
+    "test:ci": "npm run test && npm run test:integration",
     "watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
   },
   "author": "David Losert",
