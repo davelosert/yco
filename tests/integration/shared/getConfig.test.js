@@ -1,12 +1,12 @@
 import assert from 'assert';
 import { clone } from 'ramda';
-import { getConfig } from '../../src/getConfig';
-import homeConfig from '../fixtures/getConfig/.config/yabai/yco.config.json';
-import configFromPath from '../fixtures/getConfig/exampleConfig.json';
+import { getConfig } from '../../../src/shared/getConfig';
+import homeConfig from '../../fixtures/getConfig/.config/yabai/yco.config.json';
+import configFromPath from '../../fixtures/getConfig/exampleConfig.json';
 import path from 'path';
 
 
-suite('getConfig.js', () => {
+suite('getConfig()', () => {
   let originalEnv;
 
   setup(() => {
@@ -19,14 +19,14 @@ suite('getConfig.js', () => {
 
   test('loads config from given path', async () => {
     const actual = await getConfig({
-      configPath: `${__dirname}/../fixtures/getConfig/exampleConfig.json`
+      configPath: `${__dirname}/../../fixtures/getConfig/exampleConfig.json`
     });
 
     assert.deepStrictEqual(actual, configFromPath);
   });
 
   test('defaults to read from "$HOME/.config/yabai/yco.config.json" if no config is given', async () => {
-    process.env.HOME = path.join(__dirname, '..', 'fixtures', 'getConfig');
+    process.env.HOME = path.join(__dirname, '..', '..', 'fixtures', 'getConfig');
     const actual = await getConfig({});
 
     assert.deepStrictEqual(actual, homeConfig);
