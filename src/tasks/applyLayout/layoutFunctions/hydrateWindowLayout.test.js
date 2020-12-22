@@ -14,22 +14,22 @@ describe('hydrateWindowLayout()', async assert => {
   assert({
     given: 'window does not exist',
     should: 'return empty array',
-    actual: hydrateWindowLayout({plannedWindowSetup: [[['NonExisting']]], actualWindows: [{... testApp }]}),
+    actual: hydrateWindowLayout({ plannedWindowSetup: [[['NonExisting']]], actualWindows: [{ ...testApp }] }),
     expected: [[[]]]
   });
 
   assert({
     given: 'planned window exists twice',
     should: 'insert both windows at right position',
-    actual: hydrateWindowLayout({plannedWindowSetup: [[['TestApp']]], actualWindows: [{...testApp }, {...testApp}]}),
-    expected: [[[{...testApp}, {...testApp}]]]
+    actual: hydrateWindowLayout({ plannedWindowSetup: [[['TestApp']]], actualWindows: [{ ...testApp }, { ...testApp }] }),
+    expected: [[[{ ...testApp }, { ...testApp }]]]
   });
 
   assert({
     given: 'windows on second display',
     should: 'insert them in the second array',
-    actual: hydrateWindowLayout({plannedWindowSetup: [[['App1']], [['TestApp']]], actualWindows: [{ ...testApp}]}),
-    expected: [[[]], [[{...testApp}]]]
+    actual: hydrateWindowLayout({ plannedWindowSetup: [[['App1']], [['TestApp']]], actualWindows: [{ ...testApp }] }),
+    expected: [[[]], [[{ ...testApp }]]]
   });
 });
 
@@ -41,14 +41,14 @@ describe('getUnmanagedWindows()', async assert => {
   assert({
     given: 'no unmanaged window',
     should: 'return empty array',
-    actual: getUnmanagedWindows({ hydratedWindowLayout: [[[{...managedApp}]]], actualWindows: [{...managedApp}]}),
+    actual: getUnmanagedWindows({ hydratedWindowLayout: [[[{ ...managedApp }]]], actualWindows: [{ ...managedApp }] }),
     expected: []
   });
 
   assert({
     given: 'an unmanaged window',
     should: 'return that window',
-    actual: getUnmanagedWindows({ hydratedWindowLayout: [[[managedApp]]], actualWindows: [managedApp, unmanagedApp]}),
+    actual: getUnmanagedWindows({ hydratedWindowLayout: [[[managedApp]]], actualWindows: [managedApp, unmanagedApp] }),
     expected: [unmanagedApp]
   });
 });
