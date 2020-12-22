@@ -1,10 +1,9 @@
 import { calculateCommands } from './calculateCommands';
-import { execAndParseJSONResult, executeMultipleCommands } from '../../shared/commandExecutor';
-import { getAllSpaces, getAllWindows } from './layoutFunctions/yabaiComands';
+import { allSpaces, allWindows } from '../../shared/yabaiComands';
 
-export const applyLayout = async ({ layoutConfig, isDebugMode = false }) => {
-  const actualSpaces = await execAndParseJSONResult(getAllSpaces());
-  const actualWindows = await execAndParseJSONResult(getAllWindows());
+export const applyLayout = async ({ layoutConfig, yabaiAdapter }) => {
+  const actualSpaces = await yabaiAdapter.query(allSpaces());
+  const actualWindows = await yabaiAdapter.query(allWindows());
 
   const commands = calculateCommands({
     layoutConfig,
@@ -12,9 +11,5 @@ export const applyLayout = async ({ layoutConfig, isDebugMode = false }) => {
     actualWindows
   });
 
-  if (isDebugMode) {
-    console.log('The Commands: ', commands);
-  } else {
-    await executeMultipleCommands(commands);
-  }
+  await yabaiAdapter.apply(commands);
 };

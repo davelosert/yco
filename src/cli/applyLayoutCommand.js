@@ -1,7 +1,9 @@
 import { applyLayout } from '../tasks/applyLayout';
 import { buntstift } from 'buntstift';
-import { globalOptions } from './globalOptions';
 import { getConfig } from '../getConfig';
+import { globalOptions } from './globalOptions';
+import { withChildProcessExec } from '../shared/withChildProcessExec';
+import { createYabaiAdapter } from '../shared/createYabaiAdapter';
 
 export const applyLayoutCommand = {
   name: 'apply-layout',
@@ -25,16 +27,26 @@ export const applyLayoutCommand = {
       desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(config.layouts));
     }
 
-
     const layoutConfig = config.layouts[desiredLayoutName];
     if (!layoutConfig) {
       buntstift.error(`Layout with name '${desiredLayoutName}' does not exist in your config.`);
       process.exit(1);
     }
 
+    const yabaiAdapter = withChildProcessExec(createYabaiAdapter);
+
+    // If debug mode is enabled, overwrite apply-command and just print out stuff
+    if (options.debug) {
+      yabaiAdapter.apply = (cmds) => {
+        buntstift.info('The following commands would have been executed: ');
+        buntstift.newLine();
+        cmds.forEach(cmd => buntstift.list(cmd, { level: 1 }));
+      };
+    }
+
     applyLayout({
       layoutConfig,
-      isDebugMode: options.debug
+      yabaiAdapter
     });
   }
 };

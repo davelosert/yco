@@ -1,10 +1,10 @@
 import { flatten, sum, times } from 'ramda';
-import { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } from './yabaiComands';
+import { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } from '../../../shared/yabaiComands';
 
 const getDisplayNumberFoIndex = displayIndex => displayIndex + 1;
 const generateCreateSpaces = (spaceDiff, displayIndex) => [
-    generateFocusDisplayCommand(getDisplayNumberFoIndex(displayIndex)),
-    ...generateCreateCommands(spaceDiff)
+  generateFocusDisplayCommand(getDisplayNumberFoIndex(displayIndex)),
+  ...generateCreateCommands(spaceDiff)
 ];
 
 const noActionNeeded = spaceDiff => spaceDiff === 0;
