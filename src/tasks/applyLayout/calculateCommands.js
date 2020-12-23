@@ -22,6 +22,6 @@ export const calculateCommands = ({ layoutConfig, actualSpaces, actualWindows })
 
   return [
     ...createSpaceCommands({ spacesPlan, spacesCount }),
-    ...createWindowCommands(hydratedWindowLayout)
+    ...createWindowCommands({ desiredWindowLayout: hydratedWindowLayout, spacesPlan })
   ];
 };

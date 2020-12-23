@@ -74,4 +74,47 @@ suite('task: applyLayout()', () => {
       yabaiAdapter: yabaiAdapterMock
     });
   });
+
+  test('executes commands to move unmanaged windows to last space on main display with option "allInOne"', async () => {
+    const layoutConfig = {
+      nonManaged: 'allInOneSpace',
+      spaces: [
+        [
+          ['Managed Window Display 1']
+        ],
+        [
+          ['Managed Window Display 2']
+        ]
+      ]
+    };
+
+    const windowsResult = [
+      { app: 'Managed Window Display 1', display: 1, space: 1, id: 100 },
+      { app: 'Managed Window Display 2', display: 2, space: 2, id: 200 },
+      { app: 'Unmanaged Window 1', display: 1, space: 1, id: 101 },
+      { app: 'Unmanaged Window 2', display: 2, space: 2, id: 201 },
+    ];
+
+    const spacesResult = [
+      { display: 1, index: 1, windows: [100, 101] },
+      { display: 2, index: 2, windows: [200, 201] },
+    ];
+
+    const yabaiAdapterMock = {
+      query: createFakeYabaiQuery({ windowsResult, spacesResult }),
+      apply: async (cmds) => {
+        assert.deepStrictEqual(cmds, [
+          'yabai -m display --focus 1',
+          'yabai -m space --create',
+          'yabai -m window 101 --space 2',
+          'yabai -m window 201 --space 2'
+        ]);
+      }
+    };
+
+    await applyLayout({
+      layoutConfig,
+      yabaiAdapter: yabaiAdapterMock
+    });
+  });
 });

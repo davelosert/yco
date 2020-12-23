@@ -54,7 +54,7 @@ describe('planUnmanagedWindows() - allInOwnSpace', async assert => {
     given: 'three unmanaged windows',
     should: 'return each in their own space on first display',
     actual: planAllInOwnSpace({ desiredLayout, unmanagedWindows: [unmanagedWindow, unmanagedWindow2, unmanagedWindow3] }),
-    expected: [[['Managed App'], [ unmanagedWindow ], [ unmanagedWindow2 ], [ unmanagedWindow3 ]]]
+    expected: [[['Managed App'], [unmanagedWindow], [unmanagedWindow2], [unmanagedWindow3]]]
   });
 });
 
