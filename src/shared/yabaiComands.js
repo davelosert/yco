@@ -14,4 +14,4 @@ export const generateCreateCommands = times(always(yabaiCreateSpace));
 
 export const generateFocusDisplayCommand = displayNumber => `yabai -m display --focus ${displayNumber}`;
 
-export const yabaiMoveSpaceToDisplay = curry((spaceIndex, displayIndex) => `yabai -m space ${spaceIndex} --display ${displayIndex}`);
+export const generateMoveWindowToSpace = (windowId, targetSpaceIndex) => `yabai -m window ${windowId} --space ${targetSpaceIndex}`;
