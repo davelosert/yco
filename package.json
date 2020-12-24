@@ -1,6 +1,6 @@
 {
   "name": "yco",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "bin": {
     "yco": "./build/bin/yco.js"
