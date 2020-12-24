@@ -24,7 +24,7 @@ jobs:
         npm run build
     - name: Run tests
       run: |
-        npm test:ci
+        npm run test:ci
     - name: Release
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
