@@ -2,10 +2,15 @@
   "name": "yabai-configurator",
   "version": "0.0.1",
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
-  "main": "index.js",
+  "bin": {
+    "yco": "build/bin/yco.js"
+  },
   "scripts": {
-    "build": "babel ./src --out-dir build",
+    "build": "rm -rf ./build && babel ./src --out-dir build",
+    "lint": "eslint src/ tests/",
     "test": "riteway -r @babel/register 'src/**/*.test.js' | tap-nirvana",
+    "test:integration": "mocha 'tests/integration/**/*.test.js'",
+    "test:ci": "npm run test && npm run test:integration",
     "watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
   },
   "author": "David Losert",
@@ -19,12 +24,15 @@
     "@babel/register": "7.12.10",
     "@babel/runtime-corejs2": "7.12.5",
     "eslint": "7.16.0",
+    "mocha": "8.2.1",
     "nyc": "15.1.0",
     "riteway": "6.2.1",
     "tap-nirvana": "1.1.0",
     "watch": "1.0.2"
   },
   "dependencies": {
+    "buntstift": "4.0.17",
+    "command-line-interface": "3.6.15",
     "ramda": "0.27.1"
   }
 }

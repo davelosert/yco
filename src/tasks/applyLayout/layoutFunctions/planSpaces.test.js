@@ -40,14 +40,14 @@ describe('planSpaces()', async assert => {
   assert({
     given: 'one space on second display exists but is missing in desired spaces',
     should: 'leave it untouched',
-    actual: planSpaces({ actualSpaces: [{ display: 1}, { display: 2 }], desiredSpaces: [[['App1']]]}),
+    actual: planSpaces({ actualSpaces: [{ display: 1 }, { display: 2 }], desiredSpaces: [[['App1']]] }),
     expected: [0, 0]
   });
 
   assert({
     given: 'two spaces on second display exist but no configuration given in desired spaces',
     should: 'delete all but the last space for that display',
-    actual: planSpaces({ actualSpaces: [{display: 1}, { display: 2 }, { display: 2 }], desiredSpaces: [[['App1']]]}),
+    actual: planSpaces({ actualSpaces: [{ display: 1 }, { display: 2 }, { display: 2 }], desiredSpaces: [[['App1']]] }),
     expected: [0, -1]
   });
 });
