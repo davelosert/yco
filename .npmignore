@@ -1,4 +1,5 @@
 .dependabot
 .github
+.vscode
 /tests
 /tmp
