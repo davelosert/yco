@@ -7,9 +7,6 @@ import { globalOptions } from '../cli/globalOptions';
 const yco = {
   name: 'yco',
   description: 'The Yabai-Configurator.',
-  remarks: `
-    Select on of the commands to execute.
-  `,
   optionDefinitions: [
     ...globalOptions
   ],

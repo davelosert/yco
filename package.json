@@ -2,8 +2,9 @@
   "name": "yco",
   "version": "1.0.0",
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
+  "author": "David Losert",
   "bin": {
-    "yco": "./build/bin/yco.js"
+    "yco": "build/bin/yco.js"
   },
   "scripts": {
     "build": "rm -rf ./build && babel ./src --out-dir build",
@@ -13,8 +14,12 @@
     "test:ci": "npm run test && npm run test:integration",
     "watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
   },
-  "author": "David Losert",
-  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime-corejs2": "7.12.5",
+    "buntstift": "4.0.17",
+    "command-line-interface": "3.6.15",
+    "ramda": "0.27.1"
+  },
   "devDependencies": {
     "@babel/cli": "7.12.10",
     "@babel/core": "7.12.10",
@@ -22,7 +27,6 @@
     "@babel/preset-env": "7.12.11",
     "@babel/preset-typescript": "7.12.7",
     "@babel/register": "7.12.10",
-    "@babel/runtime-corejs2": "7.12.5",
     "@semantic-release/git": "9.0.0",
     "@semantic-release/npm": "7.0.9",
     "eslint": "7.16.0",
@@ -33,9 +37,5 @@
     "tap-nirvana": "1.1.0",
     "watch": "1.0.2"
   },
-  "dependencies": {
-    "buntstift": "4.0.17",
-    "command-line-interface": "3.6.15",
-    "ramda": "0.27.1"
-  }
+  "license": "MIT"
 }

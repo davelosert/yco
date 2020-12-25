@@ -1,6 +1,6 @@
 import { applyLayout } from '../tasks/applyLayout';
 import { buntstift } from 'buntstift';
-import { getConfig } from '../getConfig';
+import { getConfig } from '../shared/getConfig';
 import { globalOptions } from './globalOptions';
 import { withChildProcessExec } from '../shared/withChildProcessExec';
 import { createYabaiAdapter } from '../shared/createYabaiAdapter';
