@@ -14,7 +14,7 @@ const yco = {
     [applyLayout.name]: applyLayout
   },
 
-  async handle({ options, getUsage, ancestors }) {
+  async handle({ getUsage, ancestors }) {
     const subCommandName = await buntstift.select('Select Subcommand', Object.values(this.subcommands).map(command => command.name));
 
     if (subCommandName === 'help') {
