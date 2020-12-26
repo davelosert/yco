@@ -7,13 +7,13 @@ import { createYabaiAdapter } from '../shared/createYabaiAdapter';
 
 export const applyLayoutCommand = {
   name: 'apply-layout',
-  description: 'Move windows to the configrued spaces of the given layout.',
+  description: 'Move windows to preconfigured spaces according to a given layout.',
   remarks: 'yco <command-name> [--flag...]',
   optionDefinitions: [
     ...globalOptions,
     {
       name: 'name',
-      description: 'Name of the layout to apply',
+      description: 'Name of the layout to apply (key of the layout in your yco.config.json).',
       type: 'string',
       alias: 'n'
     }
