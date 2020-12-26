@@ -5,10 +5,7 @@ import { globalOptions } from '../cli/globalOptions';
 
 const yco = {
   name: 'yco',
-  description: 'The Yabai-Configurator.',
-  remarks: `
-    Select on of the commands to execute.
-  `,
+  description: 'Make Yabai and SKHD Configuration easy with a single tool.',
   optionDefinitions: [
     ...globalOptions
   ],
@@ -17,9 +14,15 @@ const yco = {
     [applyLayout.name]: applyLayout
   },
 
-  async handle({ options }) {
-    const subCommand = await buntstift.select('Select Subcommand', Object.values(this.subcommands).map(command => command.name));
-    await this.subcommands[subCommand].handle({ options });
+  async handle({ options, getUsage, ancestors }) {
+    const subCommandName = await buntstift.select('Select Subcommand', Object.values(this.subcommands).map(command => command.name));
+
+    if (subCommandName === 'help') {
+      buntstift.info(getUsage({ commandPath: [...ancestors, 'yco'] }));
+      process.exit(0);
+    }
+
+    await runCli({ rootCommand: this.subcommands[subCommandName], argv: process.argv });
   }
 };
 
