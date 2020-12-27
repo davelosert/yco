@@ -1,6 +1,6 @@
 import path from 'path';
 import { promises } from 'fs';
-import { getSkhdCommands } from './getSkhdCommands';
+import { getSkhdEntries } from './getSkhdEntries';
 
 const { appendFile, writeFile, mkdir } = promises;
 
@@ -10,7 +10,8 @@ export const createSkhdConfig = async ({ ycoConfig }) => {
   const ycoSkhdConfPath = path.resolve(process.env.HOME, '.config', 'yabai');
   await mkdir(ycoSkhdConfPath, { recursive: true });
 
-  const skhdCommands = getSkhdCommands({ ycoConfig });
+  const skhdCommands = getSkhdEntries({ ycoConfig });
+
   const ycoSkhdConfFile = path.resolve(ycoSkhdConfPath, ycoConfName);
   await writeFile(ycoSkhdConfFile, skhdCommands, 'utf-8');
 

@@ -1,7 +1,7 @@
 {
   "layouts": {
     "monitor": {
-      "command": "m",
+      "modKey": "m",
       "nonManaged": "allInOneSpace",
       "spaces": [[
         ["iTerm2", "Code", "Firefox"],
@@ -10,14 +10,14 @@
       ]]
     },
     "laptop": {
-      "command": "l",
+      "modKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
           ["Code"], ["Firefox"], ["iTerm2"], ["Google Chrome", "Toggl Track"], ["Slack"], ["Microsoft Outlook"]
         ]]
     },
     "pairing": {
-      "command": "p",
+      "modKey": "p",
       "nonManaged" : "leaveUntouched",
       "spaces": [
         [],
