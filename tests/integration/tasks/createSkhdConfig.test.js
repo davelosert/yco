@@ -59,7 +59,7 @@ suite('task: createSkhdConfig()', () => {
     `));
   });
 
-  test.only('creates layout mod in skhd.conf', async () => {
+  test('creates layout mod in skhd.conf', async () => {
     const ycoConfig = {
       layoutModeTriggerKey: 'alt - s',
       layouts: {
