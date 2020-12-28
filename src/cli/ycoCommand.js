@@ -1,4 +1,5 @@
-import { applyLayoutCommand as applyLayout } from '../cli/applyLayoutCommand';
+import { applyLayoutCommand } from './applyLayoutCommand';
+import { createConfigsCommand } from './createConfigs';
 import { buntstift } from 'buntstift';
 import { runCli } from 'command-line-interface';
 import { globalOptions } from '../cli/globalOptions';
@@ -11,7 +12,8 @@ const yco = {
   ],
 
   subcommands: {
-    [applyLayout.name]: applyLayout
+    [applyLayoutCommand.name]: applyLayoutCommand,
+    [createConfigsCommand.name]: createConfigsCommand
   },
 
   async handle({ getUsage, ancestors }) {

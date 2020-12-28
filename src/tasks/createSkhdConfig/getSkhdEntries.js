@@ -5,7 +5,7 @@ import { mapObjIndexed, pipe, values } from 'ramda';
 const convertLayoutsToSkhdEntries = pipe(
   mapObjIndexed((layoutConfig, layoutName) => ({
     triggerKey: layoutConfig.triggerKey,
-    actions: [`nyc apply-layout --name ${layoutName}`]
+    actions: [`yco apply-layout --name ${layoutName}`]
   })),
   values
 );
