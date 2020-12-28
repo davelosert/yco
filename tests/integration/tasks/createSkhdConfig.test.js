@@ -12,17 +12,19 @@ const withoutIndentSpaces = multilineString => multilineString.replace(/^\s*/g, 
 
 suite('task: createSkhdConfig()', () => {
   let originalEnv;
-  let testDir;
-  let ycoSkhdConfPath;
+
+  const createTestDirFromFixture = async (fixtureName) => {
+    const testDir = await isolated({
+      files: path.join(__dirname, '..', '..', 'fixtures', 'createSkhdConfig', fixtureName, '.skhdrc')
+    });
+    const ycoSkhdConfPath = path.resolve(testDir, '.config', 'yabai', 'yco.skhd.conf');
+    process.env.HOME = testDir;
+
+    return { testDir, ycoSkhdConfPath };
+  };
 
   setup(async () => {
     originalEnv = clone(process.env);
-    testDir = await isolated({
-      files: path.join(__dirname, '..', '..', 'fixtures', 'createSkhdConfig', 'firstRun', '.skhdrc')
-    });
-
-    ycoSkhdConfPath = path.resolve(testDir, '.config', 'yabai', 'yco.skhd.conf');
-    process.env.HOME = testDir;
   });
 
   teardown(() => {
@@ -30,6 +32,8 @@ suite('task: createSkhdConfig()', () => {
   });
 
   test('creates ~/.config/yabai.yco.skhd.conf', async () => {
+    const { testDir } = await createTestDirFromFixture('firstRun');
+
     await createSkhdConfig({
       ycoConfig: {}
     });
@@ -41,6 +45,41 @@ suite('task: createSkhdConfig()', () => {
   });
 
   test('inserts ".load ~/.config/yabai/yco.skhd.conf" statement in ~/.skhdrc', async () => {
+    const { testDir, ycoSkhdConfPath } = await createTestDirFromFixture('firstRun');
+
+    await createSkhdConfig({
+      ycoConfig: {}
+    });
+
+    const fileContent = await readFile(path.resolve(testDir, '.skhdrc'), 'utf-8');
+
+    const expectedStatement = `.load ${ycoSkhdConfPath}`;
+    assert.ok(fileContent.includes(expectedStatement), withoutIndentSpaces(`
+      SKHD Config did not contain .load statement
+
+      File-Content:
+      ${fileContent}
+
+      Expected Statement:
+      ${expectedStatement}
+    `));
+  });
+
+  test('does not create .load statement if it was already created by a previous run', async () => {
+    const { testDir, ycoSkhdConfPath } = await createTestDirFromFixture('firstRun');
+
+    await createSkhdConfig({ ycoConfig: {} });
+    await createSkhdConfig({ ycoConfig: {} });
+
+    const fileContent = await readFile(path.resolve(testDir, '.skhdrc'), 'utf-8');
+    const expectedStatement = `.load ${ycoSkhdConfPath}`;
+    const occurences = [...fileContent.matchAll(expectedStatement)].length;
+    assert.deepStrictEqual(occurences, 1);
+  });
+
+  test('inserts ".load ~/.config/yabai/yco.skhd.conf" statement in ~/.skhdrc', async () => {
+    const { testDir, ycoSkhdConfPath } = await createTestDirFromFixture('firstRun');
+
     await createSkhdConfig({
       ycoConfig: {}
     });
@@ -60,6 +99,8 @@ suite('task: createSkhdConfig()', () => {
   });
 
   test('creates layout mod in skhd.conf', async () => {
+    const { ycoSkhdConfPath } = await createTestDirFromFixture('firstRun');
+
     const ycoConfig = {
       layoutModeTriggerKey: 'alt - s',
       layouts: {
