@@ -1,5 +1,5 @@
 import { applyLayoutCommand } from './applyLayoutCommand';
-import { createConfigsCommand } from './createConfigs';
+import { createConfigsCommand } from './createConfigsCommand';
 import { buntstift } from 'buntstift';
 import { runCli } from 'command-line-interface';
 import { globalOptions } from '../cli/globalOptions';
