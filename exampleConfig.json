@@ -1,7 +1,8 @@
 {
+  "layoutModeTriggerKey": "alt - s",
   "layouts": {
     "monitor": {
-      "command": "m",
+      "triggerKey": "m",
       "nonManaged": "allInOneSpace",
       "spaces": [[
         ["iTerm2", "Code", "Firefox"],
@@ -10,14 +11,14 @@
       ]]
     },
     "laptop": {
-      "command": "l",
+      "triggerKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
           ["Code"], ["Firefox"], ["iTerm2"], ["Google Chrome", "Toggl Track"], ["Slack"], ["Microsoft Outlook"]
         ]]
     },
     "pairing": {
-      "command": "p",
+      "triggerKey": "p",
       "nonManaged" : "leaveUntouched",
       "spaces": [
         [],

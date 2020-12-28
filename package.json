@@ -4,7 +4,7 @@
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "author": "David Losert",
   "bin": {
-    "yco": "./src/bin/yco.js"
+    "yco": "src/bin/yco.js"
   },
   "scripts": {
     "lint": "eslint src/ tests/",
@@ -23,6 +23,7 @@
     "@semantic-release/git": "9.0.0",
     "@semantic-release/npm": "7.0.9",
     "eslint": "7.16.0",
+    "isolated": "3.0.9",
     "mocha": "8.2.1",
     "nyc": "15.1.0",
     "riteway": "6.2.1",

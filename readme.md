@@ -50,10 +50,21 @@ npx yco --config custom/path/to/config.json <task>
 
 ## Current Features
 
+### create-configs
+
+```shell
+yco create-configs
+```
+
+Create all configs for the other tools (`yabai`, `skhd`, `ubersicht`) from your central `yco.config.json`.
+
+Currently, this only adds a `skhd`-config creating a separate file `~/.config/yabai/yco.skhd.conf` and loading it within `~/.skhdrc`.
+The `yco.skhd.conf` is populated with a mode-command that lets you switch between your configured layouts (see [apply-layout](###apply-layout)) with two shortcuts.
+
 ### apply-layout
 
 ```shell
-npx yco apply-layout --name nameOfLayout
+yco apply-layout --name nameOfLayout
 ```
 
 Apply a preconfigured layout. A layout defines which windows are supposed to be in which spaces. The command will use `yabai` to compare the current location of all windows and move them to the configured spaces accordingly while creating all necessary an deleting all unused spaces.
@@ -64,8 +75,10 @@ A real-world layout configuration might look like this:
 
 ```json
 {
+  "layoutModeTriggerKey": "alt - s",
   "layouts": {
     "nameOfLayout": {
+      "triggerKey": "n",
       "nonManaged": "allInOneSpace",
       "spaces": [[
         ["iTerm2", "Code", "Firefox"],
@@ -75,6 +88,20 @@ A real-world layout configuration might look like this:
     },
 }
 ```
+
+#### Layout-Mode
+
+The Layout-Mode is basically just a predefined `skhd-config` that lets you apply the configured layouts with a simple two-setp hotkey-combination.
+It will get activated once you execute `yco create-config` (see [create-config](###create-configs)).
+
+E.g. to apply the layout configured above, you'd have to press:
+
+- The `layoutModeTriggerKey`: `alt - s`
+- The `triggerKey` of the target layout:`n`
+
+To learn more about *modes*, read [What are skhd-modes?](###what-are-skhd-modes) and [What are yco-modes?](###what-are-yco-modes)
+
+#### Layouts
 
 The `spaces` Property is a structure consiting of nested arrays, where:
 
@@ -108,19 +135,57 @@ The `nonManaged` configuration decides how to treat all currently opened windows
 
 *Please note: Currently, the order order of windows on a space is not guaranteed to be as configured (this is a bit harder to implement with yabai commands). This is a planned feature, however.*
 
-## Planned Features
+## Q & A
 
-- [x] Configure & Switch to preconfigured window layouts (see configuration example below)
-  - [x] Write a script comparing the current with the desired layout and generate `yabai` commands accordingly
-- [x] Implement a holistic CLI Interface to execute all features
-- [x] Publish the CLI as npm binary (for npx)
-- [x] Drastically improve documentation
-- [ ] Add feature to add SKHD Shortcuts starting certain yco tasks
-  - [ ] Implement a generator to inject a custom, generated config into the SKHD-Config
-  - [ ] Add a `layout-mode` to apply certain layout on a keypress
-  - [ ] I3wm-Like focussing of spaces and/or windows for a shortcut, (e.g. `CMD + 1` for VSCode, `CMD + 2` for Firefox…)
-- [ ] Toggle through windows of a certain kind (e.g. all opened Firefox Windows)
-- [ ] I3wm-Like modes for SKHD in combination with a Ubersicht-Visualization
+### What are skhd-modes?
+
+Even though your keyboard has a lot of different keys, finding a free hotkey-combination can sometimes be really cumbersome.
+
+That's why SKHD created modes. A mode lets your overwrite or overload certain hotkeys with different actions - depending on the currently active mode.
+
+This is best explained with an example. Have a look at this skhd-config:
+
+```conf
+# Keypress in default mode
+alt - l : echo "Default Mode"
+# Define the "layoutMode"
+:: layoutMode @
+# Activate layoutMode with alt-s
+alt - s ; layoutMode
+layoutMode < alt - l : echo "Layout Mode"
+# Go back to default mode with "escape"
+layoutMode < escape ; default
+```
+
+- When pressing `alt - l`, "Default Mode" will be echoed
+- When pressing `alt - s`, the layoutMode is activated
+- Now pressing `alt - l` again will echo "Layout Mode"
+- Pressing `escape` exits the mode again.
+- Pressing`alt - l` now will again echo "Default Mode"
+
+This is great to have the same hotkeys in different contexts - thus, you don't need to invent new hotkeys over and over.
+
+### What are yco-modes?
+
+There are certain actions that do not need a "first class" hotkey-combination as they do not get executed that often.
+
+For example `apply-layout` is something that you probably only need a few times a day. I'd be a waste to have to find a unique hotkey-combination for every defined layout.
+
+That's why **modes in YCO** do not only override hotkey-combinations once activated, they always automatically come back to the default-mode once an action has been taken.
+
+The idea is:
+
+1. Activate the mode
+2. Execute an action within that mode and immidiately come back to default mode
+
+This means that you need to press two hotkey-combinations to use `apply-layout` - however, this gives you two big advantages:
+
+1. You only need one hotkey-combination in your default layout
+2. You can give easy to remember hotkeys to every layout, e.g. the first letter of the layout. As the layoutMode is exited immidiately, you can even define just simple letters.
+
+Both makes it easier to find free keys as well as remember those keys.
+
+Exiting a mode in skhd is done by appending a command to simulate an `escape`-keypress to every mode-action.
 
 ## Full Configuration Example
 

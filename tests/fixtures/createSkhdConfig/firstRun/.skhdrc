@@ -1,0 +1,4 @@
+# Existing Configuration of Yabai for tests
+alt - h : yabai -m window --focus west
+
+# Expecting a load command under this line
