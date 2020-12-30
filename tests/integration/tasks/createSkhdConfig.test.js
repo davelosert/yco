@@ -1,10 +1,10 @@
 
-import assert from 'assert';
-import { clone } from 'ramda';
-import { createSkhdConfig } from '../../../src/tasks/createSkhdConfig';
-import fs from 'fs';
-import { isolated } from 'isolated';
-import path from 'path';
+const assert = require('assert');
+const { clone } = require('ramda');
+const { createSkhdConfig } = require('../../../src/tasks/createSkhdConfig');
+const fs = require('fs');
+const { isolated } = require('isolated');
+const path = require('path');
 
 const { readFile, stat } = fs.promises;
 

@@ -1,10 +1,10 @@
-import { createSkhdConfig } from '../tasks/createSkhdConfig';
-import { buntstift } from 'buntstift';
-import { getConfig } from '../shared/getConfig';
-import { globalOptions } from './globalOptions';
-import { createFSAdapter } from '../shared/createFSAdapter';
+const { createSkhdConfig } = require('../tasks/createSkhdConfig');
+const { buntstift } = require('buntstift');
+const { getConfig } = require('../shared/getConfig');
+const { globalOptions } = require('./globalOptions');
+const { createFSAdapter } = require('../shared/createFSAdapter');
 
-export const createConfigsCommand = {
+exports.createConfigsCommand = {
   name: 'create-configs',
   description: 'Extends your SKHD-Config with all shortcuts and commands from the YCO-Config.',
   optionDefinitions: [

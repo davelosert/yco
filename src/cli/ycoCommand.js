@@ -1,8 +1,8 @@
-import { applyLayoutCommand } from './applyLayoutCommand';
-import { createConfigsCommand } from './createConfigsCommand';
-import { buntstift } from 'buntstift';
-import { runCli } from 'command-line-interface';
-import { globalOptions } from '../cli/globalOptions';
+const { applyLayoutCommand } = require('./applyLayoutCommand');
+const { createConfigsCommand } = require('./createConfigsCommand');
+const { buntstift } = require('buntstift');
+const { runCli } = require('command-line-interface');
+const { globalOptions } = require('../cli/globalOptions');
 
 const yco = {
   name: 'yco',
@@ -28,6 +28,6 @@ const yco = {
   }
 };
 
-export async function runYco() {
+exports.runYco = async function runYco() {
   await runCli({ rootCommand: yco, argv: process.argv });
-}
+};

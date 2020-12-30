@@ -1,6 +1,6 @@
 const modeExitKey = 'escape';
 
-export const createSkhdMode = ({
+exports.createSkhdMode = ({
   name,
   triggerKey,
   entries

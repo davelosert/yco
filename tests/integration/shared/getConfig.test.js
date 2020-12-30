@@ -1,9 +1,9 @@
-import assert from 'assert';
-import { clone } from 'ramda';
-import { getConfig } from '../../../src/shared/getConfig';
-import homeConfig from '../../fixtures/getConfig/.config/yabai/yco.config.json';
-import configFromPath from '../../fixtures/getConfig/exampleConfig.json';
-import path from 'path';
+const assert = require('assert');
+const { clone } = require('ramda');
+const { getConfig } = require('../../../src/shared/getConfig');
+const homeConfig = require('../../fixtures/getConfig/.config/yabai/yco.config.json');
+const configFromPath = require('../../fixtures/getConfig/exampleConfig.json');
+const path = require('path');
 
 
 suite('getConfig()', () => {

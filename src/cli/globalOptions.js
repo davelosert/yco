@@ -1,4 +1,4 @@
-export const globalOptions = [
+exports.globalOptions = [
   {
     name: 'debug',
     description: 'Don\'t execute any action. Just print what would be done.',

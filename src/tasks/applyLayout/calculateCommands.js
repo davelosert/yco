@@ -1,10 +1,10 @@
-import { createSpaceCommands } from './layoutFunctions/createSpaceCommands';
-import { createWindowCommands } from './layoutFunctions/createWindowCommands';
-import { getUnmanagedStrategy } from './layoutFunctions/planUnmanagedWindows';
-import { getUnmanagedWindows, hydrateWindowLayout } from './layoutFunctions/hydrateWindowLayout';
-import { countSpacesPerDisplay, planSpaces } from './layoutFunctions/planSpaces';
+const { createSpaceCommands } = require('./layoutFunctions/createSpaceCommands');
+const { createWindowCommands } = require('./layoutFunctions/createWindowCommands');
+const { getUnmanagedStrategy } = require('./layoutFunctions/planUnmanagedWindows');
+const { getUnmanagedWindows, hydrateWindowLayout } = require('./layoutFunctions/hydrateWindowLayout');
+const { countSpacesPerDisplay, planSpaces } = require('./layoutFunctions/planSpaces');
 
-export const calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
+exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
   let hydratedWindowLayout = hydrateWindowLayout({
     actualWindows,
     plannedWindowSetup: layoutConfig.spaces

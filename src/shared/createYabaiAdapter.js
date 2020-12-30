@@ -1,4 +1,4 @@
-export const createYabaiAdapter = (cmdExec) => ({
+exports.createYabaiAdapter = (cmdExec) => ({
   query: async (cmd) => {
     const cmdResult = await cmdExec(cmd);
     return JSON.parse(cmdResult);

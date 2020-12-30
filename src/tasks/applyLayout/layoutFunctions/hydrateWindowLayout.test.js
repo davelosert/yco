@@ -1,5 +1,5 @@
-import { describe } from 'riteway';
-import { getUnmanagedWindows, hydrateWindowLayout } from './hydrateWindowLayout';
+const { describe } = require('riteway');
+const { getUnmanagedWindows, hydrateWindowLayout } = require('./hydrateWindowLayout');
 
 describe('hydrateWindowLayout()', async assert => {
   const testApp = { id: 1, app: 'TestApp', display: 1, space: 1 };

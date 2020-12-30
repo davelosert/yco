@@ -1,11 +1,11 @@
-import { applyLayout } from '../tasks/applyLayout';
-import { buntstift } from 'buntstift';
-import { getConfig } from '../shared/getConfig';
-import { globalOptions } from './globalOptions';
-import { withChildProcessExec } from '../shared/withChildProcessExec';
-import { createYabaiAdapter } from '../shared/createYabaiAdapter';
+const { applyLayout } = require('../tasks/applyLayout');
+const { buntstift } = require('buntstift');
+const { getConfig } = require('../shared/getConfig');
+const { globalOptions } = require('./globalOptions');
+const { withChildProcessExec } = require('../shared/withChildProcessExec');
+const { createYabaiAdapter } = require('../shared/createYabaiAdapter');
 
-export const applyLayoutCommand = {
+exports.applyLayoutCommand = {
   name: 'apply-layout',
   description: 'Move windows to preconfigured spaces according to a given layout.',
   remarks: 'yco <command-name> [--flag...]',

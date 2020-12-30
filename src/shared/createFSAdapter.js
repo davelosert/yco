@@ -1,8 +1,8 @@
-import { promises } from 'fs';
+const { promises } = require('fs');
 
 const { appendFile, mkdir, readFile, writeFile } = promises;
 
-export const createFSAdapter = () => ({
+exports.createFSAdapter = () => ({
   appendFile,
   readFile,
   mkdir,

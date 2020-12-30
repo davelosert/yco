@@ -1,5 +1,5 @@
-import { flatten, sum, times } from 'ramda';
-import { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } from '../../../shared/yabaiComands';
+const { flatten, sum, times } = require('ramda');
+const { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } = require('../../../shared/yabaiComands');
 
 const getDisplayNumberFoIndex = displayIndex => displayIndex + 1;
 const generateCreateSpaces = (spaceDiff, displayIndex) => [
@@ -10,7 +10,7 @@ const generateCreateSpaces = (spaceDiff, displayIndex) => [
 const noActionNeeded = spaceDiff => spaceDiff === 0;
 const spaceCreationNeeded = spaceDiff => spaceDiff >= 1;
 
-export const createSpaceCommands = ({ spacesPlan, spacesCount }) => {
+exports.createSpaceCommands = ({ spacesPlan, spacesCount }) => {
 
   const commandsArray = spacesPlan.map((spaceDiff, displayIndex) => {
     if (noActionNeeded(spaceDiff)) {

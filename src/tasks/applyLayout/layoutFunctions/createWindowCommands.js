@@ -1,5 +1,5 @@
-import { addIndex, pipe, reduce, sum, take, unnest } from 'ramda';
-import { generateMoveWindowToSpace } from '../../../shared/yabaiComands';
+const { addIndex, pipe, reduce, sum, take, unnest } = require('ramda');
+const { generateMoveWindowToSpace } = require('../../../shared/yabaiComands');
 
 const reduceIndexed = addIndex(reduce);
 
@@ -9,7 +9,7 @@ const getInsertedOrRemovedSpaces = (display, spacePlan) => pipe(
   sum
 )(spacePlan);
 
-export const createWindowCommands = ({ desiredWindowLayout, spacesPlan }) => pipe(
+exports.createWindowCommands = ({ desiredWindowLayout, spacesPlan }) => pipe(
   unnest,
   reduceIndexed((commands, windows, targetSpaceIndex) => {
     windows.forEach(window => {
