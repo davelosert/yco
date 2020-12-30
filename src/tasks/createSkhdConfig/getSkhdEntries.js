@@ -1,5 +1,5 @@
-import { createSkhdMode } from './createSkhdMode';
-import { mapObjIndexed, pipe, values } from 'ramda';
+const { createSkhdMode } = require('./createSkhdMode');
+const { mapObjIndexed, pipe, values } = require('ramda');
 
 
 const convertLayoutsToSkhdEntries = pipe(
@@ -10,7 +10,7 @@ const convertLayoutsToSkhdEntries = pipe(
   values
 );
 
-export const getSkhdEntries = ({ ycoConfig }) => {
+exports.getSkhdEntries = ({ ycoConfig }) => {
   let entries = [];
 
   if (ycoConfig.layouts) {

@@ -1,5 +1,5 @@
-import { describe } from 'riteway';
-import { createWindowCommands } from './createWindowCommands';
+const { describe } = require('riteway');
+const { createWindowCommands } = require('./createWindowCommands');
 
 describe('createWindowComands()', async assert => {
   const testApp = { id: 1, app: 'TestApp', display: 1, space: 1 };

@@ -1,11 +1,11 @@
-import path from 'path';
-import { createFSAdapter } from '../../shared/createFSAdapter';
-import { getSkhdEntries } from './getSkhdEntries';
+const path = require('path');
+const { createFSAdapter } = require('../../shared/createFSAdapter');
+const { getSkhdEntries } = require('./getSkhdEntries');
 
 
 const ycoConfName = 'yco.skhd.conf';
 
-export const createSkhdConfig = async ({ ycoConfig, fs = createFSAdapter() }) => {
+exports.createSkhdConfig = async ({ ycoConfig, fs = createFSAdapter() }) => {
   const ycoSkhdConfPath = path.resolve(process.env.HOME, '.config', 'yabai');
   await fs.mkdir(ycoSkhdConfPath, { recursive: true });
 

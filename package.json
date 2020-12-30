@@ -7,8 +7,9 @@
     "yco": "src/bin/yco.js"
   },
   "scripts": {
+    "start": "yco --help",
     "lint": "eslint src/ tests/",
-    "test": "riteway -r esm 'src/**/*.test.js' | tap-nirvana",
+    "test": "riteway 'src/**/*.test.js' | tap-nirvana",
     "test:ci": "npm run test && npm run test:integration",
     "test:integration": "mocha 'tests/integration/**/*.test.js'",
     "test:watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
@@ -16,7 +17,6 @@
   "dependencies": {
     "buntstift": "4.0.17",
     "command-line-interface": "3.6.15",
-    "esm": "3.2.25",
     "ramda": "0.27.1"
   },
   "devDependencies": {

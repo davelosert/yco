@@ -1,5 +1,5 @@
-import { describe } from 'riteway';
-import { planSpaces } from './planSpaces';
+const { describe } = require('riteway');
+const { planSpaces } = require('./planSpaces');
 
 describe('planSpaces()', async assert => {
   assert({

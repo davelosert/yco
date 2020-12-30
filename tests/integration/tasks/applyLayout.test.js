@@ -1,6 +1,6 @@
-import assert from 'assert';
-import { applyLayout } from '../../../src/tasks/applyLayout';
-import { allSpaces, allWindows } from '../../../src/shared/yabaiComands';
+const assert = require('assert');
+const { applyLayout } = require('../../../src/tasks/applyLayout');
+const { allSpaces, allWindows } = require('../../../src/shared/yabaiComands');
 
 suite('task: applyLayout()', () => {
   const createFakeYabaiQuery = ({ spacesResult, windowsResult }) => {

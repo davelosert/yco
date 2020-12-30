@@ -1,5 +1,5 @@
-import { createSkhdMode } from './createSkhdMode';
-import { describe } from 'riteway';
+const { createSkhdMode } = require('./createSkhdMode');
+const { describe } = require('riteway');
 
 
 describe('createSkhdMode()', async assert => {

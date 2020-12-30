@@ -1,5 +1,5 @@
-import { describe } from 'riteway';
-import { createSpaceCommands } from './createSpaceCommands';
+const { describe } = require('riteway');
+const { createSpaceCommands } = require('./createSpaceCommands');
 
 describe('createSpaceCommands()', async assert => {
   const yabaiCreateSpace = 'yabai -m space --create';
@@ -8,7 +8,7 @@ describe('createSpaceCommands()', async assert => {
   assert({
     given: 'no space to create',
     should: 'return an empty commands array',
-   actual: createSpaceCommands({ spacesPlan: [0], spacesCount: [1] }),
+    actual: createSpaceCommands({ spacesPlan: [0], spacesCount: [1] }),
     expected: [],
   });
 

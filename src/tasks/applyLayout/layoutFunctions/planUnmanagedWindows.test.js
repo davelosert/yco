@@ -1,5 +1,5 @@
-import { describe } from 'riteway';
-import { getUnmanagedStrategy } from './planUnmanagedWindows';
+const { describe } = require('riteway');
+const { getUnmanagedStrategy } = require('./planUnmanagedWindows');
 
 const desiredLayout = [
   [['Managed App']]

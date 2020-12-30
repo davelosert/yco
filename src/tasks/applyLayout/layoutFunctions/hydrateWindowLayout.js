@@ -1,8 +1,8 @@
-import { flatten, map, prop, pipe } from 'ramda';
+const { flatten, map, prop, pipe } = require('ramda');
 
 
 const getWindowTitle = window => window.app;
-export const hydrateWindowLayout = ({ plannedWindowSetup, actualWindows }) =>
+exports.hydrateWindowLayout = ({ plannedWindowSetup, actualWindows }) =>
   plannedWindowSetup.map(displayLayout =>
     displayLayout.map((spacesLayout) =>
       spacesLayout.reduce((hydratedWindowLayout, windowLayout) =>
@@ -17,7 +17,7 @@ const getAllIdsFromFlattened = pipe(
   flatten,
   map(prop('id'))
 );
-export const getUnmanagedWindows = ({ hydratedWindowLayout, actualWindows: allWindows }) => {
+exports.getUnmanagedWindows = ({ hydratedWindowLayout, actualWindows: allWindows }) => {
   const managedWindowIds = getAllIdsFromFlattened(hydratedWindowLayout);
   return allWindows.filter(window => !managedWindowIds.includes(window.id));
 };

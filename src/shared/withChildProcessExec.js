@@ -1,5 +1,5 @@
-import * as childProcess from 'child_process';
-import * as util from 'util';
+const childProcess = require('child_process');
+const util = require('util');
 
 const execRaw = util.promisify(childProcess.exec);
 
@@ -12,4 +12,4 @@ const execute = async function (cmd) {
   return result.stdout;
 };
 
-export const withChildProcessExec = (func) => func(execute);
+exports.withChildProcessExec = (func) => func(execute);
