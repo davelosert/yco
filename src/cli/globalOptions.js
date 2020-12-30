@@ -7,7 +7,7 @@ exports.globalOptions = [
   },
   {
     name: 'config',
-    description: 'Path to the yc configuration file. Defaults to ~/.config/yabai/yco.config.json',
+    description: 'Path to the yco configuration file. Defaults to ~/.config/yabai/yco.config.json',
     type: 'string',
     alias: 'c'
   }
