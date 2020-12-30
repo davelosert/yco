@@ -4,7 +4,7 @@
 
 ## Idea
 
-With this cli-tool, I want to make working with yabai, skhd and ubersicht easier by providing a single configuration file in combination with powerful CLI Commands that add some logic on top of yabai - for example predefined window-layouts that can be activated by a single hotkey.
+With this cli-tool, I want to make working with [yabai](https://github.com/koekeishiya/yabai), [skhd](https://github.com/koekeishiya/skhd) and [Übersicht](https://github.com/felixhageloh/uebersicht) easier by providing a single configuration file in combination with powerful CLI Commands that add some logic on top of yabai - for example predefined window-layouts that can be activated by a single hotkey.
 
 ## How to run
 
@@ -23,12 +23,16 @@ npx yco apply-layout --help
 
 ### Install globally
 
-You can also install yco globaly and then use it right away:
+You can also install yco globaly and then use it's bin without `npx`:
 
 ```shell
 npm install -g yco
 yco --help
 ```
+
+### Requirements
+
+You need to have at least [yabai](https://github.com/koekeishiya/yabai) and [skhd](https://github.com/koekeishiya/skhd) installed.
 
 ## YCO Configuration
 

@@ -8,7 +8,13 @@ const yco = {
   name: 'yco',
   description: 'Make Yabai and SKHD Configuration easy with a single tool.',
   optionDefinitions: [
-    ...globalOptions
+    ...globalOptions,
+    {
+      name: 'version',
+      description: 'Print the current version of yco to the console.',
+      type: 'boolean',
+      alias: 'v'
+    }
   ],
 
   subcommands: {
@@ -16,7 +22,13 @@ const yco = {
     [createConfigsCommand.name]: createConfigsCommand
   },
 
-  async handle({ getUsage, ancestors }) {
+  async handle({ options, getUsage, ancestors }) {
+    if (options.version) {
+      buntstift.info(require('../../package.json').version);
+      process.exit(0);
+    }
+
+
     const subCommandName = await buntstift.select('Select Subcommand', Object.values(this.subcommands).map(command => command.name));
 
     if (subCommandName === 'help') {
