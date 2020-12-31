@@ -2,6 +2,12 @@ const { generateFocusSpaceCommand, generateFocusWindowCommand } = require('../..
 const { isEmpty } = require('ramda');
 
 const isFocused = window => window.focused === 1;
+const byId = (windowA, windowB) => {
+  if (windowA.id < windowB.id) return -1;
+  if (windowA.id > windowB.id) return 1;
+  if (windowA.id === windowB.id) return 0;
+};
+
 const noOrOnlyOneFocused = matchingWindows =>
   isEmpty(matchingWindows)
   || (matchingWindows.length === 1 && isFocused(matchingWindows[0]));
@@ -15,17 +21,19 @@ exports.createSwitchFocusCommands = ({ actualWindows, windowToFocus }) => {
     return [];
   }
 
-  const result = matchingWindows.reduce((status, currentWindow) => {
-    if (isFocused(currentWindow)) {
-      return { ...status, focusNextMatch: true };
-    }
+  const result = matchingWindows
+    .sort(byId)
+    .reduce((status, currentWindow) => {
+      if (isFocused(currentWindow)) {
+        return { ...status, focusNextMatch: true };
+      }
 
-    if (status.focusNextMatch) {
-      return { focusNextMatch: false, windowToFocus: currentWindow };
-    }
+      if (status.focusNextMatch) {
+        return { focusNextMatch: false, windowToFocus: currentWindow };
+      }
 
-    return status;
-  }, { focusNextMatch: true, windowToFocus: null });
+      return status;
+    }, { focusNextMatch: true, windowToFocus: null });
 
   const focusedSpace = getCurrentFocusedSpace(actualWindows);
   const foundWindow = result.windowToFocus;
