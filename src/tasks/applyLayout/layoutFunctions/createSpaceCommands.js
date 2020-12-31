@@ -1,5 +1,5 @@
 const { flatten, sum, times } = require('ramda');
-const { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } = require('../../../shared/yabaiComands');
+const { generateFocusDisplayCommand, generateCreateCommands, generateDestroyCommands } = require('../../../shared/yabaiCommands');
 
 const getDisplayNumberFoIndex = displayIndex => displayIndex + 1;
 const generateCreateSpaces = (spaceDiff, displayIndex) => [

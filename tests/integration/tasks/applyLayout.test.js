@@ -1,6 +1,6 @@
 const assert = require('assert');
 const { applyLayout } = require('../../../src/tasks/applyLayout');
-const { allSpaces, allWindows } = require('../../../src/shared/yabaiComands');
+const { allSpaces, allWindows } = require('../../../src/shared/yabaiCommands');
 
 suite('task: applyLayout()', () => {
   const createFakeYabaiQuery = ({ spacesResult, windowsResult }) => {
@@ -26,10 +26,14 @@ suite('task: applyLayout()', () => {
     const spacesResult = [{ display: 1, index: 1, windows: [100] }];
     const windowsResult = [{ app: 'OnlyApp', display: 1, space: 1, id: 100 }];
 
+    let executedCommands = [];
     const yabaiAdapterMock = {
       query: createFakeYabaiQuery({ spacesResult, windowsResult }),
       apply: async (cmds) => {
-        assert.deepStrictEqual(cmds, []);
+        executedCommands = [
+          ...executedCommands,
+          ...cmds
+        ];
       }
     };
 
@@ -37,6 +41,8 @@ suite('task: applyLayout()', () => {
       layoutConfig,
       yabaiAdapter: yabaiAdapterMock
     });
+
+    assert.deepStrictEqual(executedCommands, []);
   });
 
   test('executes only necessary commands to create spaces and move windows', async () => {
@@ -58,14 +64,14 @@ suite('task: applyLayout()', () => {
       { display: 1, index: 2, windows: [200] },
     ];
 
+    let executedCommands = [];
     const yabaiAdapterMock = {
-      query: createFakeYabaiQuery({ windowsResult, spacesResult }),
+      query: createFakeYabaiQuery({ spacesResult, windowsResult }),
       apply: async (cmds) => {
-        assert.deepStrictEqual(cmds, [
-          'yabai -m display --focus 1',
-          'yabai -m space --create',
-          'yabai -m window 300 --space 3'
-        ]);
+        executedCommands = [
+          ...executedCommands,
+          ...cmds
+        ];
       }
     };
 
@@ -73,6 +79,12 @@ suite('task: applyLayout()', () => {
       layoutConfig,
       yabaiAdapter: yabaiAdapterMock
     });
+
+    assert.deepStrictEqual(executedCommands, [
+      'yabai -m display --focus 1',
+      'yabai -m space --create',
+      'yabai -m window 300 --space 3'
+    ]);
   });
 
   test('executes commands to move unmanaged windows to last space on main display with option "allInOne"', async () => {
@@ -100,15 +112,14 @@ suite('task: applyLayout()', () => {
       { display: 2, index: 2, windows: [200, 201] },
     ];
 
+    let executedCommands = [];
     const yabaiAdapterMock = {
-      query: createFakeYabaiQuery({ windowsResult, spacesResult }),
+      query: createFakeYabaiQuery({ spacesResult, windowsResult }),
       apply: async (cmds) => {
-        assert.deepStrictEqual(cmds, [
-          'yabai -m display --focus 1',
-          'yabai -m space --create',
-          'yabai -m window 101 --space 2',
-          'yabai -m window 201 --space 2'
-        ]);
+        executedCommands = [
+          ...executedCommands,
+          ...cmds
+        ];
       }
     };
 
@@ -116,5 +127,12 @@ suite('task: applyLayout()', () => {
       layoutConfig,
       yabaiAdapter: yabaiAdapterMock
     });
+
+    assert.deepStrictEqual(executedCommands, [
+      'yabai -m display --focus 1',
+      'yabai -m space --create',
+      'yabai -m window 101 --space 2',
+      'yabai -m window 201 --space 2'
+    ]);
   });
 });
