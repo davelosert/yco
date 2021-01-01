@@ -43,7 +43,7 @@ exports.switchFocusCommand = {
       appToFocus = await buntstift.select('Which app do you want to focus?', appOptions);
     }
 
-    switchFocus({
+    await switchFocus({
       windowQuery: {
         app: appToFocus
       },
