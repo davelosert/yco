@@ -7,7 +7,7 @@ const { uniq } = require('ramda');
 
 exports.switchFocusCommand = {
   name: 'switch-focus',
-  description: 'Move windows to preconfigured spaces according to a given layout.',
+  description: 'Switch the focus to the specified app or to the next window of the app (if multiple windows of the same app are found)',
   remarks: 'yco <command-name> [--flag...]',
   optionDefinitions: [
     {

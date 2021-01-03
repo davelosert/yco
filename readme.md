@@ -65,6 +65,46 @@ Create all configs for the other tools (`yabai`, `skhd`, `ubersicht`) from your 
 Currently, this only adds a `skhd`-config creating a separate file `~/.config/yabai/yco.skhd.conf` and loading it within `~/.skhdrc`.
 The `yco.skhd.conf` is populated with a mode-command that lets you switch between your configured layouts (see [apply-layout](###apply-layout)) with two shortcuts.
 
+### switch-focus
+
+```shell
+yco switch-focus --app "Firefox"
+# Alternatively, use the more performant method
+yco-switch-focus "Firefox"
+```
+
+Switch the focus to the next window of the specified app.
+
+If the app is on a different space, focus will be switched without the usual Mac OS X animations (so no distractions).
+
+If there is more than one window of the app, it will focus them subsequently, ordered by their yabai id, so you can tab through them.
+
+#### Configure SwitchFocus Hotkeys
+
+You can configure SKHD-Hotkeys in your `yco.config.json`:
+
+```json
+{
+  "switchFocus": [
+    {
+      "triggerKey": "cmd - 1",
+      "app": "Firefox"
+    },
+    {
+      "triggerKey": "cmd - 2",
+      "app": "Code"
+    }
+  ]
+}
+```
+
+- **app**: Needs to match the `app`-Field of the yabai-window object (use `yabai -m query --windows` to get them)
+- **triggerKey**: Can be any valid SKHD-Keysm.
+
+When applied with `yco create-configs`, this will generate the necessary SKHD-Configs to focus the windows when pressing they triggerKey(s).
+
+E.g. in the example above, pressing `cmd - 1` will focs the Firefox Browser.
+
 ### apply-layout
 
 ```shell
@@ -73,7 +113,7 @@ yco apply-layout --name nameOfLayout
 
 Apply a preconfigured layout. A layout defines which windows are supposed to be in which spaces. The command will use `yabai` to compare the current location of all windows and move them to the configured spaces accordingly while creating all necessary an deleting all unused spaces.
 
-#### Layout Configuration
+#### Configure Layout Modes
 
 A real-world layout configuration might look like this:
 
