@@ -4,7 +4,8 @@
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "author": "David Losert",
   "bin": {
-    "yco": "src/bin/yco.js"
+    "yco": "src/bin/yco.js",
+    "yco-switch-focus": "src/bin/yco-switch-focus.js"
   },
   "scripts": {
     "start": "yco --help",

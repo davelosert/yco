@@ -12,6 +12,10 @@ exports.generateDestroyCommands = curry(
 
 exports.generateCreateCommands = times(always(yabaiCreateSpace));
 
+exports.generateFocusWindowCommand = windowId => `yabai -m window --focus ${windowId}`;
+exports.generateFocusSpaceCommand = spaceIndex => `yabai -m space --focus ${spaceIndex}`;
 exports.generateFocusDisplayCommand = displayNumber => `yabai -m display --focus ${displayNumber}`;
+
+
 
 exports.generateMoveWindowToSpace = (windowId, targetSpaceIndex) => `yabai -m window ${windowId} --space ${targetSpaceIndex}`;

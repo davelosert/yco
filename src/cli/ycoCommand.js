@@ -1,8 +1,9 @@
 const { applyLayoutCommand } = require('./applyLayoutCommand');
-const { createConfigsCommand } = require('./createConfigsCommand');
 const { buntstift } = require('buntstift');
-const { runCli } = require('command-line-interface');
+const { createConfigsCommand } = require('./createConfigsCommand');
 const { globalOptions } = require('../cli/globalOptions');
+const { runCli } = require('command-line-interface');
+const { switchFocusCommand } = require('./switchFocusCommand');
 
 const yco = {
   name: 'yco',
@@ -19,7 +20,8 @@ const yco = {
 
   subcommands: {
     [applyLayoutCommand.name]: applyLayoutCommand,
-    [createConfigsCommand.name]: createConfigsCommand
+    [createConfigsCommand.name]: createConfigsCommand,
+    [switchFocusCommand.name]: switchFocusCommand
   },
 
   async handle({ options, getUsage, ancestors }) {

@@ -1,5 +1,5 @@
 const { addIndex, pipe, reduce, sum, take, unnest } = require('ramda');
-const { generateMoveWindowToSpace } = require('../../../shared/yabaiComands');
+const { generateMoveWindowToSpace } = require('../../../shared/yabaiCommands');
 
 const reduceIndexed = addIndex(reduce);
 

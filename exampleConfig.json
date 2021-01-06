@@ -1,4 +1,14 @@
 {
+  "switchFocus": [
+    { "triggerKey": "cmd - 1", "app": "Code" },
+    { "triggerKey": "cmd - 2", "app": "Firefox" },
+    { "triggerKey": "cmd - 3", "app": "iTerm2" },
+    { "triggerKey": "cmd - 4", "app": "Google Chrome" },
+    { "triggerKey": "cmd - 5", "app": "Slack" },
+    { "triggerKey": "cmd - 6", "app": "Microsoft Outlook" },
+    { "triggerKey": "cmd - 7", "app": "Microsoft Teams" },
+    { "triggerKey": "cmd - 8", "app": "Spotify" }
+  ],
   "layoutModeTriggerKey": "alt - s",
   "layouts": {
     "monitor": {
@@ -24,7 +34,6 @@
         [],
         [["Code"], ["Firefox"], ["iTerm2"]]
       ]
-
     }
   }
 }

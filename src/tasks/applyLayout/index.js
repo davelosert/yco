@@ -1,5 +1,5 @@
 const { calculateCommands } = require('./calculateCommands');
-const { allSpaces, allWindows } = require('../../shared/yabaiComands');
+const { allSpaces, allWindows } = require('../../shared/yabaiCommands');
 
 exports.applyLayout = async ({ layoutConfig, yabaiAdapter }) => {
   const actualSpaces = await yabaiAdapter.query(allSpaces());
