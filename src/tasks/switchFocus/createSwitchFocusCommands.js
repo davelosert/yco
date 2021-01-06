@@ -12,9 +12,9 @@ const noOrOnlyOneFocused = matchingWindows =>
   isEmpty(matchingWindows)
   || (matchingWindows.length === 1 && isFocused(matchingWindows[0]));
 
-const getCurrentFocusedSpace = windows => windows.find(isFocused).space;
+const getCurrentFocusedSpace = spaces => spaces.find(isFocused).index;
 
-exports.createSwitchFocusCommands = ({ actualWindows, windowToFocus }) => {
+exports.createSwitchFocusCommands = ({ actualWindows, actualSpaces, windowToFocus }) => {
   const matchingWindows = actualWindows.filter((yabaiWindow) => yabaiWindow.app === windowToFocus.app);
 
   if (noOrOnlyOneFocused(matchingWindows)) {
@@ -35,7 +35,7 @@ exports.createSwitchFocusCommands = ({ actualWindows, windowToFocus }) => {
       return status;
     }, { focusNextMatch: true, windowToFocus: null });
 
-  const focusedSpace = getCurrentFocusedSpace(actualWindows);
+  const focusedSpace = getCurrentFocusedSpace(actualSpaces);
   const foundWindow = result.windowToFocus;
   if (focusedSpace === foundWindow.space) {
     return [
