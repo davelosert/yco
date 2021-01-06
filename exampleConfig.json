@@ -10,8 +10,9 @@
     { "triggerKey": "cmd - 8", "app": "Spotify" }
   ],
   "layoutModeTriggerKey": "alt - s",
-  "layouts": {
-    "monitor": {
+  "layouts": [
+    {
+      "name": "monitor",
       "triggerKey": "m",
       "nonManaged": "allInOneSpace",
       "spaces": [[
@@ -20,14 +21,16 @@
         ["Microsoft Teams", "Spotify"]
       ]]
     },
-    "laptop": {
+    {
+      "name": "laptop",
       "triggerKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
           ["Code"], ["Firefox"], ["iTerm2"], ["Google Chrome", "Toggl Track"], ["Slack"], ["Microsoft Outlook"]
         ]]
     },
-    "pairing": {
+    {
+      "name": "pairing",
       "triggerKey": "p",
       "nonManaged" : "leaveUntouched",
       "spaces": [
@@ -35,5 +38,5 @@
         [["Code"], ["Firefox"], ["iTerm2"]]
       ]
     }
-  }
+  ]
 }
