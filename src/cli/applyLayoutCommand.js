@@ -27,7 +27,7 @@ exports.applyLayoutCommand = {
       desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(config.layouts));
     }
 
-    const layoutConfig = config.layouts[desiredLayoutName];
+    const layoutConfig = config.layouts.find(layout => layout.name === desiredLayoutName);
     if (!layoutConfig) {
       buntstift.error(`Layout with name '${desiredLayoutName}' does not exist in your config.`);
       process.exit(1);

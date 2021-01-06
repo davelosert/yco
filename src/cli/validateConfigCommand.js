@@ -17,18 +17,16 @@ exports.validateConfigCommand = {
     const ajv = new Ajv({ allErrors: true });
     const schema = require('../schemas/YcoConfigSchema.json');
     const validate = ajv.compile(schema);
-
     const valid = validate(config);
 
     if (!valid) {
       buntstift.error('Config is invalid! The following errors occured: ');
-      validate.errors.map(error => {
-        buntstift.error(`${error.dataPath} ${error.message}`, {});
+      validate.errors.forEach(ajvError => {
+        buntstift.error(`${ajvError.dataPath} ${ajvError.message}`);
       });
       process.exit(1);
     }
 
-    buntstift.info('Config is valid!');
-
+    buntstift.success('Config is valid!');
   }
 };

@@ -28,7 +28,6 @@
     },
     "layouts": {
       "type": "array",
-      "additionalItems": false,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -50,15 +49,12 @@
           "spaces": {
             "type": "array",
             "description": "One array for each display of your setup.",
-            "additionalItems": false,
             "items": {
               "type": "array",
               "description": "One array for each space you'd like to configure for this display.",
-              "additionalItems": false,
               "items": {
                 "type": "array",
                 "description": "Array of all windows you'd like to configure for the space.",
-                "additionalItems": false,
                 "items": {
                   "type": "string",
                   "description": "App to be moved to this space of this display (needs to match with the 'app' property of the yabai-window)."
@@ -68,11 +64,6 @@
           }
         }
       }
-    },
-    "dependencies": {
-      "layouts": [
-        "layoutModeTriggerKey"
-      ]
     }
   }
 }

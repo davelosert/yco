@@ -1,29 +1,42 @@
 {
-  "layouts": {
-    "monitor": {
-      "command": "m",
-      "nonManaged": "allInOneSpace",
+  "switchFocus": [
+    { "triggerKey": "cmd - 1", "app": "Code" },
+    { "triggerKey": "cmd - 2", "app": "Firefox" },
+    { "triggerKey": "cmd - 3", "app": "iTerm2" },
+    { "triggerKey": "cmd - 4", "app": "Google Chrome" },
+    { "triggerKey": "cmd - 5", "app": "Slack" },
+    { "triggerKey": "cmd - 6", "app": "Microsoft Outlook" },
+    { "triggerKey": "cmd - 7", "app": "Microsoft Teams" },
+    { "triggerKey": "cmd - 8", "app": "Spotify" }
+  ],
+  "layoutModeTriggerKey": "alt - s",
+  "layouts": [
+    {
+      "name": "monitor",
+      "triggerKey": "m",
+      "nonManaged": "allInOneSpa2ce",
       "spaces": [[
         ["iTerm2", "Code", "Firefox"],
         ["Toggl Track", "Google Chrome", "Slack", "Microsoft Outlook"],
         ["Microsoft Teams", "Spotify"]
       ]]
     },
-    "laptop": {
-      "command": "l",
+    {
+      "name": "laptop",
+      "triggerKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
           ["Code"], ["Firefox"], ["iTerm2"], ["Google Chrome", "Toggl Track"], ["Slack"], ["Microsoft Outlook"]
         ]]
     },
-    "pairing": {
-      "command": "p",
+    {
+      "name": "pairing",
+      "triggerKey": "p",
       "nonManaged" : "leaveUntouched",
       "spaces": [
         [],
         [["Code"], ["Firefox"], ["iTerm2"]]
       ]
-
     }
-  }
+  ]
 }
