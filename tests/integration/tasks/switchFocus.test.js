@@ -1,25 +1,19 @@
-const { allWindows } = require('../../../src/shared/yabaiCommands');
 const { switchFocus } = require('../../../src/tasks/switchFocus');
 const assert = require('assert');
+const { createFakeYabaiQuery } = require('../../helpers/createFakeYabaiQuery');
 
 suite('task: switchFocus()', () => {
-  const createFakeYabaiQuery = (windowsResult) => {
-    return async (cmd) => {
-      if (cmd === allWindows()) {
-        return windowsResult;
-      }
-    };
-  };
-
   test('focuses queried window if not focused but on same space', async () => {
     const windowsResult = [
       { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'App in Focus', display: 2, space: 1, id: 200, focused: 1 }
     ];
 
+    const spacesResult = [{ index: 1, focused: 1 }];
+
     let executedCommands = [];
     const yabaiAdapterMock = {
-      query: createFakeYabaiQuery(windowsResult),
+      query: createFakeYabaiQuery({ windowsResult, spacesResult }),
       apply: async (cmds) => {
         executedCommands = [
           ...executedCommands,
@@ -44,9 +38,11 @@ suite('task: switchFocus()', () => {
       { app: 'App in Focus', display: 2, space: 2, id: 200, focused: 1 }
     ];
 
+    const spacesResult = [{ index: 1, focused: 0 }, { index: 2, focused: 1 }];
+
     let executedCommands = [];
     const yabaiAdapterMock = {
-      query: createFakeYabaiQuery(windowsResult),
+      query: createFakeYabaiQuery({ windowsResult, spacesResult }),
       apply: async (cmds) => {
         executedCommands = [
           ...executedCommands,
@@ -74,9 +70,11 @@ suite('task: switchFocus()', () => {
       { app: 'App to Focus', display: 1, space: 2, id: 300, focused: 0 },
     ];
 
+    const spacesResult = [{ index: 1, focused: 1 }, { index: 2, focused: 0 }];
+
     let executedCommands = [];
     const yabaiAdapterMock = {
-      query: createFakeYabaiQuery(windowsResult),
+      query: createFakeYabaiQuery({ windowsResult, spacesResult }),
       apply: async (cmds) => {
         executedCommands = [...cmds];
       }

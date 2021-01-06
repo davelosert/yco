@@ -1,20 +1,8 @@
 const assert = require('assert');
 const { applyLayout } = require('../../../src/tasks/applyLayout');
-const { allSpaces, allWindows } = require('../../../src/shared/yabaiCommands');
+const { createFakeYabaiQuery } = require('../../helpers/createFakeYabaiQuery');
 
 suite('task: applyLayout()', () => {
-  const createFakeYabaiQuery = ({ spacesResult, windowsResult }) => {
-    return async (cmd) => {
-      if (cmd === allSpaces()) {
-        return spacesResult;
-      }
-
-      if (cmd === allWindows()) {
-        return windowsResult;
-      }
-    };
-  };
-
   test('executes no command if all windows are already in their correct position', async () => {
     const layoutConfig = {
       nonManaged: 'allInOwnSpace',
