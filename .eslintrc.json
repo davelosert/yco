@@ -8,6 +8,9 @@
     "ecmaVersion": 2019,
     "sourceType": "module"
   },
+  "plugins": [
+    "json-format"
+  ],
   "rules": {
     "no-tabs": "error",
     "space-before-blocks": "error",

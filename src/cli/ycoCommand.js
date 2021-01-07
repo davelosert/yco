@@ -4,6 +4,7 @@ const { createConfigsCommand } = require('./createConfigsCommand');
 const { globalOptions } = require('../cli/globalOptions');
 const { runCli } = require('command-line-interface');
 const { switchFocusCommand } = require('./switchFocusCommand');
+const { validateConfigCommand } = require('./validateConfigCommand');
 
 const yco = {
   name: 'yco',
@@ -21,7 +22,8 @@ const yco = {
   subcommands: {
     [applyLayoutCommand.name]: applyLayoutCommand,
     [createConfigsCommand.name]: createConfigsCommand,
-    [switchFocusCommand.name]: switchFocusCommand
+    [switchFocusCommand.name]: switchFocusCommand,
+    [validateConfigCommand.name]: validateConfigCommand
   },
 
   async handle({ options, getUsage, ancestors }) {

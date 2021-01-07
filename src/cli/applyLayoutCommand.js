@@ -20,14 +20,15 @@ exports.applyLayoutCommand = {
   ],
 
   async handle({ options }) {
-    const config = await getConfig({ configPath: options.config });
+    const configResult = await getConfig({ configPath: options.config });
+    const ycoConfig = configResult.content;
 
     let desiredLayoutName = options.name;
     if (!desiredLayoutName) {
-      desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(config.layouts));
+      desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(ycoConfig.layouts));
     }
 
-    const layoutConfig = config.layouts[desiredLayoutName];
+    const layoutConfig = ycoConfig.layouts.find(layout => layout.name === desiredLayoutName);
     if (!layoutConfig) {
       buntstift.error(`Layout with name '${desiredLayoutName}' does not exist in your config.`);
       process.exit(1);

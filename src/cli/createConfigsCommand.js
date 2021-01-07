@@ -12,7 +12,8 @@ exports.createConfigsCommand = {
   ],
 
   async handle({ options }) {
-    const ycoConfig = await getConfig({ configPath: options.config });
+    const configResult = await getConfig({ configPath: options.config });
+    const ycoConfig = configResult.content;
 
     const fsAdapter = createFSAdapter();
 

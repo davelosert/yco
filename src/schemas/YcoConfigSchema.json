@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/davelosert/yco/main/src/schemas/YcoConfigSchema.json",
+  "title": "YcoConfig",
+  "description": "A schema for the yco.config.json of the yco library.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The URL to the Yco Json Schema to enable autocompletion and validation in supported editors (e.g. VSCode)"
+    },
+    "switchFocus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "triggerKey": {
+            "description": "Hotkey in SKHD Format which will trigger the switch-focus command.",
+            "type": "string"
+          },
+          "app": {
+            "type": "string",
+            "description": "App to focus on hotkey-press (needs to match with the 'app' property of the yabai-window)."
+          }
+        }
+      }
+    },
+    "layoutModeTriggerKey": {
+      "type": "string",
+      "description": "Hotkey in SKHD Format which will trigger the apply-layout command."
+    },
+    "layouts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "triggerKey": {
+            "type": "string"
+          },
+          "nonManaged": {
+            "type": "string",
+            "enum": [
+              "allInOneSpace",
+              "allInOwnSpace",
+              "leaveUntouched"
+            ]
+          },
+          "spaces": {
+            "type": "array",
+            "description": "One array for each display of your setup.",
+            "items": {
+              "type": "array",
+              "description": "One array for each space you'd like to configure for this display.",
+              "items": {
+                "type": "array",
+                "description": "Array of all windows you'd like to configure for the space.",
+                "items": {
+                  "type": "string",
+                  "description": "App to be moved to this space of this display (needs to match with the 'app' property of the yabai-window)."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

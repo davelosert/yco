@@ -115,10 +115,10 @@ suite('task: createSkhdConfig()', () => {
 
       const ycoConfig = {
         layoutModeTriggerKey: 'alt - s',
-        layouts: {
-          layout1: { triggerKey: '1' },
-          layout2: { triggerKey: '2' }
-        }
+        layouts: [
+          { name: 'layout1', triggerKey: '1' },
+          { name: 'layout2', triggerKey: '2' }
+        ]
       };
 
       await createSkhdConfig({

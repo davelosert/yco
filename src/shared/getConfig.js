@@ -8,5 +8,8 @@ const getDefaultConf = () => {
 
 exports.getConfig = async ({ configPath = getDefaultConf() }) => {
   const rawConfig = await promises.readFile(configPath);
-  return JSON.parse(rawConfig);
+  return {
+    path: configPath,
+    content: JSON.parse(rawConfig)
+  };
 };
