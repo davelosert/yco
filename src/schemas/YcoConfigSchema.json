@@ -6,6 +6,10 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The URL to the Yco Json Schema to enable autocompletion and validation in supported editors (e.g. VSCode)"
+    },
     "switchFocus": {
       "type": "array",
       "items": {
