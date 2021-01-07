@@ -10,6 +10,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "triggerKey": {
             "description": "Hotkey in SKHD Format which will trigger the switch-focus command.",
