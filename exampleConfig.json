@@ -1,6 +1,7 @@
 {
+  "$schema": "https://raw.githubusercontent.com/davelosert/yco/main/src/schemas/YcoConfigSchema.json",
   "switchFocus": [
-    { "triggerKey": "cmd - 1", "app": "Code", "notvalid": true },
+    { "triggerKey": "cmd - 1", "app": "Code" },
     { "triggerKey": "cmd - 2", "app": "Firefox" },
     { "triggerKey": "cmd - 3", "app": "iTerm2" },
     { "triggerKey": "cmd - 4", "app": "Google Chrome" },
@@ -14,7 +15,7 @@
     {
       "name": "monitor",
       "triggerKey": "m",
-      "nonManaged": "allInOneSpace2",
+      "nonManaged": "allInOneSpace",
       "spaces": [[
         ["iTerm2", "Code", "Firefox"],
         ["Toggl Track", "Google Chrome", "Slack", "Microsoft Outlook"],
