@@ -16,7 +16,7 @@ exports.setupTestEnvironment = async ({ configSourcePath, defaultTarget = false 
   await copyFile(configSourcePath, path.resolve(targetPath, 'yco.config.json'));
   await copyFile(yabaiFakeBin(), path.resolve(tempDir, 'yabai'));
 
-  const preconfigfuredExecuteYco = async (cmd, yabaiResults) => {
+  const preconfigfuredExecuteYco = async (cmd, mockYabaiResults) => {
     const options = {
       env: {
         PATH: `${tempDir}:${process.env.PATH}`,
@@ -24,17 +24,21 @@ exports.setupTestEnvironment = async ({ configSourcePath, defaultTarget = false 
       }
     };
 
-    if (yabaiResults) {
-      options.env.QUERY_SPACES_RESULT = JSON.stringify(yabaiResults.spacesResult);
-      options.env.QUERY_WINDOWS_RESULT = JSON.stringify(yabaiResults.windowsResult);
+    if (mockYabaiResults) {
+      options.env.QUERY_SPACES_RESULT = JSON.stringify(mockYabaiResults.spacesResult);
+      options.env.QUERY_WINDOWS_RESULT = JSON.stringify(mockYabaiResults.windowsResult);
     }
 
     return await executeYco({ cmd, options });
   };
 
   const getYabaiLogs = async () => {
-    const rawData = await readFile(path.resolve(tempDir, 'yabai_calls.log'), 'utf-8');
-    return rawData.split('\n').filter(val => val !== '');
+    try {
+      const rawData = await readFile(path.resolve(tempDir, 'yabai_calls.log'), 'utf-8');
+      return rawData.split('\n').filter(val => val !== '');
+    } catch (err) {
+      return [];
+    }
   };
 
   return {

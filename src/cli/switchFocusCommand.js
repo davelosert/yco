@@ -31,8 +31,7 @@ exports.switchFocusCommand = {
     // If debug mode is enabled, overwrite apply-command and just print out stuff
     if (options.debug) {
       yabaiAdapter.apply = (cmds) => {
-        buntstift.info('The following commands would have been executed: ');
-        buntstift.newLine();
+        buntstift.info('The following commands would have been executed:');
         cmds.forEach(cmd => buntstift.list(cmd, { level: 1 }));
       };
     }
