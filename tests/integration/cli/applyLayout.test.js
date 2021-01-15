@@ -1,6 +1,6 @@
 const path = require('path');
 const { setupTestEnvironment } = require('../../helpers/setupTestEnvironment');
-const { allOf, assertThat, isEmpty, is, equalTo, containsString } = require('hamjest');
+const { assertThat, isEmpty, is, equalTo, containsString } = require('hamjest');
 const { withoutIndentSpaces } = require('../../helpers/withoutIndentSpaces');
 
 suite('yco apply-layout --name "Layout To apply"', () => {
@@ -207,16 +207,17 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       const yabaiLogs = await getYabaiLogs();
 
       assertThat(yabaiLogs, isEmpty());
-      assertThat(withoutIndentSpaces(output), allOf(
-        containsString('The following commands would have been executed:'),
+      assertThat(
+        withoutIndentSpaces(output),
         containsString(withoutIndentSpaces(`
+          The following commands would have been executed:
           ∙ yabai -m display --focus 1
           ∙ yabai -m space --create
           ∙ yabai -m space --create
           ∙ yabai -m window 200 --space 2
           ∙ yabai -m window 300 --space 3
-        `))
-      ));
+        `)
+        ));
     });
 
   });

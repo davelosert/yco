@@ -25,7 +25,7 @@ exports.applyLayoutCommand = {
 
     let desiredLayoutName = options.name;
     if (!desiredLayoutName) {
-      desiredLayoutName = await buntstift.select('Choose Layout to apply: ', Object.keys(ycoConfig.layouts));
+      desiredLayoutName = await buntstift.select('Choose Layout to apply:', Object.keys(ycoConfig.layouts));
     }
 
     const layoutConfig = ycoConfig.layouts.find(layout => layout.name === desiredLayoutName);
@@ -39,7 +39,7 @@ exports.applyLayoutCommand = {
     // If debug mode is enabled, overwrite apply-command and just print out stuff
     if (options.debug) {
       yabaiAdapter.apply = (cmds) => {
-        buntstift.info('The following commands would have been executed: ');
+        buntstift.info('The following commands would have been executed:');
         buntstift.newLine();
         cmds.forEach(cmd => buntstift.list(cmd, { level: 1 }));
       };
