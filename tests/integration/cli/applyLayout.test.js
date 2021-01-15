@@ -1,6 +1,7 @@
 const path = require('path');
 const { setupTestEnvironment } = require('../../helpers/setupTestEnvironment');
-const { assertThat, isEmpty, is, equalTo } = require('hamjest');
+const { allOf, assertThat, isEmpty, is, equalTo, containsString } = require('hamjest');
+const { withoutIndentSpaces } = require('../../helpers/withoutIndentSpaces');
 
 suite('yco apply-layout --name "Layout To apply"', () => {
   test('executes yabai commands to move windows to their configured spaces and creates those spaces if necessary.', async () => {
@@ -184,6 +185,40 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       'yabai -m window 300 --space 4',
       'yabai -m window 201 --space 5',
     ])));
+  });
+
+  suite.only('with "--debug"', () => {
+    test('only prints all commands to stdout without executing them', async () => {
+      const windowsResult = [
+        { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
+        { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },
+        { app: 'Firefox', display: 1, space: 1, id: 300, focused: 1 }
+      ];
+
+      const spacesResult = [{ index: 1, focused: 1, windows: [100, 200, 300] }];
+
+      const { executeYco, getYabaiLogs } = await setupTestEnvironment({
+        configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+        defaultTarget: true
+      });
+
+      const { output } = await executeYco('apply-layout --name laptop --debug', { windowsResult, spacesResult });
+
+      const yabaiLogs = await getYabaiLogs();
+
+      assertThat(yabaiLogs, isEmpty());
+      assertThat(withoutIndentSpaces(output), allOf(
+        containsString('The following commands would have been executed:'),
+        containsString(withoutIndentSpaces(`
+          ∙ yabai -m display --focus 1
+          ∙ yabai -m space --create
+          ∙ yabai -m space --create
+          ∙ yabai -m window 200 --space 2
+          ∙ yabai -m window 300 --space 3
+        `))
+      ));
+    });
+
   });
 
 
