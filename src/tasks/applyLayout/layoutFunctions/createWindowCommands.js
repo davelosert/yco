@@ -1,7 +1,5 @@
-const { addIndex, pipe, reduce, sum, take, unnest } = require('ramda');
+const { pipe, reduce, sum, take, unnest } = require('ramda');
 const { generateMoveWindowToSpace } = require('../../../shared/yabaiCommands');
-
-const reduceIndexed = addIndex(reduce);
 
 // const calculateSpaceDiff = (display, spacePlan) =>  
 const getInsertedOrRemovedSpaces = (display, spacePlan) => pipe(
@@ -9,14 +7,31 @@ const getInsertedOrRemovedSpaces = (display, spacePlan) => pipe(
   sum
 )(spacePlan);
 
+
+const attachTargetDisplayAndSpace = desiredWindowLayout => {
+  let absoluteSpaceCounter = 0;
+  return desiredWindowLayout.map((spaces, targetDisplayIndex) => {
+    return spaces.map((windows) => {
+      absoluteSpaceCounter++;
+      return windows.map(window => ({
+        ...window,
+        targetSpace: absoluteSpaceCounter,
+        targetDisplay: targetDisplayIndex + 1
+      }));
+    });
+  });
+};
+
+
 exports.createWindowCommands = ({ desiredWindowLayout, spacesPlan }) => pipe(
+  attachTargetDisplayAndSpace,
   unnest,
-  reduceIndexed((commands, windows, targetSpaceIndex) => {
+  reduce((commands, windows) => {
     windows.forEach(window => {
       const spacesDiff = getInsertedOrRemovedSpaces(window.display, spacesPlan);
       const anticipatedSourceSpace = window.space + spacesDiff;
-      if (anticipatedSourceSpace !== (targetSpaceIndex + 1)) {
-        commands.push(generateMoveWindowToSpace(window.id, targetSpaceIndex + 1));
+      if (anticipatedSourceSpace !== window.targetSpace || window.display !== window.targetDisplay) {
+        commands.push(generateMoveWindowToSpace(window.id, window.targetSpace));
       }
     });
     return commands;
