@@ -7,13 +7,16 @@ const { mkdir, copyFile, readFile } = fs.promises;
 
 const yabaiFakeBin = () => path.resolve(__dirname, 'yabaiFakeBin.sh');
 
-exports.setupTestEnvironment = async ({ configSourcePath, defaultTarget = false }) => {
-  const tempDir = await isolated();
+exports.setupTestEnvironment = async ({ configSourcePath, defaultTarget = false, insertFiles = [] }) => {
 
-  const targetPath = defaultTarget ? path.join(tempDir, '.config', 'yabai') : tempDir;
+  const tempDir = await isolated({
+    files: insertFiles
+  });
 
-  await mkdir(targetPath, { recursive: true });
-  await copyFile(configSourcePath, path.resolve(targetPath, 'yco.config.json'));
+  const configTargetPath = defaultTarget ? path.join(tempDir, '.config', 'yabai') : tempDir;
+
+  await mkdir(configTargetPath, { recursive: true });
+  await copyFile(configSourcePath, path.resolve(configTargetPath, 'yco.config.json'));
   await copyFile(yabaiFakeBin(), path.resolve(tempDir, 'yabai'));
 
   const preconfigfuredExecuteYco = async (cmd, mockYabaiResults) => {
@@ -44,7 +47,7 @@ exports.setupTestEnvironment = async ({ configSourcePath, defaultTarget = false 
   return {
     executeYco: preconfigfuredExecuteYco,
     tempDir,
-    targetPath,
+    configTargetPath,
     getYabaiLogs
   };
 };
