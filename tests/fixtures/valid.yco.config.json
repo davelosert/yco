@@ -20,7 +20,7 @@
       "triggerKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
-          ["Code"], ["Firefox"], ["iTerm2"]
+          ["iTerm2"], ["Code"], ["Firefox"]
         ]]
     },
     {
@@ -29,7 +29,7 @@
       "nonManaged" : "leaveUntouched",
       "spaces": [
         [],
-        [["Code"], ["Firefox"], ["iTerm2"]]
+        [["iTerm2"], ["Code"], ["Firefox"]]
       ]
     }
   ]
