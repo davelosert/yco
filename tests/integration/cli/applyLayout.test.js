@@ -187,7 +187,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  suite.only('with "--debug"', () => {
+  suite('with "--debug"', () => {
     test('only prints all commands to stdout without executing them', async () => {
       const windowsResult = [
         { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
