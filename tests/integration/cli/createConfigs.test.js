@@ -118,7 +118,7 @@ suite('yco create-configs', () => {
 
 
   suite('with "--debug"', () => {
-    test.only('only prints what files would be written without actually writing them.', async () => {
+    test('only prints what files would be written without actually writing them.', async () => {
       const { executeYco, ycoSkhdConfPath, testDir } = await createTestDir();
 
       const { output } = await executeYco('create-configs --debug');
