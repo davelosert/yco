@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "ajv": "6.12.6",
-    "better-ajv-errors": "0.6.7",
+    "better-ajv-errors": "0.7.0",
     "buntstift": "4.0.18",
     "command-line-interface": "3.6.16",
     "ramda": "0.27.1"
