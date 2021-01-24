@@ -1,0 +1,36 @@
+
+{
+  "switchFocus": [
+    { "triggerKey": "cmd - 1", "app": "Code" },
+    { "triggerKey": "cmd - 2", "app": "Firefox" },
+    { "triggerKey": "cmd - 3", "app": "iTerm2" }
+  ],
+  "layoutModeTriggerKey": "alt - s",
+  "layouts": [
+    {
+      "name": "monitor",
+      "triggerKey": "m",
+      "nonManaged": "allInOneSpace",
+      "spaces": [[
+        ["iTerm2", "Code", "Firefox"]
+      ]]
+    },
+    {
+      "name": "laptop",
+      "triggerKey": "l",
+      "nonManaged": "allInOwnSpace",
+      "spaces": [[
+          ["iTerm2"], ["Code"], ["Firefox"]
+        ]]
+    },
+    {
+      "name": "pairing",
+      "triggerKey": "p",
+      "nonManaged" : "leaveUntouched",
+      "spaces": [
+        [],
+        [["iTerm2"], ["Code"], ["Firefox"]]
+      ]
+    }
+  ]
+}

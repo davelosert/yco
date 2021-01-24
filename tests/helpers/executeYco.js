@@ -13,6 +13,7 @@ exports.executeYco = async function ({ cmd, options }) {
       exitCode: 0
     };
   } catch (error) {
+    console.log(error.stdout);
     return {
       output: error.stderr,
       exitCode: error.code

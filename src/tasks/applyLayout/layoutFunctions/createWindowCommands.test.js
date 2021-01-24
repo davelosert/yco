@@ -78,4 +78,17 @@ describe('createWindowComands()', async assert => {
     }),
     expected: []
   });
+
+  assert({
+    given: 'window is supposed to be on same space index but on different display',
+    should: 'return a move command to that space',
+    actual: createWindowCommands({
+      desiredWindowLayout: [
+        [[]],
+        [[], [{ id: 1, app: 'TestApp', display: 1, space: 3 }]]
+      ],
+      spacesPlan: [-1, +1]
+    }),
+    expected: ['yabai -m window 1 --space 3']
+  });
 });
