@@ -52,7 +52,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     assertThat(yabaiLogs, isEmpty());
   });
 
-  test('execute yabai commands to remove empty spaces (if it is not the last space on a display)', async () => {
+  test('executes yabai commands to remove empty spaces (if it is not the last space on a display).', async () => {
     const windowsResult = [
       { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Code', display: 1, space: 2, id: 200, focused: 0 },
@@ -83,7 +83,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('with option { "nonManaged": "allInOneSpace" } executes commands to move unmanaged windows to last space on main display.', async () => {
+  test('with option \'{ "nonManaged": "allInOneSpace" }\' executes commands to move unmanaged windows to last space on the main display.', async () => {
     const windowsResult = [
       { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },
@@ -114,7 +114,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('with option { "nonManaged": "allInOwnSpace" } executes commands to move each unmanaged window into an own space on the main display.', async () => {
+  test('with option \'{ "nonManaged": "allInOwnSpace" }\' executes commands to move each unmanaged window into an own space on the main display.', async () => {
     const windowsResult = [
       { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Unmanaged Window 1', display: 1, space: 1, id: 101, focused: 0 },
@@ -148,7 +148,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('with option { "nonManaged": "leaveUntouched" } leaves all unmanaged windows where they are, but moves their spaces behind managed windows spaces.', async () => {
+  test('with option \'{ "nonManaged": "leaveUntouched" }\' leaves all unmanaged windows where they are, but moves their spaces behind existing managed windows\' spaces.', async () => {
     const windowsResult = [
       { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Unmanaged Window 1', display: 1, space: 1, id: 101, focused: 0 },
@@ -188,7 +188,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
   });
 
   suite('with "--debug"', () => {
-    test('only prints all commands to stdout without executing them', async () => {
+    test('only prints all commands to stdout without executing them.', async () => {
       const windowsResult = [
         { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
         { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },

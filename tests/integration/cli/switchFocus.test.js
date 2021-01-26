@@ -4,7 +4,7 @@ const { assertThat, is, equalTo, isEmpty } = require('hamjest');
 const { withoutIndentSpaces } = require('../../helpers/withoutIndentSpaces');
 
 suite('yco switch-focus --name "App to Focus"', () => {
-  test('focuses the window with yabai if window is on same space.', async () => {
+  test('executes a yabai command to focus the window of the given app where app is the "app" field of the yabai window config.', async () => {
     const windowsResult = [
       { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'App in Focus', display: 2, space: 1, id: 200, focused: 1 }
@@ -24,7 +24,7 @@ suite('yco switch-focus --name "App to Focus"', () => {
   });
 
 
-  test('focuses queried space and window if both are not focused yet', async () => {
+  test('when window to focus is on another space, it executes yabai commands to first focus the space and then the window (avoids space animations).', async () => {
     const windowsResult = [
       { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'App in Focus', display: 2, space: 2, id: 200, focused: 1 }
@@ -47,7 +47,7 @@ suite('yco switch-focus --name "App to Focus"', () => {
   });
 
 
-  test('fouses next window of an app with multiple windows if one is already focused', async () => {
+  test('when multiple windows of an app exist and one is already focused, executes yabai commands to focus the next window of that app sorted by the yabai id.', async () => {
     const windowsResult = [
       { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'App to Focus', display: 1, space: 1, id: 200, focused: 1 },
@@ -70,7 +70,7 @@ suite('yco switch-focus --name "App to Focus"', () => {
     ])));
   });
 
-  test('does nothing if window to focus is already focused', async () => {
+  test('executes nothing if the window to focus is already focused.', async () => {
     const windowsResult = [{ app: 'App to Focus', display: 1, space: 1, id: 100, focused: 1 }];
     const spacesResult = [{ index: 1, focused: 1 }];
 
@@ -86,7 +86,7 @@ suite('yco switch-focus --name "App to Focus"', () => {
   });
 
   suite('with "--debug"', () => {
-    test('only prints all commands to stdout without executing them', async () => {
+    test('only prints all commands to stdout without executing them.', async () => {
       const windowsResult = [
         { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
         { app: 'App in Focus', display: 2, space: 2, id: 200, focused: 1 }
