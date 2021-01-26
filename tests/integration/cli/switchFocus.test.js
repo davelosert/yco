@@ -4,7 +4,7 @@ const { assertThat, is, equalTo, isEmpty } = require('hamjest');
 const { withoutIndentSpaces } = require('../../helpers/withoutIndentSpaces');
 
 suite('yco switch-focus --name "App to Focus"', () => {
-  test('executes yabai commands to focus the window if on the same space.', async () => {
+  test('executes a yabai command to focus the window of the given app where app is the "app" field of the yabai window config.', async () => {
     const windowsResult = [
       { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'App in Focus', display: 2, space: 1, id: 200, focused: 1 }
@@ -24,7 +24,7 @@ suite('yco switch-focus --name "App to Focus"', () => {
   });
 
 
-  test('executes yabai commands to focus both, the space and the window if window is on another space.', async () => {
+  test('when window to focus is on another space, it executes yabai commands to first focus the space and then the window (avoids space animations).', async () => {
     const windowsResult = [
       { app: 'App to Focus', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'App in Focus', display: 2, space: 2, id: 200, focused: 1 }
@@ -70,7 +70,7 @@ suite('yco switch-focus --name "App to Focus"', () => {
     ])));
   });
 
-  test('does nothing if the window to focus is already focused.', async () => {
+  test('executes nothing if the window to focus is already focused.', async () => {
     const windowsResult = [{ app: 'App to Focus', display: 1, space: 1, id: 100, focused: 1 }];
     const spacesResult = [{ index: 1, focused: 1 }];
 
