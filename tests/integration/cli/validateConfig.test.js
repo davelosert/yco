@@ -5,7 +5,7 @@ const { assertThat, containsString, is, equalTo } = require('hamjest');
 
 
 suite('yco validate-config', () => {
-  test('validates the config at the default path (~/.config/yabai/yco.config.json) and outputs a success message.', async () => {
+  test('validates the config at the default path \'~/.config/yabai/yco.config.json\' and outputs a success message.', async () => {
     const { executeYco, configTargetPath } = await setupTestEnvironment({
       configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'validateConfig', 'valid.yco.config.json'),
       defaultTarget: true

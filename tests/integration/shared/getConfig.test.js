@@ -17,7 +17,7 @@ suite('getConfig()', () => {
     process.env = originalEnv;
   });
 
-  test('loads config from given path', async () => {
+  test('loads config from given path.', async () => {
     const { content } = await getConfig({
       configPath: `${__dirname}/../../fixtures/getConfig/exampleConfig.json`
     });
@@ -25,7 +25,7 @@ suite('getConfig()', () => {
     assert.deepStrictEqual(content, configFromPath);
   });
 
-  test('defaults to read from "$HOME/.config/yabai/yco.config.json" if no config is given', async () => {
+  test('defaults to read from "$HOME/.config/yabai/yco.config.json" if no config is given.', async () => {
     process.env.HOME = path.join(__dirname, '..', '..', 'fixtures', 'getConfig');
     const { content } = await getConfig({});
 

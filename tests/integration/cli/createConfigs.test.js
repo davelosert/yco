@@ -1,9 +1,8 @@
-
 const fs = require('fs');
 const path = require('path');
 const { setupTestEnvironment } = require('../../helpers/setupTestEnvironment');
 const { withoutIndentSpaces } = require('../../helpers/withoutIndentSpaces');
-const { assertThat, is, truthy, containsString, equalTo, promiseThat, rejected, hasProperty } = require('hamjest');
+const { assertThat, is, containsString, equalTo, promiseThat, rejected, hasProperty } = require('hamjest');
 
 const { readFile, stat } = fs.promises;
 
@@ -23,16 +22,7 @@ suite('yco create-configs', () => {
   };
 
 
-  test('creates ~/.config/yabai/yco.skhd.conf', async () => {
-    const { executeYco, ycoSkhdConfPath } = await createTestDir();
-
-    await executeYco('create-configs');
-
-    const fileState = await stat(ycoSkhdConfPath);
-    assertThat(fileState.isFile(), is(truthy()));
-  });
-
-  test('writes info about file generation as comment to ~/.confg/yabai/yco.skhd.conf', async () => {
+  test('creates the skhd config under \'~/.config/yabai/yco.skhd.conf\'.', async () => {
     const { executeYco, ycoSkhdConfPath } = await createTestDir();
 
     await executeYco('create-configs');
@@ -45,7 +35,7 @@ suite('yco create-configs', () => {
     );
   });
 
-  test('inserts ".load ~/.config/yabai/yco.skhd.conf" statement in ~/.skhdrc', async () => {
+  test('inserts \'.load ~/.config/yabai/yco.skhd.conf\' statement in \'~/.skhdrc\'.', async () => {
     const { testDir, executeYco, ycoSkhdConfPath } = await createTestDir();
 
     await executeYco('create-configs');
@@ -58,7 +48,7 @@ suite('yco create-configs', () => {
     );
   });
 
-  test('creates load statement only once on subsequent runs', async () => {
+  test('creates load statement only once on subsequent runs.', async () => {
     const { testDir, executeYco, ycoSkhdConfPath } = await createTestDir();
 
     await executeYco('create-configs');
@@ -97,7 +87,7 @@ suite('yco create-configs', () => {
     });
   });
 
-  suite('with config: switchFocus', () => {
+  suite('with config: "switchFocus"', () => {
     test('creates switchFocus entries in yco.skhd.conf for all defined apps.', async () => {
       const { executeYco, ycoSkhdConfPath } = await createTestDir();
 
@@ -117,7 +107,7 @@ suite('yco create-configs', () => {
   });
 
 
-  suite('with "--debug"', () => {
+  suite('with flag "--debug"', () => {
     test('only prints what files would be written without actually writing them.', async () => {
       const { executeYco, ycoSkhdConfPath, testDir } = await createTestDir();
 
