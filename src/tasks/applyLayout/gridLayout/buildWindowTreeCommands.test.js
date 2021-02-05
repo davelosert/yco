@@ -125,16 +125,14 @@ describe.only('createWindowCommands()', async assert => {
         type: 'treeNode',
         split: 'horizontal',
         id: 2,
-        windows: [{
-          type: 'treeNode',
-          split: 'vertical',
-          id: 3,
-          windows: [
-            { type: 'window', id: 11 },
-            { type: 'window', id: 12 }
-          ]
-        },
-        { type: 'window', id: 13 }
+        windows: [
+          {
+            type: 'treeNode',
+            split: 'vertical',
+            id: 3,
+            windows: [{ type: 'window', id: 11 }, { type: 'window', id: 12 }]
+          },
+          { type: 'window', id: 13 }
         ]
       },
       {
@@ -146,6 +144,7 @@ describe.only('createWindowCommands()', async assert => {
           { type: 'treeNode', split: 'vertical', id: 5, windows: [{ type: 'window', id: 22 }, { type: 'window', id: 23 }] }
         ]
       },
+      { type: 'window', id: 31 }
     ]
   };
 
@@ -154,13 +153,19 @@ describe.only('createWindowCommands()', async assert => {
     should: 'alwas split the siblings first, then the children recursively.',
     actual: buildWindowTreeCommands(treeWithDeepNestedSubTrees),
     expected: [
+      // Siblings
       'yabai -m window 11 --insert east',
       'yabai -m window 21 --warp 11',
+      'yabai -m window 21 --insert east',
+      'yabai -m window 31 --warp 21',
+
+      // Children of left plane
       'yabai -m window 11 --insert south',
       'yabai -m window 13 --warp 11',
       'yabai -m window 11 --insert east',
       'yabai -m window 12 --warp 11',
 
+      // Children oft middle plane
       'yabai -m window 21 --insert south',
       'yabai -m window 22 --warp 21',
       'yabai -m window 22 --insert east',
