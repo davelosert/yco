@@ -23,7 +23,7 @@ npx yco apply-layout --help
 
 ### Install globally
 
-You can also install yco globaly and then use it's bin without `npx`:
+You can also install yco globally and then use it's bin without `npx`:
 
 ```shell
 npm install -g yco

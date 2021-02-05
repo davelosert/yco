@@ -1,0 +1,72 @@
+
+{
+  "$schema": "../../src/schemas/YcoConfigSchema.json",
+  "switchFocus": [
+    { "triggerKey": "cmd - 1", "app": "Code" },
+    { "triggerKey": "cmd - 2", "app": "Firefox" },
+    { "triggerKey": "cmd - 3", "app": "iTerm2" }
+  ],
+  "layoutModeTriggerKey": "alt - s",
+  "layouts": [
+    {
+      "name": "onlyMoveWindowsTest",
+      "triggerKey": "l",
+      "nonManaged": "allInOwnSpace",
+      "spaces": [[
+          ["iTerm2"], ["Code"], ["Firefox"]
+        ]]
+    },
+    {
+      "name": "treeNodeTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOneSpace",
+      "spaces": [[
+          [
+            { "split": "horizontal", "windows": ["iTerm2", "iTerm2"] }, 
+            "Code", 
+            "Firefox"
+          ],
+          ["Chrome"]
+        ]]
+    },
+    {
+      "name": "destroySpacesTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOneSpace",
+      "spaces": [
+        [
+          ["Display1Space1"],
+          ["Display1Space2"]
+        ],
+        [
+          ["Display2Space3"]
+        ]
+      ]
+    },
+    {
+      "name": "allInOneSpaceTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOneSpace",
+      "spaces": [
+        [ ["Managed 1"], ["Managed 2"] ]
+      ]
+    },
+    {
+      "name": "allInOwnSpaceTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOwnSpace",
+      "spaces": [
+        [ ["Managed 1"], ["Managed 2"] ]
+      ]
+    },
+    {
+      "name": "leaveUntouchedTest",
+      "triggerKey": "t",
+      "nonManaged": "leaveUntouched",
+      "spaces": [
+        [ ["Managed 1"], ["Managed 2"] ],
+        [ ["Managed 3"] ]
+      ]
+    }
+  ]
+}
