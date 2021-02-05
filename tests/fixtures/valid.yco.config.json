@@ -1,5 +1,6 @@
 
 {
+  "$schema": "../../src/schemas/YcoConfigSchema.json",
   "switchFocus": [
     { "triggerKey": "cmd - 1", "app": "Code" },
     { "triggerKey": "cmd - 2", "app": "Firefox" },

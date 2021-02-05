@@ -5,6 +5,56 @@
   "description": "A schema for the yco.config.json of the yco library.",
   "type": "object",
   "additionalProperties": false,
+  "definitions": {
+    "window": {
+      "description": "Windows can be described as simple strings or as objects with the 'app' property. Both the string or the content of the 'app' property have to match the same named property of a yabai window query (yabai -m query --windows).",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "A window simply defined by a string. The String needs to match the 'app' property of a yabai query. Is the same as defining a window-object with only the 'app'-property."
+        },
+        {
+          "type": "object",
+          "description": "A window described as an object. Can be used to give additional information for the window, e.g. the size.",
+          "properties": {
+            "app": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "split": {
+      "type": "object",
+      "description": "You can define a split-object everywhere where you can define a window. All subwindows (defined in the 'windows'-property) will then be arranged accordingly: for split type 'vertical' as columns and for type 'horizontal' as rows.",
+      "properties": {
+        "split": {
+          "type": "string",
+          "enum": [
+            "vertical",
+            "horizontal"
+          ]
+        },
+        "windows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/windowTreeNode"
+          }
+        }
+      }
+    },
+    "windowTreeNode": {
+      "description": "Is either a window or a split object.",
+      "anyOf": [
+        {
+        "$ref": "#/definitions/split"
+        },
+        {
+          "$ref": "#/definitions/window"
+        }
+      ]
+    }
+  },
   "properties": {
     "$schema": {
       "type": "string",
@@ -61,8 +111,7 @@
                 "type": "array",
                 "description": "Array of all windows you'd like to configure for the space.",
                 "items": {
-                  "type": "string",
-                  "description": "App to be moved to this space of this display (needs to match with the 'app' property of the yabai-window)."
+                  "$ref": "#/definitions/windowTreeNode"
                 }
               }
             }

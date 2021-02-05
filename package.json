@@ -13,7 +13,7 @@
     "test": "riteway 'src/**/*.test.js' | tap-nirvana",
     "test:ci": "npm run test && npm run test:integration",
     "test:integration": "mocha 'tests/integration/**/*.test.js'",
-    "test:watch": "watch 'clear && npm run -s test | tap-nirvana' src/"
+    "test:watch": "watch 'clear && npm run test' src/"
   },
   "dependencies": {
     "ajv": "6.12.6",
