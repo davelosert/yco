@@ -1,25 +1,6 @@
 const { describe } = require('riteway');
 const { normalizeLayoutConfig } = require('./normalizeLayoutConfig');
 
-const initial = [
-  { 'windows': ['iTerm2', 'iTerm2'], 'split': 'horizontal', 'size': '1/4' },
-  { 'windows': ['Code'], 'size': '2/4' },
-  'FireFox'
-];
-
-const expected = {
-  type: 'treeNode',
-  split: 'vertical',
-  windows: [{
-    type: 'treeNode',
-    split: 'horizontal',
-    windows: ['iTerm2', 'iTerm2']
-  }, {
-    type: 'window',
-    app: 'Code'
-  }]
-
-};
 const emptyTreeNode = {
   type: 'treeNode',
   split: 'vertical',
@@ -52,7 +33,7 @@ describe.only('normalizeLayoutConfig()', async assert => {
   });
 
   assert({
-    given: 'space with window described as string',
+    given: 'space with window as string',
     should: 'normalized treeNode with a single window with string in app field',
     actual: normalizeLayoutConfig([
       [['FireFox']]
@@ -74,7 +55,7 @@ describe.only('normalizeLayoutConfig()', async assert => {
   });
 
   assert({
-    given: 'space with window described as window with size',
+    given: 'space with a windowas object',
     should: 'only add "type: window"',
     actual: normalizeLayoutConfig([
       [[{ app: 'FireFox', size: '4/4' }]]
@@ -96,14 +77,36 @@ describe.only('normalizeLayoutConfig()', async assert => {
     ]
   });
 
-  // assert({
-  //   given: 'only a window defined by a string',
-  //   should: 'return a node of type window with the window itself',
-  //   actual: normalizeTreeConfig(['TestApp']),
-  //   expected: {
-  //     type: 'window',
-  //     app: 'TestApp'
-  //   }
-  // });
+  assert({
+    given: 'space with a horizontal split object',
+    should: 'treat it as tree node with window objects',
+    actual: normalizeLayoutConfig([
+      [[
+        { split: 'horizontal', windows: ['FireFox', 'iTerm2'] }]]
+    ]),
+    expected: [
+      {
+        display: 1,
+        index: 1,
+        windowTree: {
+          type: 'treeNode',
+          split: 'vertical',
+          windows: [{
+            type: 'treeNode',
+            split: 'horizontal',
+            windows: [{
+              type: 'window',
+              app: 'FireFox',
+            },
+            {
+              type: 'window',
+              app: 'iTerm2'
+            }]
+          }]
+        }
+      }
+    ]
+  });
+
 
 });
