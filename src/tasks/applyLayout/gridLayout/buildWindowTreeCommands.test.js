@@ -1,7 +1,21 @@
 const { describe } = require('riteway');
 const { buildWindowTreeCommands } = require('./buildWindowTreeCommands');
 
-describe.only('createWindowCommands()', async assert => {
+describe('createWindowCommands()', async assert => {
+  const treeWithNoWindows = {
+    type: 'treeNode',
+    split: 'vertical',
+    windows: []
+  };
+
+  assert({
+    given: 'tree with no windows',
+    should: 'return empty array',
+    actual: buildWindowTreeCommands(treeWithNoWindows),
+    expected: []
+  });
+
+
   const simpleVerticalWindowTree = {
     type: 'treeNode',
     split: 'vertical',
