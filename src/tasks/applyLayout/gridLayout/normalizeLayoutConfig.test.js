@@ -55,7 +55,7 @@ describe.only('normalizeLayoutConfig()', async assert => {
   });
 
   assert({
-    given: 'space with a windowas object',
+    given: 'space with a window as object',
     should: 'only add "type: window"',
     actual: normalizeLayoutConfig([
       [[{ app: 'FireFox', size: '4/4' }]]
@@ -78,8 +78,8 @@ describe.only('normalizeLayoutConfig()', async assert => {
   });
 
   assert({
-    given: 'space with a horizontal split object',
-    should: 'treat it as tree node with window objects',
+    given: 'a space with only a horizontal split object',
+    should: 'treat it as a tree node and insert windows as window objects',
     actual: normalizeLayoutConfig([
       [[
         { split: 'horizontal', windows: ['FireFox', 'iTerm2'] }]]
@@ -108,5 +108,29 @@ describe.only('normalizeLayoutConfig()', async assert => {
     ]
   });
 
-
+  assert({
+    given: 'a space with only a horizontal split object as root object',
+    should: 'have the horizontal tree node as top level object',
+    actual: normalizeLayoutConfig([
+      [{ split: 'horizontal', windows: ['FireFox', 'iTerm2'] }]
+    ]),
+    expected: [
+      {
+        display: 1,
+        index: 1,
+        windowTree: {
+          type: 'treeNode',
+          split: 'horizontal',
+          windows: [{
+            type: 'window',
+            app: 'FireFox',
+          },
+          {
+            type: 'window',
+            app: 'iTerm2'
+          }]
+        }
+      }
+    ]
+  });
 });
