@@ -4,7 +4,7 @@ const buildWindowTreeCommands = (parentNode) => {
   let { commands, childNodes } = handleSiblings(parentNode);
 
   if (childNodes.length > 0) {
-    const childCommands = childNodes.flatMap(subTree => buildWindowTreeCommands(subTree));
+    const childCommands = childNodes.flatMap(childNode => buildWindowTreeCommands(childNode));
     commands = [
       ...commands,
       ...childCommands
@@ -23,7 +23,7 @@ function handleSiblings(parentNode) {
       childNodes.push(currentNode);
     }
 
-    const sourceWindow = getMostLeftWindow(currentNode);
+    const sourceWindow = getMostLeftWindowOf(currentNode);
     if (isFirstIteration(context)) {
       return {
         commands: [],
@@ -52,12 +52,12 @@ function isFirstIteration(context) {
   return !context.previousWindow;
 }
 
-function getMostLeftWindow(node) {
+function getMostLeftWindowOf(node) {
   if (node.type === 'window') {
     return node;
   }
 
-  return getMostLeftWindow(node.windows[0]);
+  return getMostLeftWindowOf(node.windows[0]);
 }
 
 exports.buildWindowTreeCommands = buildWindowTreeCommands;
