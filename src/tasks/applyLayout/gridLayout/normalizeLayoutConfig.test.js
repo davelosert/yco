@@ -7,7 +7,7 @@ const emptyTreeNode = {
   windows: []
 };
 
-describe.only('normalizeLayoutConfig()', async assert => {
+describe('normalizeLayoutConfig()', async assert => {
   assert({
     given: 'no window at all',
     should: 'return only space with with no windows',

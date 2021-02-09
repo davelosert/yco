@@ -1,7 +1,4 @@
-const R = require('ramda'); // Rambda functional library
-const { createWindowTree } = require('./normalizeWindowObjects');
-
-
+const { createWindowTree } = require('./createWindowTree');
 
 exports.normalizeLayoutConfig = (layoutPlan) => {
   let absoluteSpaceIndex = 0;
