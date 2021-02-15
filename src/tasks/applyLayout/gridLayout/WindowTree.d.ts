@@ -2,7 +2,6 @@ interface Window {
   id: number;
   display: number;
   space: number;
-  spaceAfterMutation: number;
   frame: WindowSizes;
   type: 'window'
   app: 'string'

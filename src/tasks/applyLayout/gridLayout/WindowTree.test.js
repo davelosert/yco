@@ -41,6 +41,7 @@ describe('mapWindows()', async assert => {
       { ...emptyTree, windows: [{ ...testWindow }, { ...testWindow }] }
     ]
   };
+
   assert({
     given: 'a tree with windows nested in a childtree',
     should: 'return tree with mapped windows on all childtree levels',

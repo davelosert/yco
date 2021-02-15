@@ -17,7 +17,6 @@ const mapWindows = R.curry((mappingFunc, node) => {
   };
 });
 
-
 module.exports = {
   mapWindows,
   NODE_TYPES
