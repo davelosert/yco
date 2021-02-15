@@ -17,7 +17,16 @@ const mapWindows = R.curry((mappingFunc, node) => {
   };
 });
 
+const getMostLeftWindowOf = (node) => {
+  if (node.type === 'window') {
+    return node;
+  }
+
+  return getMostLeftWindowOf(node.windows[0]);
+};
+
 module.exports = {
   mapWindows,
+  getMostLeftWindowOf,
   NODE_TYPES
 };

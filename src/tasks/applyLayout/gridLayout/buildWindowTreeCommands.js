@@ -1,4 +1,5 @@
 const { generateInsertCommand, generateWarpCommand } = require('../../../shared/yabaiCommands');
+const { getMostLeftWindowOf } = require('./WindowTree');
 
 const buildWindowTreeCommands = (parentNode) => {
   let { commands, childNodes } = handleSiblings(parentNode);
@@ -50,14 +51,6 @@ function handleSiblings(parentNode) {
 
 function isFirstIteration(context) {
   return !context.previousWindow;
-}
-
-function getMostLeftWindowOf(node) {
-  if (node.type === 'window') {
-    return node;
-  }
-
-  return getMostLeftWindowOf(node.windows[0]);
 }
 
 exports.buildWindowTreeCommands = buildWindowTreeCommands;

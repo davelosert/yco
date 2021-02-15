@@ -1,4 +1,5 @@
 const { describe } = require('riteway');
+const { getMostLeftWindowOf } = require('./WindowTree');
 const { mapWindows, NODE_TYPES } = require('./WindowTree');
 
 
@@ -55,5 +56,41 @@ describe('mapWindows()', async assert => {
     }
 
   });
+
+});
+
+
+describe('getMostLeftWindow', async assert => {
+  const searchWindow = { app: 'test', id: 1, type: 'window' };
+  const secondaryWindow = { ...searchWindow, id: 2 };
+  const aTreeNodeWith = (windows) => ({
+    type: 'treeNode',
+    split: 'vertical',
+    windows: [...windows]
+  });
+
+  assert({
+    given: 'a tree with only a window node',
+    should: 'return the window',
+    actual: getMostLeftWindowOf(searchWindow),
+    expected: searchWindow
+  });
+
+  assert({
+    given: 'a tree with the two windows nested under a treeNode',
+    should: 'return the first window of the treeNode',
+    actual: getMostLeftWindowOf(aTreeNodeWith([searchWindow, secondaryWindow])),
+    expected: searchWindow
+  });
+
+  assert({
+    given: 'a tree with the first window deep nested under several treeNodes',
+    should: 'return the window',
+    actual: getMostLeftWindowOf(
+      aTreeNodeWith([aTreeNodeWith([searchWindow, secondaryWindow])])
+    ),
+    expected: searchWindow
+  });
+
 
 });
