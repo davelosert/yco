@@ -2,58 +2,68 @@ const { describe } = require('riteway');
 const { hydrateWindows } = require('./hydrateWindows');
 const { NODE_TYPES } = require('./WindowTree');
 
+describe.only('hydrateWindows()', async assert => {
 
-describe.only('findYabaiWindow()', async assert => {
   assert({
-    given: 'no windows defined in treenode',
-    should: 'return empty windowTree',
+    given: 'one window to match',
+    should: 'put that window into the nodetree',
     actual: hydrateWindows(
-      [{ app: 'test' }],
-      { split: 'vertical', type: NODE_TYPES.TREE_NODE, windows: [] }
+      [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }],
+      [{ app: 'test', id: 1 }]
     ),
-    expected: { split: 'vertical', type: NODE_TYPES.TREE_NODE, windows: [] }
+    expected:
+      [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 1 } }]
   });
 
-  const matchingWindow = { id: 1, app: 'test', space: 1, display: 1 };
   assert({
-    given: 'window match by app',
-    should: 'merge the matching window within the tree',
+    given: 'two windows of same app on two spaces',
+    should: 'put both windows into tree only once',
     actual: hydrateWindows(
-      [{ ...matchingWindow }],
-      { split: 'vertical', type: NODE_TYPES.TREE_NODE, windows: [{ type: NODE_TYPES.WINDOW, app: 'test' }] }
+      [
+        { display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } },
+        { display: 1, space: 2, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }
+      ],
+      [
+        { app: 'test', id: 1 },
+        { app: 'test', id: 2 }
+      ]
     ),
-    expected: { split: 'vertical', type: NODE_TYPES.TREE_NODE, windows: [{ type: NODE_TYPES.WINDOW, ...matchingWindow }] }
+    expected:
+      [
+        { display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 1 } },
+        { display: 1, space: 2, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 2 } }
+      ]
   });
 
-  const matchingWindow2 = { id: 2, app: 'test2', space: 1, display: 1 };
-  const matchingWindow3 = { id: 3, app: 'test3', space: 2, display: 2 };
   assert({
-    given: 'a window-tree with deep nested windows',
-    should: 'insert matches on all levels of the tree',
+    given: 'two windows of same app on the same space',
+    should: 'put both windows into tree only once',
     actual: hydrateWindows(
-      [{ ...matchingWindow }, { ...matchingWindow2 }, { ...matchingWindow3 }],
-      {
-        split: 'vertical', type: NODE_TYPES.TREE_NODE, windows: [
-          { type: NODE_TYPES.WINDOW, app: 'test' },
-          {
-            type: NODE_TYPES.TREE_NODE, split: 'horizontal', windows: [
-              { type: NODE_TYPES.WINDOW, app: 'test2' },
-              { type: NODE_TYPES.WINDOW, app: 'test3' }
-            ]
-          }
-        ]
-      }
-    ),
-    expected: {
-      split: 'vertical', type: NODE_TYPES.TREE_NODE, windows: [
-        { type: NODE_TYPES.WINDOW, ...matchingWindow },
-        {
-          type: NODE_TYPES.TREE_NODE, split: 'horizontal', windows: [
-            { type: NODE_TYPES.WINDOW, ...matchingWindow2 },
-            { type: NODE_TYPES.WINDOW, ...matchingWindow3 }
+      [{
+        display: 1,
+        space: 1,
+        windowTree: {
+          windows: [
+            { type: NODE_TYPES.WINDOW, app: 'test' },
+            { type: NODE_TYPES.WINDOW, app: 'test' }
           ]
         }
+      }],
+      [
+        { app: 'test', id: 1 },
+        { app: 'test', id: 2 }
       ]
-    }
+    ),
+    expected:
+      [{
+        display: 1,
+        space: 1,
+        windowTree: {
+          windows: [
+            { type: NODE_TYPES.WINDOW, app: 'test', id: 1 },
+            { type: NODE_TYPES.WINDOW, app: 'test', id: 2 }
+          ]
+        }
+      }],
   });
 });
