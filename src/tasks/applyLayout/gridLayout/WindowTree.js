@@ -5,6 +5,12 @@ const NODE_TYPES = {
   WINDOW: 'window'
 };
 
+const defaultWindowTree = {
+  type: NODE_TYPES.TREE_NODE,
+  split: 'vertical',
+  windows: []
+};
+
 const isWindow = node => node.type === NODE_TYPES.WINDOW;
 const mapWindows = R.curry((mappingFunc, node) => {
   if (isWindow(node)) {
@@ -26,6 +32,7 @@ const getMostLeftWindowOf = (node) => {
 };
 
 module.exports = {
+  defaultWindowTree,
   mapWindows,
   getMostLeftWindowOf,
   NODE_TYPES
