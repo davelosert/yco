@@ -1,4 +1,5 @@
 const R = require('ramda');
+const { createWindowTree } = require('./WindowTree');
 
 const normalizeWindowObjects = R.map(windowDescriptor => {
   if (isPlaneDescriptor(windowDescriptor)) {
@@ -27,27 +28,19 @@ function isPlaneDescriptor(windowObject) {
   return windowObject.split === 'vertical' || windowObject.split === 'horizontal';
 }
 
-
-const defaultTreeNode = {
-  split: 'vertical',
-  type: 'treeNode'
-};
-
-const createWindowTree = (windowConfig) => {
+const convertToWindowTree = (windowConfig) => {
   if (Array.isArray(windowConfig)) {
-    return {
-      ...defaultTreeNode,
+    return createWindowTree({
       windows: normalizeWindowObjects(windowConfig)
-    };
+    });
   } else {
-    return {
+    return createWindowTree({
       ...windowConfig,
-      type: 'treeNode',
       windows: normalizeWindowObjects(windowConfig.windows)
-    };
+    });
   }
 };
 
 module.exports = {
-  createWindowTree
+  convertToWindowTree
 };

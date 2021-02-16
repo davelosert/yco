@@ -1,6 +1,6 @@
 const { describe } = require('riteway');
 const { setSpaceActions } = require('./setSpaceActions');
-const { defaultWindowTree } = require('./WindowTree');
+const { createWindowTree } = require('./WindowTree');
 
 describe('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert => {
   const yabaiSpace = { display: 1, index: 1 };
@@ -38,7 +38,7 @@ describe('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert =>
     ),
     expected: [
       { ...spacePlan, action: 'leave' },
-      { ...yabaiSpace, index: 2, action: 'destroy', windowTree: defaultWindowTree }
+      { ...yabaiSpace, index: 2, action: 'destroy', windowTree: createWindowTree() }
     ]
   });
 

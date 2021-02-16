@@ -11,6 +11,11 @@ const defaultWindowTree = {
   windows: []
 };
 
+const createWindowTree = props => ({
+  ...defaultWindowTree,
+  ...props
+});
+
 const isWindow = node => node.type === NODE_TYPES.WINDOW;
 const mapWindows = R.curry((mappingFunc, node) => {
   if (isWindow(node)) {
@@ -32,7 +37,7 @@ const getMostLeftWindowOf = (node) => {
 };
 
 module.exports = {
-  defaultWindowTree,
+  createWindowTree,
   mapWindows,
   getMostLeftWindowOf,
   NODE_TYPES

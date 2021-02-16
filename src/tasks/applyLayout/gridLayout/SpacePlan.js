@@ -1,7 +1,7 @@
-const { defaultWindowTree } = require('./WindowTree');
+const { createWindowTree } = require('./WindowTree');
 const R = require('ramda');
 
-const createSpacePlan = ({ display, index, windowTree = defaultWindowTree }) => ({
+const createSpacePlan = ({ display, index, windowTree = createWindowTree() }) => ({
   display,
   index,
   windowTree

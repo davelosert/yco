@@ -1,14 +1,11 @@
 const { describe } = require('riteway');
 const { getMostLeftWindowOf } = require('./WindowTree');
-const { mapWindows, NODE_TYPES } = require('./WindowTree');
+const { createWindowTree, mapWindows, NODE_TYPES } = require('./WindowTree');
 
 
 describe('mapWindows()', async assert => {
-  const emptyTree = {
-    type: NODE_TYPES.TREE_NODE,
-    split: 'vertical',
-    windows: []
-  };
+  const emptyTree = createWindowTree();
+
   const addTestAttribute = (window) => ({
     ...window,
     mapped: true
@@ -25,10 +22,9 @@ describe('mapWindows()', async assert => {
   assert({
     given: 'a tree with a single window',
     should: 'return tree with mapped window',
-    actual: mapWindows(addTestAttribute, {
-      ...emptyTree,
+    actual: mapWindows(addTestAttribute, createWindowTree({
       windows: [{ ...testWindow }]
-    }),
+    })),
     expected: {
       ...emptyTree,
       windows: [{ ...testWindow, mapped: true }]
@@ -39,7 +35,7 @@ describe('mapWindows()', async assert => {
     ...emptyTree,
     windows: [
       { ...testWindow },
-      { ...emptyTree, windows: [{ ...testWindow }, { ...testWindow }] }
+      createWindowTree({ windows: [{ ...testWindow }, { ...testWindow }] })
     ]
   };
 

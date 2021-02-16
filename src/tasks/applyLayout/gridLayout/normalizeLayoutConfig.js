@@ -1,4 +1,4 @@
-const { createWindowTree } = require('./createWindowTree');
+const { convertToWindowTree } = require('./convertToWindowTree');
 const { createSpacePlan } = require('./SpacePlan');
 
 exports.normalizeLayoutConfig = (layoutPlan) => {
@@ -10,7 +10,7 @@ exports.normalizeLayoutConfig = (layoutPlan) => {
       return createSpacePlan({
         display: displayIndex + 1,
         index: absoluteSpaceIndex,
-        windowTree: createWindowTree(configuredWindows)
+        windowTree: convertToWindowTree(configuredWindows)
       });
 
     });

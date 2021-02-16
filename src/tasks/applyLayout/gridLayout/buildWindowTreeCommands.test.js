@@ -1,5 +1,6 @@
 const { describe } = require('riteway');
 const { buildWindowTreeCommands } = require('./buildWindowTreeCommands');
+const { createWindowTree } = require('./WindowTree');
 
 describe('createWindowCommands()', async assert => {
   const treeWithNoWindows = {
@@ -16,14 +17,12 @@ describe('createWindowCommands()', async assert => {
   });
 
 
-  const simpleVerticalWindowTree = {
-    type: 'treeNode',
-    split: 'vertical',
+  const simpleVerticalWindowTree = createWindowTree({
     windows: [
       { type: 'window', id: 1 },
       { type: 'window', id: 2 }
     ]
-  };
+  });
 
   assert({
     given: 'two vertically split windows',
@@ -50,15 +49,13 @@ describe('createWindowCommands()', async assert => {
     ]
   });
 
-  const threeColumnTree = {
-    type: 'treeNode',
-    split: 'vertical',
+  const threeColumnTree = createWindowTree({
     windows: [
       { type: 'window', id: 1 },
       { type: 'window', id: 2 },
       { type: 'window', id: 3 }
     ]
-  };
+  });
 
   assert({
     given: 'three vertically split windows',
@@ -73,21 +70,18 @@ describe('createWindowCommands()', async assert => {
   });
 
 
-  const treeWithSubTreeOnFirstNode = {
-    type: 'treeNode',
-    split: 'vertical',
+  const treeWithSubTreeOnFirstNode = createWindowTree({
     windows: [
-      {
-        type: 'treeNode',
+      createWindowTree({
         split: 'horizontal',
         windows: [{ type: 'window', id: 1 }, { type: 'window', id: 2 }]
-      },
+      }),
       {
         type: 'window',
         id: 3
       }
     ]
-  };
+  });
 
   assert({
     given: 'two vertical planes with an additional horzontal split on the left plane',
@@ -102,7 +96,7 @@ describe('createWindowCommands()', async assert => {
   });
 
 
-  const treeWithSubTreeOnSecondNode = {
+  const treeWithSubTreeOnSecondNode = createWindowTree({
     type: 'treeNode',
     split: 'vertical',
     windows: [
@@ -110,13 +104,13 @@ describe('createWindowCommands()', async assert => {
         type: 'window',
         id: 1
       },
-      {
+      createWindowTree({
         type: 'treeNode',
         split: 'horizontal',
         windows: [{ type: 'window', id: 2 }, { type: 'window', id: 3 }]
-      },
+      }),
     ]
-  };
+  });
 
   assert({
     given: 'vertical windows with an additional horizontal split on the right plane',
@@ -135,29 +129,26 @@ describe('createWindowCommands()', async assert => {
     split: 'vertical',
     id: 1,
     windows: [
-      {
-        type: 'treeNode',
+      createWindowTree({
         split: 'horizontal',
         id: 2,
         windows: [
-          {
-            type: 'treeNode',
+          createWindowTree({
             split: 'vertical',
             id: 3,
             windows: [{ type: 'window', id: 11 }, { type: 'window', id: 12 }]
-          },
+          }),
           { type: 'window', id: 13 }
         ]
-      },
-      {
-        type: 'treeNode',
+      }),
+      createWindowTree({
         split: 'horizontal',
         id: 4,
         windows: [
           { type: 'window', id: 21 },
-          { type: 'treeNode', split: 'vertical', id: 5, windows: [{ type: 'window', id: 22 }, { type: 'window', id: 23 }] }
+          createWindowTree({ split: 'vertical', id: 5, windows: [{ type: 'window', id: 22 }, { type: 'window', id: 23 }] })
         ]
-      },
+      }),
       { type: 'window', id: 31 }
     ]
   };
