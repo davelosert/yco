@@ -2,7 +2,7 @@ const { describe } = require('riteway');
 const { hydrateWindows } = require('./hydrateWindows');
 const { NODE_TYPES } = require('./WindowTree');
 
-describe.only('hydrateWindows()', async assert => {
+describe('hydrateWindows()', async assert => {
 
   assert({
     given: 'one window to match',

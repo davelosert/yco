@@ -2,7 +2,7 @@ const { describe } = require('riteway');
 const { setSpaceActions } = require('./setSpaceActions');
 const { defaultWindowTree } = require('./WindowTree');
 
-describe.only('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert => {
+describe('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert => {
   const yabaiSpace = { display: 1, index: 1 };
   const spacePlan = { display: 1, index: 1, windowTree: { type: 'treeNode', windows: [] } };
 

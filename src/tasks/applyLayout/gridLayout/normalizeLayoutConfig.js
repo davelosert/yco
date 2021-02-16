@@ -1,4 +1,5 @@
 const { createWindowTree } = require('./createWindowTree');
+const { createSpacePlan } = require('./SpacePlan');
 
 exports.normalizeLayoutConfig = (layoutPlan) => {
   let absoluteSpaceIndex = 0;
@@ -6,11 +7,12 @@ exports.normalizeLayoutConfig = (layoutPlan) => {
     return spaces.map((configuredWindows) => {
       absoluteSpaceIndex += 1;
 
-      return {
+      return createSpacePlan({
         display: displayIndex + 1,
         index: absoluteSpaceIndex,
         windowTree: createWindowTree(configuredWindows)
-      };
+      });
+
     });
   });
 };
