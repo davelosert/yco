@@ -8,8 +8,7 @@ type Action = 'create' | 'leave' | 'delete';
 
 export interface SpacePlan {
   index: number;
-  windowTree: WindowTree;
-  first: WindowId;
   display: number;
-  action: Action;
+  windowTree: WindowTree;
+  action?: Action;
 }

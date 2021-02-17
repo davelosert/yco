@@ -1,11 +1,33 @@
-const { clone, without, pipe } = require('ramda');
+const { clone, without, groupBy, pipe, values } = require('ramda');
 const { addAction, createSpacePlan } = require('./SpacePlan');
 
-exports.setSpaceActions = (yabaiSpaces, layoutPlan) => {
-  let remainingSpaces = clone(yabaiSpaces);
+const groupByDisplay = pipe(
+  groupBy(space => space.display),
+  values
+);
 
+const context = {
+  accumLayoutPlan: []
+};
+
+exports.setSpaceActions = (yabaiSpaces, layoutPlan) => {
+  const layoutsByDisplay = groupByDisplay(layoutPlan);
+  const yabaiSpacesByDisplay = groupByDisplay(yabaiSpaces);
+
+  return layoutsByDisplay.reduce((currentContext, layoutPlansForCurrentDisplay, index) => {
+    return {
+      accumLayoutPlan: [
+        ...currentContext.accumLayoutPlan,
+        ...setForDisplay(yabaiSpacesByDisplay[index], layoutPlansForCurrentDisplay)
+      ]
+    };
+  }, context).accumLayoutPlan;
+};
+
+function setForDisplay(yabaiSpaces, layoutPlan) {
+  let remainingSpaces = clone(yabaiSpaces);
   const partialPlan = layoutPlan.map(spacePlan => {
-    const existingSpace = yabaiSpaces.find(yabaiSpace => yabaiSpace.index === spacePlan.index);
+    const existingSpace = yabaiSpaces.find(yabaiSpace => yabaiSpace.index === spacePlan.index && yabaiSpace.display === spacePlan.display);
     if (!existingSpace) {
       return addAction('create', spacePlan);
     }
@@ -24,5 +46,4 @@ exports.setSpaceActions = (yabaiSpaces, layoutPlan) => {
   }
 
   return partialPlan;
-
-};
+}
