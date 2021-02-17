@@ -4,24 +4,25 @@ const { assertThat, isEmpty, is, equalTo, containsString } = require('hamjest');
 const { withoutIndentSpaces } = require('../../helpers/withoutIndentSpaces');
 
 suite('yco apply-layout --name "Layout To apply"', () => {
-  test('executes yabai commands to move windows to their configured spaces and creates those spaces if necessary.', async () => {
+  test.only('executes yabai commands to move windows to their configured spaces and creates those spaces if necessary.', async () => {
     const windowsResult = [
       { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },
       { app: 'Firefox', display: 1, space: 1, id: 300, focused: 1 }
     ];
 
-    const spacesResult = [{ index: 1, focused: 1, windows: [100, 200, 300] }];
+    const spacesResult = [{ index: 1, display: 1, focused: 1, windows: [100, 200, 300] }];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
       configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
+    console.error(output);
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m display --focus 1',
       'yabai -m space --create',

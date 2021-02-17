@@ -1,27 +1,28 @@
-const { createSpaceCommands } = require('./layoutFunctions/createSpaceCommands');
-const { createWindowCommands } = require('./layoutFunctions/createWindowCommands');
-const { getUnmanagedStrategy } = require('./layoutFunctions/planUnmanagedWindows');
-const { getUnmanagedWindows, hydrateWindowLayout } = require('./layoutFunctions/hydrateWindowLayout');
-const { countSpacesPerDisplay, planSpaces } = require('./layoutFunctions/planSpaces');
+const { normalizeLayoutConfig } = require('./gridLayout/normalizeLayoutConfig');
+const { hydrateWindows } = require('./gridLayout/hydrateWindows');
+const { moveFirstWindow } = require('./gridLayout/moveFirstWindows');
+const { setSpaceActions } = require('./gridLayout/setSpaceActions');
+const { createSpaces } = require('./gridLayout/createSpaces');
 
 exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
-  let hydratedWindowLayout = hydrateWindowLayout({
-    actualWindows,
-    plannedWindowSetup: layoutConfig.spaces
-  });
+  const normalizedSpaces = normalizeLayoutConfig(layoutConfig.spaces);
 
-  const unmanagedWindows = getUnmanagedWindows({ hydratedWindowLayout, actualWindows });
-  const handleUnmanagedWindows = getUnmanagedStrategy(layoutConfig.nonManaged);
-  hydratedWindowLayout = handleUnmanagedWindows({
-    desiredLayout: hydratedWindowLayout,
-    unmanagedWindows
-  });
 
-  const spacesPlan = planSpaces({ actualSpaces, desiredSpaces: hydratedWindowLayout });
-  const spacesCount = countSpacesPerDisplay(actualSpaces);
+  let layoutPlan = hydrateWindows(
+    normalizedSpaces,
+    actualWindows
+  );
+
+  // const unmanagedWindows = getUnmanagedWindows({ hydratedWindowLayout, actualWindows });
+  // const handleUnmanagedWindows = getUnmanagedStrategy(layoutConfig.nonManaged);
+  // hydratedWindowLayout = handleUnmanagedWindows({
+  //   desiredLayout: hydratedWindowLayout,
+  //   unmanagedWindows
+  // });
+  layoutPlan = setSpaceActions(actualSpaces, layoutPlan);
 
   return [
-    ...createSpaceCommands({ spacesPlan, spacesCount }),
-    ...createWindowCommands({ desiredWindowLayout: hydratedWindowLayout, spacesPlan })
+    ...createSpaces(layoutPlan),
+    ...moveFirstWindow(layoutPlan),
   ];
 };
