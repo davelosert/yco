@@ -1,9 +1,9 @@
 const { convertToWindowTree } = require('./convertToWindowTree');
 const { createSpacePlan } = require('./SpacePlan');
 
-exports.normalizeLayoutConfig = (layoutPlan) => {
+exports.normalizeLayoutConfig = (layoutConfig) => {
   let absoluteSpaceIndex = 0;
-  return layoutPlan.flatMap((spaces, displayIndex) => {
+  return layoutConfig.flatMap((spaces, displayIndex) => {
     return spaces.map((configuredWindows) => {
       absoluteSpaceIndex += 1;
 
