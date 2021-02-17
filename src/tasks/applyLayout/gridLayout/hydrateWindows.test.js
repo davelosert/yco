@@ -8,8 +8,8 @@ describe('hydrateWindows()', async assert => {
     given: 'one window to match',
     should: 'put that window into the nodetree',
     actual: hydrateWindows(
-      [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }],
-      [{ app: 'test', id: 1 }]
+      [{ app: 'test', id: 1 }],
+      [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }]
     ),
     expected:
       [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 1 } }]
@@ -20,12 +20,12 @@ describe('hydrateWindows()', async assert => {
     should: 'put both windows into tree only once',
     actual: hydrateWindows(
       [
-        { display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } },
-        { display: 1, space: 2, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }
-      ],
-      [
         { app: 'test', id: 1 },
         { app: 'test', id: 2 }
+      ],
+      [
+        { display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } },
+        { display: 1, space: 2, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }
       ]
     ),
     expected:
@@ -39,6 +39,10 @@ describe('hydrateWindows()', async assert => {
     given: 'two windows of same app on the same space',
     should: 'put both windows into tree only once',
     actual: hydrateWindows(
+      [
+        { app: 'test', id: 1 },
+        { app: 'test', id: 2 }
+      ],
       [{
         display: 1,
         space: 1,
@@ -48,11 +52,7 @@ describe('hydrateWindows()', async assert => {
             { type: NODE_TYPES.WINDOW, app: 'test' }
           ]
         }
-      }],
-      [
-        { app: 'test', id: 1 },
-        { app: 'test', id: 2 }
-      ]
+      }]
     ),
     expected:
       [{

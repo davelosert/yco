@@ -1,7 +1,7 @@
 const R = require('ramda');
 const { mapWindows } = require('./WindowTree');
 
-exports.hydrateWindows = R.curry((layoutPlan, yabaiWindows) => {
+exports.hydrateWindows = R.curry((yabaiWindows, layoutPlan) => {
   let remainingWindows = R.clone(yabaiWindows);
   return layoutPlan
     .map(spacePlan => {
