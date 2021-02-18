@@ -32,7 +32,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('executes no commands if all windows are already in their correct position.', async () => {
+  test.only('executes no commands if all windows are already in their correct position.', async () => {
     const windowsResult = [
       { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },
@@ -51,6 +51,42 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     const yabaiLogs = await getYabaiLogs();
 
     assertThat(yabaiLogs, isEmpty());
+  });
+
+  test.only('executes yabai commands to construct the desired window trees on all displays.', async () => {
+    const windowsResult = [
+      { app: 'iTerm2', display: 1, space: 2, id: 100, focused: 0 },
+      { app: 'iTerm2', display: 1, space: 1, id: 101, focused: 0 },
+      { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },
+      { app: 'Firefox', display: 1, space: 1, id: 300, focused: 1 },
+      { app: 'Chrome', display: 1, space: 2, id: 400, focused: 0 }
+    ];
+
+    const spacesResult = [
+      { display: 1, index: 1, focused: 1, windows: [101, 200, 300] },
+      { display: 1, index: 2, focused: 0, windows: [100, 400] },
+    ];
+
+    const { executeYco, getYabaiLogs } = await setupTestEnvironment({
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      defaultTarget: true
+    });
+
+    const { output } = await executeYco('apply-layout --name treeNodeTest', { windowsResult, spacesResult });
+
+    const yabaiLogs = await getYabaiLogs();
+
+
+    assertThat(output, isEmpty());
+    assertThat(yabaiLogs, is(equalTo([
+      'yabai -m window 100 --space 1',
+      'yabai -m window 100 --insert east',
+      'yabai -m window 200 --warp 100',
+      'yabai -m window 200 --insert east',
+      'yabai -m window 300 --warp 200',
+      'yabai -m window 100 --insert south',
+      'yabai -m window 101 --warp 100'
+    ])));
   });
 
   test('executes yabai commands to remove empty spaces (if it is not the last space on a display).', async () => {

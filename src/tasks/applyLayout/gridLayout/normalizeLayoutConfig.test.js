@@ -133,4 +133,34 @@ describe('normalizeLayoutConfig()', async assert => {
       }
     ]
   });
+
+  assert({
+    given: 'a space with a horizontal split and a string object',
+    should: 'insert a vertical split as rootObject and create the horizontalTree Node and a normal window object as siblings',
+    actual: normalizeLayoutConfig([
+      [[{ split: 'horizontal', windows: ['iTerm2', 'iTerm2'] }, 'FireFox']]
+    ]),
+    expected: [
+      {
+        display: 1,
+        index: 1,
+        windowTree: {
+          type: 'treeNode',
+          split: 'vertical',
+          windows: [
+            {
+              type: 'treeNode',
+              split: 'horizontal',
+              windows: [{ type: 'window', app: 'iTerm2', }, { type: 'window', app: 'iTerm2' }]
+            },
+            {
+              type: 'window',
+              app: 'FireFox'
+            }
+          ]
+        }
+      }
+    ]
+
+  });
 });
