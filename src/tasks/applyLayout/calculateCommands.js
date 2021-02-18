@@ -5,6 +5,7 @@ const { moveFirstWindow } = require('./gridLayout/moveFirstWindows');
 const { setSpaceActions } = require('./gridLayout/setSpaceActions');
 const { createSpaces } = require('./gridLayout/createSpaces');
 const { buildWindowTreeCommands } = require('./gridLayout/buildWindowTreeCommands');
+const { destroySpaces } = require('./gridLayout/destroySpaces');
 
 exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
   const layoutPlan = R.pipe(
@@ -24,6 +25,7 @@ exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
   return [
     ...createSpaces(layoutPlan),
     ...moveFirstWindow(layoutPlan),
-    ...treeComands
+    ...treeComands,
+    ...destroySpaces(layoutPlan)
   ];
 };
