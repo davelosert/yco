@@ -3,7 +3,7 @@ const { setSpaceActions } = require('./setSpaceActions');
 const { createWindowTree } = require('./WindowTree');
 const { createSpacePlan } = require('./SpacePlan');
 
-describe.only('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert => {
+describe('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert => {
   const yabaiSpace = { display: 1, index: 1 };
   const spacePlan = createSpacePlan({ display: 1, index: 1 });
 
@@ -96,6 +96,23 @@ describe.only('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async asse
       { ...spacePlan, display: 1, index: 2, action: 'destroy' },
       { ...spacePlan, display: 2, index: 3, action: 'leave' },
       { ...spacePlan, display: 2, index: 4, action: 'create' },
+    ]
+  });
+
+
+  assert({
+    given: 'a space to create on the first and two spaces to delete on the second display',
+    should: 'set the correct indices',
+    actual: setSpaceActions(
+      [{ ...yabaiSpace }, { ...yabaiSpace, display: 2, index: 2 }, { ...yabaiSpace, display: 2, index: 3 }, { ...yabaiSpace, display: 2, index: 4 }],
+      [{ ...spacePlan }, { ...spacePlan, display: 1, index: 2 }, { ...spacePlan, display: 2, index: 3 }]
+    ),
+    expected: [
+      { ...spacePlan, display: 1, index: 1, action: 'leave' },
+      { ...spacePlan, display: 1, index: 2, action: 'create' },
+      { ...spacePlan, display: 2, index: 3, action: 'leave' },
+      { ...spacePlan, display: 2, index: 4, action: 'destroy' },
+      { ...spacePlan, display: 2, index: 5, action: 'destroy' }
     ]
   });
 
