@@ -33,6 +33,10 @@ const getMostLeftWindowOf = (node) => {
     return node;
   }
 
+  if (node.windows.length === 0) {
+    return null;
+  }
+
   return getMostLeftWindowOf(node.windows[0]);
 };
 

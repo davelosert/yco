@@ -88,5 +88,12 @@ describe('getMostLeftWindow', async assert => {
     expected: searchWindow
   });
 
+  assert({
+    given: 'a tree with a treeNode but no windows',
+    should: 'return null',
+    actual: getMostLeftWindowOf(aTreeNodeWith([])),
+    expected: null
+  });
+
 
 });
