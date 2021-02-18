@@ -22,7 +22,8 @@ suite('yco apply-layout --name "Layout To apply"', () => {
 
     const yabaiLogs = await getYabaiLogs();
 
-    console.error(output);
+
+    assertThat(output, isEmpty());
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m display --focus 1',
       'yabai -m space --create',
@@ -50,10 +51,11 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
+    assertThat(output, isEmpty());
     assertThat(yabaiLogs, isEmpty());
   });
 
@@ -93,11 +95,11 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test.only('executes yabai commands to remove empty spaces (if it is not the last space on a display) in the end.', async () => {
+  test('executes yabai commands to remove empty spaces (if it is not the last space on a display) in the end.', async () => {
     const windowsResult = [
       { app: 'Display1Space1', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Display1Space2', display: 2, space: 4, id: 200, focused: 0 },
-      { app: 'Display2Space3', display: 2, space: 2, id: 300, focused: 1 },
+      { app: 'Display2Space3', display: 1, space: 2, id: 300, focused: 1 },
     ];
 
     const spacesResult = [

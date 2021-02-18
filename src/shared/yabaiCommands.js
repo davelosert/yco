@@ -3,6 +3,7 @@ const { always, curry, subtract, times } = require('ramda');
 const yabaiCreateSpace = 'yabai -m space --create';
 const yabaiDestroySpace = spaceIndex => `yabai -m space ${spaceIndex} --destroy`;
 
+exports.generateDestroySpace = yabaiDestroySpace;
 exports.allSpaces = () => 'yabai -m query --spaces';
 
 exports.allWindows = () => 'yabai -m query --windows';
