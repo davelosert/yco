@@ -15,10 +15,12 @@ const createSpacePlan = ({ display, index, windowTree = createWindowTree(), acti
 };
 
 const addAction = R.curry((action, spacePlan) => ({ ...spacePlan, action }));
+const addIndexOffset = R.curry((offset, spacePlan) => ({ ...spacePlan, index: spacePlan.index + offset }));
 const setIndex = R.curry((index, spacePlan) => ({ ...spacePlan, index }));
 
 module.exports = {
   addAction,
+  addIndexOffset,
   setIndex,
   createSpacePlan
 };

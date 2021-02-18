@@ -1,6 +1,7 @@
 const { createWindowTree } = require('./WindowTree');
 const { describe } = require('riteway');
 const { moveFirstWindow } = require('./moveFirstWindows');
+const { createSpacePlan } = require('./SpacePlan');
 
 describe('moveFirstWindow()', async assert => {
   const firstWindow = createWindowTree({
@@ -11,7 +12,7 @@ describe('moveFirstWindow()', async assert => {
     display: 1
   });
 
-  const aSpaceWith = (windowTree) => ({
+  const aSpaceWith = (windowTree) => createSpacePlan({
     display: 1,
     index: 1,
     windowTree: {

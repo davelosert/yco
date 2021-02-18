@@ -1,4 +1,5 @@
 const R = require('ramda');
+const { addIndexOffset } = require('./SpacePlan');
 const { addAction, createSpacePlan } = require('./SpacePlan');
 
 const groupByDisplay = R.pipe(
@@ -7,43 +8,75 @@ const groupByDisplay = R.pipe(
 );
 
 const context = {
-  accumLayoutPlan: []
+  indexOffset: 0,
+  layoutPlan: []
 };
 
 exports.setSpaceActions = R.curry((yabaiSpaces, layoutPlan) => {
-  const layoutsByDisplay = groupByDisplay(layoutPlan);
+  const spacesByDisplay = groupByDisplay(layoutPlan);
   const yabaiSpacesByDisplay = groupByDisplay(yabaiSpaces);
 
-  return layoutsByDisplay.reduce((currentContext, layoutPlansForCurrentDisplay, index) => {
+  let newLayout = spacesByDisplay.reduce((currentContext, spaces, index) => {
+    const actionized = addActions(yabaiSpacesByDisplay[index], spaces, currentContext.indexOffset);
+
+    // When there are more spaces in yabai than within the plan (so spaces that need to be destroyed), the previously absolute indices of the plan are wrong.
+    // This is because lefotver spaces will only be destroyed in the end. 
+    const indexOffset = actionized.filter(space => space.action === 'destroy').length;
     return {
-      accumLayoutPlan: [
-        ...currentContext.accumLayoutPlan,
-        ...setForDisplay(yabaiSpacesByDisplay[index], layoutPlansForCurrentDisplay)
-      ]
+      layoutPlan: [
+        ...currentContext.layoutPlan,
+        ...actionized
+      ],
+      indexOffset: currentContext.indexOffset + indexOffset
     };
-  }, context).accumLayoutPlan;
+  }, context).layoutPlan;
+
+  return newLayout;
 });
 
-function setForDisplay(yabaiSpaces, layoutPlan) {
-  let remainingSpaces = R.clone(yabaiSpaces);
-  const partialPlan = layoutPlan.map(spacePlan => {
-    const existingSpace = yabaiSpaces.find(yabaiSpace => yabaiSpace.index === spacePlan.index && yabaiSpace.display === spacePlan.display);
-    if (!existingSpace) {
-      return addAction('create', spacePlan);
-    }
-    remainingSpaces = R.without([existingSpace], remainingSpaces);
-    return addAction('leave', spacePlan);
-  });
 
-  if (remainingSpaces.length > 0) {
+const moreYabaiSpacesExistThanPlanned = diff => diff < 0;
+const lessYabaiSpacesExistThanPlanned = diff => diff > 0;
+
+function addActions(yabaiSpaces, spacePlans, indexOffset) {
+  const diff = spacePlans.length - yabaiSpaces.length;
+
+  const spacesToLeave = R.pipe(
+    R.take(spacePlans.length - diff),
+    R.map(R.pipe(
+      addAction('leave'),
+      addIndexOffset(indexOffset)
+    ))
+  )(spacePlans);
+
+  if (moreYabaiSpacesExistThanPlanned(diff)) {
     return [
-      ...partialPlan,
-      ...remainingSpaces.map(R.pipe(
-        createSpacePlan,
-        addAction('destroy')
-      ))
+      ...spacesToLeave,
+      ...R.pipe(
+        R.takeLast(diff * -1),
+        R.map(R.pipe(
+          createSpacePlan,
+          addAction('destroy'),
+          addIndexOffset(indexOffset)
+        ))
+      )(yabaiSpaces)
     ];
   }
 
-  return partialPlan;
+  if (lessYabaiSpacesExistThanPlanned(diff)) {
+    return [
+      ...spacesToLeave,
+      ...R.pipe(
+        R.takeLast(diff),
+        R.map(R.pipe(
+          addAction('create'),
+          addIndexOffset(indexOffset)
+        ))
+      )(spacePlans)
+    ];
+  }
+
+  return spacesToLeave;
+
+
 }
