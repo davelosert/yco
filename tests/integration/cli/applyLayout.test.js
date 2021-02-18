@@ -14,7 +14,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     const spacesResult = [{ index: 1, display: 1, focused: 1, windows: [100, 200, 300] }];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -47,7 +47,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -74,7 +74,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -110,7 +110,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -144,7 +144,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -177,7 +177,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -211,7 +211,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
       defaultTarget: true
     });
 
@@ -244,7 +244,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       const spacesResult = [{ index: 1, focused: 1, windows: [100, 200, 300] }];
 
       const { executeYco, getYabaiLogs } = await setupTestEnvironment({
-        configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'valid.yco.config.json'),
+        configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
         defaultTarget: true
       });
 

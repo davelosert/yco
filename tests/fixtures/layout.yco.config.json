@@ -31,6 +31,33 @@
         [],
         [["iTerm2"], ["Code"], ["Firefox"]]
       ]
+    },
+    {
+      "name": "treeNodeTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOneSpace",
+      "spaces": [[
+          [
+            { "split": "horizontal", "windows": ["iTerm2", "iTerm2"] }, 
+            "Code", 
+            "Firefox"
+          ],
+          ["Chrome"]
+        ]]
+    },
+    {
+      "name": "destroySpacesTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOneSpace",
+      "spaces": [
+        [
+          ["Display1Space1"],
+          ["Display1Space2"]
+        ],
+        [
+          ["Display2Space3"]
+        ]
+      ]
     }
   ]
 }
