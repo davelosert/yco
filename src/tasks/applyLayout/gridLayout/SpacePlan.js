@@ -1,7 +1,7 @@
 const { createWindowTree } = require('./WindowTree');
 const R = require('ramda');
 
-const createSpacePlan = ({ display, index, windowTree = createWindowTree(), action }) => {
+const createSpacePlan = ({ display = 0, index = 0, windowTree = createWindowTree(), action }) => {
   let baseSpace = {
     display,
     index,
