@@ -11,8 +11,10 @@ describe('hydrateWindows()', async assert => {
       [{ app: 'test', id: 1 }],
       [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }]
     ),
-    expected:
-      [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 1 } }]
+    expected: {
+      layoutPlan: [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 1 } }],
+      remainingWindows: []
+    }
   });
 
   assert({
@@ -28,11 +30,13 @@ describe('hydrateWindows()', async assert => {
         { display: 1, space: 2, windowTree: { type: NODE_TYPES.WINDOW, app: 'test' } }
       ]
     ),
-    expected:
-      [
+    expected: {
+      layoutPlan: [
         { display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 1 } },
         { display: 1, space: 2, windowTree: { type: NODE_TYPES.WINDOW, app: 'test', id: 2 } }
-      ]
+      ],
+      remainingWindows: []
+    }
   });
 
   assert({
@@ -54,8 +58,8 @@ describe('hydrateWindows()', async assert => {
         }
       }]
     ),
-    expected:
-      [{
+    expected: {
+      layoutPlan: [{
         display: 1,
         space: 1,
         windowTree: {
@@ -65,5 +69,20 @@ describe('hydrateWindows()', async assert => {
           ]
         }
       }],
+      remainingWindows: []
+    },
+  });
+
+  assert({
+    given: 'a layoutPlan where not all given yabaiWindows exist',
+    should: 'return the delta as remainingWindows',
+    actual: hydrateWindows(
+      [{ app: 'Planned', id: 1 }, { app: 'Unplanned 1', id: 2 }, { app: 'Unplanned 3', id: 3 }],
+      [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'Planned' } }]
+    ),
+    expected: {
+      layoutPlan: [{ display: 1, space: 1, windowTree: { type: NODE_TYPES.WINDOW, app: 'Planned', id: 1 } }],
+      remainingWindows: [{ app: 'Unplanned 1', id: 2 }, { app: 'Unplanned 3', id: 3 }]
+    }
   });
 });

@@ -17,7 +17,6 @@ const normalizeWindowObjects = R.map(windowDescriptor => {
     };
   }
 
-
   return {
     ...windowDescriptor,
     type: 'window'

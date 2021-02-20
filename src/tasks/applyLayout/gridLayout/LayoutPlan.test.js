@@ -49,7 +49,7 @@ describe('LayoutPlan - getDestructionOffset(display: number, layoutPlan: LayoutP
   });
 });
 
-describe.only('LayoutPlan - addSpaceToDisplay(display: number, spaces: Space, layoutPlan: LayoutPlan): LayoutPlan', async assert => {
+describe('LayoutPlan - addSpaceToDisplay(display: number, spaces: Space, layoutPlan: LayoutPlan): LayoutPlan', async assert => {
 
   const insertSpace = createSpacePlan({});
 
