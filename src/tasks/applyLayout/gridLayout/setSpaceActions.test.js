@@ -39,7 +39,7 @@ describe('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert =>
     ),
     expected: [
       { ...spacePlan, action: 'leave' },
-      { ...yabaiSpace, index: 2, action: 'destroy', windowTree: createWindowTree() }
+      createSpacePlan({ ...yabaiSpace, index: 2, action: 'destroy', windowTree: createWindowTree() })
     ]
   });
 

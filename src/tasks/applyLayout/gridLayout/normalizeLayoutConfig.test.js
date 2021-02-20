@@ -1,22 +1,21 @@
 const { describe } = require('riteway');
 const { normalizeLayoutConfig } = require('./normalizeLayoutConfig');
+const { createLayoutPlan } = require('./LayoutPlan');
+const { createSpacePlan } = require('./SpacePlan');
+const { createWindowTree } = require('./WindowTree');
 
-const emptyTreeNode = {
-  type: 'treeNode',
-  split: 'vertical',
-  windows: []
-};
 
 describe('normalizeLayoutConfig()', async assert => {
+  const emptyTreeNode = createWindowTree();
   assert({
     given: 'no window at all',
     should: 'return only space with with no windows',
     actual: normalizeLayoutConfig([[[]]]),
-    expected: [{
+    expected: createLayoutPlan([createSpacePlan({
       display: 1,
       index: 1,
       windowTree: emptyTreeNode
-    }]
+    })])
   });
 
   assert({
@@ -26,10 +25,10 @@ describe('normalizeLayoutConfig()', async assert => {
       [[]],
       [[]]
     ]),
-    expected: [
-      { display: 1, index: 1, windowTree: emptyTreeNode },
-      { display: 2, index: 2, windowTree: emptyTreeNode }
-    ]
+    expected: createLayoutPlan([
+      createSpacePlan({ display: 1, index: 1, windowTree: emptyTreeNode }),
+      createSpacePlan({ display: 2, index: 2, windowTree: emptyTreeNode })
+    ])
   });
 
   assert({
@@ -38,8 +37,8 @@ describe('normalizeLayoutConfig()', async assert => {
     actual: normalizeLayoutConfig([
       [['FireFox']]
     ]),
-    expected: [
-      {
+    expected: createLayoutPlan([
+      createSpacePlan({
         display: 1,
         index: 1,
         windowTree: {
@@ -50,8 +49,8 @@ describe('normalizeLayoutConfig()', async assert => {
             app: 'FireFox'
           }]
         }
-      }
-    ]
+      })
+    ])
   });
 
   assert({
@@ -60,8 +59,8 @@ describe('normalizeLayoutConfig()', async assert => {
     actual: normalizeLayoutConfig([
       [[{ app: 'FireFox', size: '4/4' }]]
     ]),
-    expected: [
-      {
+    expected: createLayoutPlan([
+      createSpacePlan({
         display: 1,
         index: 1,
         windowTree: {
@@ -73,8 +72,8 @@ describe('normalizeLayoutConfig()', async assert => {
             size: '4/4'
           }]
         }
-      }
-    ]
+      })
+    ])
   });
 
   assert({
@@ -84,8 +83,8 @@ describe('normalizeLayoutConfig()', async assert => {
       [[
         { split: 'horizontal', windows: ['FireFox', 'iTerm2'] }]]
     ]),
-    expected: [
-      {
+    expected: createLayoutPlan([
+      createSpacePlan({
         display: 1,
         index: 1,
         windowTree: {
@@ -104,8 +103,8 @@ describe('normalizeLayoutConfig()', async assert => {
             }]
           }]
         }
-      }
-    ]
+      })
+    ])
   });
 
   assert({
@@ -114,8 +113,8 @@ describe('normalizeLayoutConfig()', async assert => {
     actual: normalizeLayoutConfig([
       [{ split: 'horizontal', windows: ['FireFox', 'iTerm2'] }]
     ]),
-    expected: [
-      {
+    expected: createLayoutPlan([
+      createSpacePlan({
         display: 1,
         index: 1,
         windowTree: {
@@ -130,8 +129,8 @@ describe('normalizeLayoutConfig()', async assert => {
             app: 'iTerm2'
           }]
         }
-      }
-    ]
+      })
+    ])
   });
 
   assert({
@@ -140,8 +139,8 @@ describe('normalizeLayoutConfig()', async assert => {
     actual: normalizeLayoutConfig([
       [[{ split: 'horizontal', windows: ['iTerm2', 'iTerm2'] }, 'FireFox']]
     ]),
-    expected: [
-      {
+    expected: createLayoutPlan([
+      createSpacePlan({
         display: 1,
         index: 1,
         windowTree: {
@@ -159,8 +158,8 @@ describe('normalizeLayoutConfig()', async assert => {
             }
           ]
         }
-      }
-    ]
+      })
+    ])
 
   });
 });

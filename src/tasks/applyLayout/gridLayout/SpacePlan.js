@@ -5,8 +5,7 @@ const createSpacePlan = ({ display = 0, index = 0, windowTree = createWindowTree
   let baseSpace = {
     display,
     index,
-    windowTree,
-    unmanagedWindows
+    windowTree
   };
 
   if (action) {

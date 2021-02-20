@@ -3,7 +3,7 @@ const { createLayoutPlan } = require('../LayoutPlan');
 const { createSpacePlan } = require('../SpacePlan');
 const { leaveUntouched } = require('./leaveUntouched');
 
-describe.only('leaveUntouched(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutPlan): LayoutPlan', async assert => {
+describe('leaveUntouched(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutPlan): LayoutPlan', async assert => {
 
   const existingSpace = createSpacePlan({ display: 1, index: 1 });
   const existingPlan = createLayoutPlan([
@@ -24,7 +24,7 @@ describe.only('leaveUntouched(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutP
     actual: leaveUntouched([unmanagedWindowIndex1], existingPlan),
     expected: createLayoutPlan([
       { ...existingSpace },
-      createSpacePlan({ display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1], unmanaged: true })
+      { ...createSpacePlan({}), display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1], unmanaged: true }
     ])
   });
 
@@ -34,7 +34,7 @@ describe.only('leaveUntouched(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutP
     actual: leaveUntouched([unmanagedWindowIndex1, unmanagedWindowIndex1], existingPlan),
     expected: createLayoutPlan([
       { ...existingSpace },
-      createSpacePlan({ display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1, unmanagedWindowIndex1], unmanaged: true })
+      { ...createSpacePlan({}), display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1, unmanagedWindowIndex1], unmanaged: true }
     ])
   });
 
@@ -45,8 +45,8 @@ describe.only('leaveUntouched(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutP
     actual: leaveUntouched([unmanagedWindowIndex1, unmanagedWindowIndex1, unmanagedWindowIndex4], existingPlan),
     expected: createLayoutPlan([
       { ...existingSpace },
-      createSpacePlan({ display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1, unmanagedWindowIndex1], unmanaged: true }),
-      createSpacePlan({ display: 1, index: 3, swapWith: 4, unmanagedWindows: [unmanagedWindowIndex4], unmanaged: true })
+      { ...createSpacePlan({}), display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1, unmanagedWindowIndex1], unmanaged: true },
+      { ...createSpacePlan({}), display: 1, index: 3, swapWith: 4, unmanagedWindows: [unmanagedWindowIndex4], unmanaged: true }
     ])
   });
 
@@ -63,9 +63,9 @@ describe.only('leaveUntouched(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutP
     actual: leaveUntouched([unmanagedWindowIndex1, unmanagedWindowDisplay2], spaceWithTwoDisplays),
     expected: createLayoutPlan([
       { ...existingSpace },
-      createSpacePlan({ display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1], unmanaged: true }),
+      { ...createSpacePlan({}), display: 1, index: 2, swapWith: 1, unmanagedWindows: [unmanagedWindowIndex1], unmanaged: true },
       { ...existingSpaceDisplay2, index: 3 },
-      createSpacePlan({ display: 2, index: 4, swapWith: 2, unmanagedWindows: [unmanagedWindowDisplay2], unmanaged: true })
+      { ...createSpacePlan({}), display: 2, index: 4, swapWith: 2, unmanagedWindows: [unmanagedWindowDisplay2], unmanaged: true }
     ])
   });
 
