@@ -6,12 +6,13 @@ const { createSpaces } = require('./gridLayout/createSpaces');
 const { buildWindowTreeCommands } = require('./gridLayout/buildWindowTreeCommands');
 const { destroySpaces } = require('./gridLayout/destroySpaces');
 const { insertWindowsWith } = require('./gridLayout/insertWindowsWith');
+const { getUnmanagedStrategy } = require('./gridLayout/unmanagedStrategies/getUnmanagedStrategy');
 
 exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
   const layoutPlan = R.pipe(
     normalizeLayoutConfig,
     insertWindowsWith(
-      (remainingWindows, layoutPlan) => layoutPlan,
+      getUnmanagedStrategy(layoutConfig.nonManaged),
       actualWindows
     ),
     setSpaceActions(actualSpaces),

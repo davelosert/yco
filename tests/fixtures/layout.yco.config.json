@@ -58,6 +58,15 @@
           ["Display2Space3"]
         ]
       ]
+    },
+    {
+      "name": "allInOneSpaceTest",
+      "triggerKey": "t",
+      "nonManaged": "allInOneSpace",
+      "spaces": [
+        [ ["Managed 1"], ["Managed 2"] ]
+      ]
+    
     }
   ]
 }
