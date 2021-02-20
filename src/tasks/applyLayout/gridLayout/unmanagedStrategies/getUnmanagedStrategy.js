@@ -1,8 +1,9 @@
 const { allInOneSpace } = require('./allInOneSpace');
+const { allInOwnSpace } = require('./allInOwnSpace');
 
 const strategies = {
   allInOneSpace,
-  // allInOwnSpace,
+  allInOwnSpace,
   // leave
 };
 

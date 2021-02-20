@@ -2,23 +2,23 @@ const { createWindowTree } = require('../WindowTree');
 const { createSpacePlan } = require('../SpacePlan');
 const { addSpacesToDisplay } = require('../LayoutPlan');
 
-const allInOneSpace = (unmanagedWindows, layoutPlan) => {
+const allInOwnSpace = (unmanagedWindows, layoutPlan) => {
   if (unmanagedWindows.length === 0) {
     return layoutPlan;
   }
 
-  const unmanagedSpace = createSpacePlan({
+  const unmanagedSpaces = unmanagedWindows.map(window => createSpacePlan({
     windowTree: createWindowTree({
-      windows: unmanagedWindows.map(window => ({
+      windows: [({
         ...window,
         type: 'window'
-      }))
+      })]
     })
-  });
+  }));
 
-  return addSpacesToDisplay(1, [unmanagedSpace], layoutPlan);
+  return addSpacesToDisplay(1, unmanagedSpaces, layoutPlan);
 };
 
 module.exports = {
-  allInOneSpace
+  allInOwnSpace
 };

@@ -129,18 +129,17 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test.skip('with option \'{ "nonManaged": "allInOneSpace" }\' executes commands to move unmanaged windows to last space on the main display.', async () => {
+  test('with option \'{ "nonManaged": "allInOneSpace" }\' executes commands to move unmanaged windows to last space on the main display.', async () => {
     const windowsResult = [
-      { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
-      { app: 'Code', display: 1, space: 1, id: 200, focused: 0 },
-      { app: 'Firefox', display: 1, space: 1, id: 300, focused: 1 },
-      { app: 'Unmanaged Window 1', display: 1, space: 1, id: 101, focused: 0 },
-      { app: 'Unmanaged Window 2', display: 2, space: 2, id: 201, focsed: 0 }
+      { app: 'Managed 1', display: 1, space: 1, id: 100, focused: 0 },
+      { app: 'Managed 2', display: 1, space: 1, id: 200, focused: 0 },
+      { app: 'Unmanaged 1', display: 1, space: 1, id: 300, focused: 0 },
+      { app: 'Unmanaged 2', display: 2, space: 2, id: 301, focsed: 0 }
     ];
 
     const spacesResult = [
-      { display: 1, index: 1, windows: [100, 200, 300, 101] },
-      { display: 2, index: 2, windows: [201] },
+      { display: 1, index: 1, windows: [100, 200, 300] },
+      { display: 2, index: 2, windows: [301] },
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
@@ -148,32 +147,33 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name monitor', { windowsResult, spacesResult });
+    await executeYco('apply-layout --name allInOneSpaceTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m display --focus 1',
       'yabai -m space --create',
-      'yabai -m window 101 --space 2',
-      'yabai -m window 201 --space 2'
+      'yabai -m space --create',
+      'yabai -m window 200 --space 2',
+      'yabai -m window 300 --space 3',
+      'yabai -m window 300 --insert east',
+      'yabai -m window 301 --warp 300'
     ])));
   });
 
-  test.skip('with option \'{ "nonManaged": "allInOwnSpace" }\' executes commands to move each unmanaged window into an own space on the main display.', async () => {
+  test('with option \'{ "nonManaged": "allInOwnSpace" }\' executes commands to move each unmanaged window into an own space on the main display.', async () => {
     const windowsResult = [
-      { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
-      { app: 'Unmanaged Window 1', display: 1, space: 1, id: 101, focused: 0 },
-      { app: 'Code', display: 1, space: 2, id: 200, focused: 0 },
-      { app: 'Firefox', display: 1, space: 3, id: 300, focused: 1 },
-      { app: 'Unmanaged Window 2', display: 2, space: 4, id: 201, focsed: 0 }
+      { app: 'Managed 1', display: 1, space: 1, id: 100, focused: 0 },
+      { app: 'Unmanaged 1', display: 1, space: 1, id: 300, focused: 0 },
+      { app: 'Managed 2', display: 1, space: 2, id: 200, focused: 0 },
+      { app: 'Unmanaged 2', display: 2, space: 3, id: 400, focsed: 0 }
     ];
 
     const spacesResult = [
-      { display: 1, index: 1, windows: [100, 101] },
+      { display: 1, index: 1, windows: [100, 300] },
       { display: 1, index: 2, windows: [200] },
-      { display: 1, index: 3, windows: [300] },
-      { display: 2, index: 4, windows: [201] },
+      { display: 2, index: 3, windows: [400] },
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
@@ -181,7 +181,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
+    await executeYco('apply-layout --name allInOwnSpaceTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
@@ -189,8 +189,8 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       'yabai -m display --focus 1',
       'yabai -m space --create',
       'yabai -m space --create',
-      'yabai -m window 101 --space 4',
-      'yabai -m window 201 --space 5'
+      'yabai -m window 300 --space 3',
+      'yabai -m window 400 --space 4'
     ])));
   });
 
