@@ -1,4 +1,4 @@
-interface Window {
+export interface Window {
   id: number;
   display: number;
   space: number;

@@ -74,6 +74,15 @@
       "spaces": [
         [ ["Managed 1"], ["Managed 2"] ]
       ]
+    },
+    {
+      "name": "leaveUntoucehd",
+      "triggerKey": "t",
+      "nonManaged": "leaveUntouched",
+      "spaces": [
+        [ ["Managed 1"], ["Managed 2"] ],
+        [ ["Managed 3"] ]
+      ]
     }
   ]
 }

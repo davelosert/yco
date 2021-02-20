@@ -1,16 +1,33 @@
 const { createWindowTree } = require('./WindowTree');
 const R = require('ramda');
 
-const createSpacePlan = ({ display = 0, index = 0, windowTree = createWindowTree(), action }) => {
+const createSpacePlan = ({ display = 0, index = 0, windowTree = createWindowTree(), action, unmanagedWindows, swapWith }) => {
   let baseSpace = {
     display,
     index,
     windowTree,
+    unmanagedWindows
   };
 
   if (action) {
     baseSpace = addAction(action, baseSpace);
   }
+
+  if (unmanagedWindows) {
+    baseSpace = {
+      ...baseSpace,
+      unmanaged: true,
+      unmanagedWindows,
+    };
+  }
+
+  if (swapWith) {
+    baseSpace = {
+      ...baseSpace,
+      swapWith
+    };
+  }
+
   return baseSpace;
 };
 

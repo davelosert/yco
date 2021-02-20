@@ -5,7 +5,7 @@ const { createSpacePlan } = require('../SpacePlan');
 const { createWindowTree } = require('../WindowTree');
 
 
-describe.only('allInOneSpace(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutPlan): LayoutPlan', async assert => {
+describe('allInOneSpace(unmanagedSpaces: YabaiSpace[], layoutPlan: LayoutPlan): LayoutPlan', async assert => {
 
   const existingSpace = createSpacePlan({ display: 1, index: 1 });
   const existingPlan = createLayoutPlan([
