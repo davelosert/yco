@@ -46,10 +46,16 @@ const addSpacesToDisplay = R.curry((display, spaces, layoutPlan) => {
   return raiseIndexForDisplaysAfter(display, spaces.length, insertedLayout);
 });
 
+const getSwapTarget = R.curry((sourceIndex, layoutPlan) => {
+  const sourceSpace = R.find(space => space.swapWith === sourceIndex)(layoutPlan);
+  return sourceSpace ? sourceSpace.index : null;
+});
+
 module.exports = {
   addSpacesToDisplay,
   createLayoutPlan,
   getDestructionOffset,
   getCreationOffset,
-  getHighestIndexForDisplay
+  getHighestIndexForDisplay,
+  getSwapTarget
 };

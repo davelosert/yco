@@ -19,3 +19,4 @@ exports.generateFocusDisplayCommand = displayNumber => `yabai -m display --focus
 exports.generateMoveWindowToSpace = (windowId, targetSpaceIndex) => `yabai -m window ${windowId} --space ${targetSpaceIndex}`;
 exports.generateInsertCommand = (windowId, direction) => `yabai -m window ${windowId} --insert ${direction}`;
 exports.generateWarpCommand = (sourceId, targetId) => `yabai -m window ${sourceId} --warp ${targetId}`;
+exports.generateSwapCommand = (sourceSpaceIndex, targetSpaceIndex) => `yabai -m space ${sourceSpaceIndex} --swap ${targetSpaceIndex}`;

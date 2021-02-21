@@ -1,7 +1,7 @@
 const R = require('ramda');
 const { describe } = require('riteway');
 const { createSpacePlan } = require('./SpacePlan');
-const { addSpacesToDisplay, createLayoutPlan, getDestructionOffset, } = require('./LayoutPlan');
+const { addSpacesToDisplay, createLayoutPlan, getDestructionOffset, getSwapTarget } = require('./LayoutPlan');
 
 describe('LayoutPlan - getDestructionOffset(display: number, layoutPlan: LayoutPlan): number', async assert => {
   const simpleLayoutPlan = createLayoutPlan([
@@ -112,5 +112,27 @@ describe('LayoutPlan - addSpaceToDisplay(display: number, spaces: Space, layoutP
       { ...insertSpace, index: 7, display: 3 },
     ]
   });
+});
 
+describe('LayoutPlan - getSwapTarget(sourceIndex: number, layoutPlan: LayoutPlan): Index | Null', async assert => {
+  assert({
+    given: 'a space with "swapWith" === sourceIndex',
+    should: 'return the spaces index',
+    actual: getSwapTarget(1, createLayoutPlan([
+      createSpacePlan({ display: 1, index: 1 }),
+      createSpacePlan({ display: 1, index: 2, swapWith: 1, umanaged: true })
+    ])),
+    expected: 2
+  });
+
+  assert({
+    given: 'no space with "swapWith" === sourceIndex exists',
+    should: 'returns null',
+    actual: getSwapTarget(1, createLayoutPlan([
+      createSpacePlan({ display: 1, index: 1 }),
+      createSpacePlan({ display: 1, index: 2 }),
+      createSpacePlan({ display: 1, index: 3, swapWith: 2, umanaged: true })
+    ])),
+    expected: null
+  });
 });

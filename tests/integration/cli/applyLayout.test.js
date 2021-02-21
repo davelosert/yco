@@ -18,7 +18,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    const { output } = await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name onlyMoveWindowsTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
@@ -51,7 +51,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    const { output } = await executeYco('apply-layout --name laptop', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name onlyMoveWindowsTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
@@ -194,20 +194,24 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test.skip('with option \'{ "nonManaged": "leaveUntouched" }\' leaves all unmanaged windows where they are, but moves their spaces behind existing managed windows\' spaces.', async () => {
+  test('with option \'{ "nonManaged": "leaveUntouched" }\' leaves all unmanaged windows where they are, but moves their spaces behind existing managed windows\' spaces.', async () => {
     const windowsResult = [
-      { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
-      { app: 'Unmanaged Window 1', display: 1, space: 1, id: 101, focused: 0 },
-      { app: 'Code', display: 1, space: 2, id: 200, focused: 0 },
-      { app: 'Firefox', display: 1, space: 3, id: 300, focused: 1 },
-      { app: 'Unmanaged Window 2', display: 2, space: 4, id: 201, focsed: 0 }
+      { app: 'Managed 1', display: 1, space: 3, id: 100 },
+      { app: 'Unmanaged 1', display: 1, space: 1, id: 300 },
+      { app: 'Managed 2', display: 1, space: 2, id: 200 },
+      { app: 'Unmanaged 2', display: 1, space: 4, id: 400 },
+      { app: 'Managed 3', display: 1, space: 5, id: 500 },
+      { app: 'Unmanaged 3', display: 2, space: 5, id: 600 },
+      { app: 'Unmanaged 4', display: 2, space: 5, id: 601 }
     ];
 
     const spacesResult = [
-      { display: 1, index: 1, windows: [100, 101] },
-      { display: 2, index: 2, windows: [200] },
-      { display: 2, index: 3, windows: [300] },
-      { display: 2, index: 4, windows: [201] },
+      { display: 1, index: 1, windows: [300] },
+      { display: 1, index: 2, windows: [200] },
+      { display: 1, index: 3, windows: [100] },
+      { display: 1, index: 4, windows: [400] },
+      { display: 1, index: 5, windows: [500] },
+      { display: 2, index: 6, windows: [600, 601] }
     ];
 
     const { executeYco, getYabaiLogs } = await setupTestEnvironment({
@@ -215,25 +219,22 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name pairing', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name leaveUntouchedTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
+    assertThat(output, isEmpty());
     assertThat(yabaiLogs, is(equalTo([
-      'yabai -m space 3 --destroy',
-      'yabai -m space 2 --destroy',
       'yabai -m display --focus 2',
       'yabai -m space --create',
-      'yabai -m space --create',
-      'yabai -m space --create',
-      'yabai -m window 100 --space 2',
-      'yabai -m window 200 --space 3',
-      'yabai -m window 300 --space 4',
-      'yabai -m window 201 --space 5',
+      'yabai -m space 1 --swap 3',
+      'yabai -m space 6 --swap 7',
+      'yabai -m window 500 --space 6',
+      'yabai -m space 5 --destroy',
     ])));
   });
 
-  suite.skip('with "--debug"', () => {
+  suite('with "--debug"', () => {
     test('only prints all commands to stdout without executing them.', async () => {
       const windowsResult = [
         { app: 'iTerm2', display: 1, space: 1, id: 100, focused: 0 },
@@ -248,7 +249,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
         defaultTarget: true
       });
 
-      const { output } = await executeYco('apply-layout --name laptop --debug', { windowsResult, spacesResult });
+      const { output } = await executeYco('apply-layout --name onlyMoveWindowsTest --debug', { windowsResult, spacesResult });
 
       const yabaiLogs = await getYabaiLogs();
 

@@ -86,16 +86,16 @@ describe('setSpaceActions(yabaiSpaces, layoutPlan): LayoutPlan', async assert =>
 
   assert({
     given: 'a space to delete on the first display with existing spaces on the second display',
-    should: 'increase the absolute index of the spaces on the second display as deletion happens in the end',
+    should: 'increase the absolute index and swapWith of the spaces on the second display as deletion happens in the end',
     actual: setSpaceActions(
       [{ ...yabaiSpace }, { ...yabaiSpace, index: 2 }, { ...yabaiSpace, display: 2, index: 3 }],
-      [{ ...spacePlan }, { ...spacePlan, display: 2, index: 2 }, { ...spacePlan, display: 2, index: 3 }]
+      [{ ...spacePlan }, { ...spacePlan, display: 2, index: 2 }, { ...spacePlan, display: 2, index: 3, swapWith: 2 }]
     ),
     expected: [
       { ...spacePlan, display: 1, index: 1, action: 'leave' },
       { ...spacePlan, display: 1, index: 2, action: 'destroy' },
       { ...spacePlan, display: 2, index: 3, action: 'leave' },
-      { ...spacePlan, display: 2, index: 4, action: 'create' },
+      { ...spacePlan, display: 2, index: 4, swapWith: 3, action: 'create' },
     ]
   });
 

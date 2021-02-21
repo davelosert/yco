@@ -7,6 +7,7 @@ const { buildWindowTreeCommands } = require('./gridLayout/buildWindowTreeCommand
 const { destroySpaces } = require('./gridLayout/destroySpaces');
 const { insertWindowsWith } = require('./gridLayout/insertWindowsWith');
 const { getUnmanagedStrategy } = require('./gridLayout/unmanagedStrategies/getUnmanagedStrategy');
+const { swapUnmanagedSpaces } = require('./gridLayout/swapUnmanagedSpaces');
 
 exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
   const layoutPlan = R.pipe(
@@ -18,16 +19,11 @@ exports.calculateCommands = ({ layoutConfig, actualSpaces, actualWindows }) => {
     setSpaceActions(actualSpaces),
   )(layoutConfig.spaces);
 
-  // const unmanagedWindows = getUnmanagedWindows({ hydratedWindowLayout, actualWindows });
-  // const handleUnmanagedWindows = getUnmanagedStrategy(layoutConfig.nonManaged);
-  // hydratedWindowLayout = handleUnmanagedWindows({
-  //   desiredLayout: hydratedWindowLayout,
-  //   unmanagedWindows
-  // });
   const treeComands = layoutPlan.flatMap(spacePlan => buildWindowTreeCommands(spacePlan.windowTree));
 
   return [
     ...createSpaces(layoutPlan),
+    ...swapUnmanagedSpaces(layoutPlan),
     ...moveFirstWindow(layoutPlan),
     ...treeComands,
     ...destroySpaces(layoutPlan)

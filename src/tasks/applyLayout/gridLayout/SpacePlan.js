@@ -31,8 +31,20 @@ const createSpacePlan = ({ display = 0, index = 0, windowTree = createWindowTree
 };
 
 const addAction = R.curry((action, spacePlan) => ({ ...spacePlan, action }));
-const addIndexOffset = R.curry((offset, spacePlan) => ({ ...spacePlan, index: spacePlan.index + offset }));
+const addIndexOffset = R.curry((offset, spacePlan) => {
+  let mutatedSpace = { ...spacePlan, index: spacePlan.index + offset };
+
+  if (mutatedSpace.swapWith) {
+    mutatedSpace = {
+      ...mutatedSpace,
+      swapWith: mutatedSpace.swapWith + offset
+    };
+
+  }
+  return mutatedSpace;
+});
 const setIndex = R.curry((index, spacePlan) => ({ ...spacePlan, index }));
+
 
 module.exports = {
   addAction,

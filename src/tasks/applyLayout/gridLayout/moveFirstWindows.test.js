@@ -4,7 +4,7 @@ const { moveFirstWindow } = require('./moveFirstWindows');
 const { createSpacePlan } = require('./SpacePlan');
 const { createLayoutPlan } = require('./LayoutPlan');
 
-describe.skip('moveFirstWindow(layoutPlan: LayoutPlan): Command[]', async assert => {
+describe.only('moveFirstWindow(layoutPlan: LayoutPlan): Command[]', async assert => {
   const firstWindow = createWindowTree({
     type: 'window',
     app: 'test',
@@ -41,7 +41,29 @@ describe.skip('moveFirstWindow(layoutPlan: LayoutPlan): Command[]', async assert
     actual: moveFirstWindow(createLayoutPlan([
       createSpacePlan({ display: 1, index: 1, action: 'leave' }),
       createSpacePlan({ display: 1, index: 2, action: 'create' }),
-      createSpacePlan({ display: 2, index: 3, action: 'leave', windowTree: createWindowTree({ ...firstWindow, display: 2, index: 2 }) })
+      createSpacePlan({ display: 2, index: 3, action: 'leave', windowTree: createWindowTree({ ...firstWindow, display: 2, space: 2 }) })
+    ])),
+    expected: []
+  });
+
+  assert({
+    given: 'a layoutPlan where a space is swapped with the target space, putting the window in the wrong position',
+    should: 'move the window to target if it got swapped away',
+    actual: moveFirstWindow(createLayoutPlan([
+      createSpacePlan({ display: 1, index: 1, action: 'leave', windowTree: createWindowTree({ ...firstWindow }) }),
+      createSpacePlan({ display: 1, index: 2, action: 'leave', unmanaged: true, swapWith: 1 })
+    ])),
+    expected: [
+      'yabai -m window 1 --space 1'
+    ]
+  });
+
+  assert({
+    given: 'a layoutPlan where a space is swapped with the target space, putting the window into the right position',
+    should: 'return an empty array as no moving is necessary',
+    actual: moveFirstWindow(createLayoutPlan([
+      createSpacePlan({ display: 1, index: 1, action: 'leave', windowTree: createWindowTree({ ...firstWindow, space: 2 }) }),
+      createSpacePlan({ display: 1, index: 2, action: 'leave', unmanaged: true, swapWith: 1 })
     ])),
     expected: []
   });

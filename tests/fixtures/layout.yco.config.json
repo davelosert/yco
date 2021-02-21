@@ -8,29 +8,12 @@
   "layoutModeTriggerKey": "alt - s",
   "layouts": [
     {
-      "name": "monitor",
-      "triggerKey": "m",
-      "nonManaged": "allInOneSpace",
-      "spaces": [[
-        ["iTerm2", "Code", "Firefox"]
-      ]]
-    },
-    {
-      "name": "laptop",
+      "name": "onlyMoveWindowsTest",
       "triggerKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
           ["iTerm2"], ["Code"], ["Firefox"]
         ]]
-    },
-    {
-      "name": "pairing",
-      "triggerKey": "p",
-      "nonManaged" : "leaveUntouched",
-      "spaces": [
-        [],
-        [["iTerm2"], ["Code"], ["Firefox"]]
-      ]
     },
     {
       "name": "treeNodeTest",
@@ -76,7 +59,7 @@
       ]
     },
     {
-      "name": "leaveUntoucehd",
+      "name": "leaveUntouchedTest",
       "triggerKey": "t",
       "nonManaged": "leaveUntouched",
       "spaces": [
