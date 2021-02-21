@@ -1,10 +1,11 @@
 const { allInOneSpace } = require('./allInOneSpace');
 const { allInOwnSpace } = require('./allInOwnSpace');
+const { leaveUntouched } = require('./leaveUntouched');
 
 const strategies = {
   allInOneSpace,
   allInOwnSpace,
-  // leave
+  leaveUntouched
 };
 
 const getUnmanagedStrategy = (descriptor) => {

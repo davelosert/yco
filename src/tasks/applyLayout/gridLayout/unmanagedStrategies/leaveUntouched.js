@@ -2,7 +2,7 @@ const R = require('ramda');
 const { addSpacesToDisplay } = require('../LayoutPlan');
 const { createSpacePlan } = require('../SpacePlan');
 
-const groupByIndex = R.groupBy(R.prop('index'));
+const groupBySpace = R.groupBy(R.prop('space'));
 const addSpacesTo = (layoutPlan, spaces) => addSpacesToDisplay(spaces.display, [spaces], layoutPlan);
 const leaveUntouched = (unmanagedWindows, layoutPlan) => {
   if (unmanagedWindows.length === 0) {
@@ -10,7 +10,7 @@ const leaveUntouched = (unmanagedWindows, layoutPlan) => {
   }
 
   return R.pipe(
-    groupByIndex,
+    groupBySpace,
     R.mapObjIndexed((windows, spaceIndex) => {
       return createSpacePlan({
         display: windows[0].display,
