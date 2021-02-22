@@ -22,7 +22,6 @@ suite('yco apply-layout --name "Layout To apply"', () => {
 
     const yabaiLogs = await getYabaiLogs();
 
-
     assertThat(output, isEmpty());
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m display --focus 1',
@@ -147,10 +146,11 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name allInOneSpaceTest', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name allInOneSpaceTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
+    assertThat(output, isEmpty());
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m display --focus 1',
       'yabai -m space --create',
@@ -181,10 +181,11 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       defaultTarget: true
     });
 
-    await executeYco('apply-layout --name allInOwnSpaceTest', { windowsResult, spacesResult });
+    const { output } = await executeYco('apply-layout --name allInOwnSpaceTest', { windowsResult, spacesResult });
 
     const yabaiLogs = await getYabaiLogs();
 
+    assertThat(output, isEmpty());
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m display --focus 1',
       'yabai -m space --create',
@@ -266,8 +267,5 @@ suite('yco apply-layout --name "Layout To apply"', () => {
         `)
         ));
     });
-
   });
-
-
 });

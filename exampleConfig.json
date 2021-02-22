@@ -17,8 +17,12 @@
       "triggerKey": "m",
       "nonManaged": "allInOneSpace",
       "spaces": [[
-        ["iTerm2", "Code", "Firefox"],
-        ["Toggl Track", "Google Chrome", "Slack", "Microsoft Outlook"],
+        [
+          { "windows": ["iTerm2", "iTerm2"], "split": "horizontal" },
+          { "app": "Code" } , 
+          { "app": "Firefox"}
+        ],
+        [{ "split": "horizontal", "windows": ["Toggl Track", "Google Chrome"]}, "Slack", "Microsoft Outlook"],
         ["Microsoft Teams", "Spotify"]
       ]]
     },
@@ -27,7 +31,7 @@
       "triggerKey": "l",
       "nonManaged": "allInOwnSpace",
       "spaces": [[
-          ["Code"], ["Firefox"], ["iTerm2"], ["Google Chrome", "Toggl Track"], ["Slack"], ["Microsoft Outlook"]
+          ["Code"], ["Firefox"], ["iTerm2", "iTerm2"], ["Google Chrome", "Toggl Track"], ["Slack"], ["Microsoft Outlook"]
         ]]
     },
     {
@@ -37,6 +41,20 @@
       "spaces": [
         [],
         [["Code"], ["Firefox"], ["iTerm2"]]
+      ]
+    },
+    {
+      "name": "test",
+      "triggerKey": "t",
+      "nonManaged" : "leaveUntouched",
+      "spaces": [
+        [
+          [
+            { "split": "horizontal", "windows": ["iTerm2", "iTerm2"]},
+            "Code",
+            "Firefox"
+          ]
+        ]
       ]
     }
   ]
