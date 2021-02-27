@@ -1,8 +1,7 @@
-const R = require('ramda');
 const { describe } = require('riteway');
 const { getMissingWindows } = require('./getMissingWindows');
 
-describe.only('getUnopenWindows(yabaiWindows: YabaiWindow[], requiredWindows: string[]): RequiredWindows[]', async assert => {
+describe('getUnopenWindows(yabaiWindows: YabaiWindow[], requiredWindows: string[]): RequiredWindows[]', async assert => {
   const unRequiredWindow = { id: 1, app: 'Test', display: 1, space: 1 };
   const requiredWindow = { id: 1, app: 'Required App', display: 1, space: 1 };
 
