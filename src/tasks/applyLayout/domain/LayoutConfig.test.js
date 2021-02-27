@@ -1,6 +1,6 @@
 const { createLayoutConfig, getAllApps } = require('./LayoutConfig');
 const { describe } = require('riteway');
-describe.only('LayoutConfig - getAllApps(layoutConfig: LayoutConfig): string[]', async assert => {
+describe('LayoutConfig - getAllApps(layoutConfig: LayoutConfig): string[]', async assert => {
 
   assert({
     given: 'an empty layoutConfig',
