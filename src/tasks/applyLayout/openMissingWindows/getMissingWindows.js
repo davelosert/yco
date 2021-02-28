@@ -1,8 +1,7 @@
-
 const R = require('ramda');
+
 const countByApp = R.countBy(R.prop('app'));
 const countByValue = R.countBy(R.identity);
-
 
 const getMissingWindows = (yabaiWindows, requiredWindows) => {
   const yabaiWithCount = countByApp(yabaiWindows);

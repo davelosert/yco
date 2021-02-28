@@ -9,7 +9,7 @@ describe('getUnopenWindows(yabaiWindows: YabaiWindow[], requiredWindows: string[
     given: 'no configured windows',
     should: 'return an empty array',
     actual: getMissingWindows(
-      [unRequiredWindow],
+      [],
       []
     ),
     expected: []
