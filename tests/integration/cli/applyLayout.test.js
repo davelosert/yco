@@ -94,7 +94,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('executes yabai commands to remove empty spaces (if it is not the last space on a display) in the end.', async () => {
+  test.only('executes yabai commands to remove empty spaces (if it is not the last space on a display) in the end.', async () => {
     const windowsResult = [
       { app: 'Display1Space1', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Display1Space2', display: 2, space: 4, id: 200, focused: 0 },
@@ -125,6 +125,57 @@ suite('yco apply-layout --name "Layout To apply"', () => {
       'yabai -m window 300 --space 3',
       'yabai -m space 5 --destroy',
       'yabai -m space 4 --destroy',
+    ])));
+  });
+
+  test('executes yabai commands to construct the desired window trees on all displays.', async function () {
+    this.timeout(5000);
+
+    const windowsResultFirstCall = [
+      { app: 'Already Open', display: 1, space: 1, id: 100, focused: 0 },
+    ];
+    const windowResultSecondCall = [
+      ...windowsResultFirstCall,
+      { app: 'Not Open Yet', display: 1, space: 2, id: 200 }
+    ];
+
+    const windowResultFinalCall = [
+      ...windowResultSecondCall,
+      { app: 'Not Open Yet', display: 1, space: 2, id: 300 }
+    ];
+
+    const windowsResult = [
+      windowsResultFirstCall,
+      windowResultSecondCall,
+      windowResultFinalCall,
+      // Needs to be inserted twice as it is called both by the open and by apply-layout
+      windowResultFinalCall
+    ];
+
+    const spacesResult = [
+      { display: 1, index: 1, focused: 0, windows: [100] },
+      { display: 1, index: 2, focused: 1, windows: [200, 300] },
+      { display: 1, index: 3, focused: 0, windows: [] },
+    ];
+
+    const { executeYco, getYabaiLogs, getOpenLogs } = await setupTestEnvironment({
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
+      defaultTarget: true
+    });
+
+    const { output } = await executeYco('apply-layout --name openWindowsTest', { windowsResult, spacesResult });
+
+    const yabaiLogs = await getYabaiLogs();
+    const openLogs = await getOpenLogs();
+
+
+    assertThat(output, isEmpty());
+    assertThat(openLogs, is(equalTo([
+      'open -n -g -a Not Open Yet',
+      'open -n -g -a Not Open Yet'
+    ])));
+    assertThat(yabaiLogs, is(equalTo([
+      'yabai -m window 300 --space 3',
     ])));
   });
 

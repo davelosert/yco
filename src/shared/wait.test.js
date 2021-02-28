@@ -1,4 +1,3 @@
-const { fail } = require('hamjest');
 const { describe } = require('riteway');
 const { wait } = require('./wait');
 

@@ -7,10 +7,24 @@ COMMAND=$@
 
 touch $HOME/yabai_calls.log
 
+
+
 if [[ $COMMAND == "-m query --spaces" ]]; then
 	echo $QUERY_SPACES_RESULT
 elif [[ $COMMAND == "-m query --windows" ]]; then
-	echo $QUERY_WINDOWS_RESULT
+	# Maintain a call count file so we can know the right json to return.
+	# THis is necessary as e.g. `apply-layout` quersies yabai windows multiple times
+	CALL_FILE=$HOME/yabai_window_call_count
+	if test -f $CALL_FILE; then
+		CALL_COUNT=$(cat ${CALL_FILE})
+	else
+		CALL_COUNT=0
+	fi
+
+	cat "$HOME/yabaiWindowResult${CALL_COUNT}.json"
+
+	CALL_COUNT=$(($CALL_COUNT+1))
+	echo $CALL_COUNT > $CALL_FILE
 else
 	echo "yabai $@" >> $HOME/yabai_calls.log
 fi
