@@ -5,13 +5,24 @@ const { getMissingWindows } = require('./getMissingWindows');
 const { wait } = require('../../../shared/wait');
 
 
-const rejectAfter = async (delay) => {
-  await wait(delay);
-  throw new Error('Opening windows took too long.');
+const createErrorTimer = (delay) => {
+  let timeoutId;
+  const promise = new Promise(resolve => {
+    timeoutId = setTimeout(resolve, delay);
+  }).then(() => {
+    throw new Error('Opening windows took too long.');
+  });
+
+  return {
+    promise,
+    clear: () => clearTimeout(timeoutId)
+  };
 };
 
 const openAndWait = async (yabaiAdapter, parallelExec, timerOpts, layoutConfig) => {
-  await Promise.race([startWaitingLoop(), rejectAfter(timerOpts.timeoutAfter)]);
+  const errorTimer = createErrorTimer(timerOpts.timeoutAfter);
+  await Promise.race([startWaitingLoop(), errorTimer.promise]);
+  errorTimer.clear();
 
   async function startWaitingLoop() {
     let firstRun = true;
