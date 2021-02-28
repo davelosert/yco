@@ -1,5 +1,5 @@
-const { describe } = require('riteway');
 const { createOpenCommands } = require('./createOpenCommands');
+const { describe } = require('riteway');
 
 
 describe('createOpenCommands(missingWindows: MissingWindows[]): Commands[]', async assert => {

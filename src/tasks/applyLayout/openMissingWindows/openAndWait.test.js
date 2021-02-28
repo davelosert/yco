@@ -1,5 +1,5 @@
-const { describe } = require('riteway');
 const { createLayoutConfig } = require('../domain/LayoutConfig');
+const { describe } = require('riteway');
 const { openAndWait } = require('./openAndWait');
 const { wait } = require('../../../shared/wait');
 

@@ -1,6 +1,6 @@
-const { withChildProcessExec } = require('../../../shared/withChildProcessExec');
 const { createParallelExec } = require('../../../shared/createParalellExec');
 const { openAndWait } = require('./openAndWait');
+const { withChildProcessExec } = require('../../../shared/withChildProcessExec');
 
 const timeoutOpts = {
   waitFor: 500,
