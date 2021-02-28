@@ -30,6 +30,14 @@
         ]]
     },
     {
+      "name": "openWindowsTest",
+      "triggerKey": "o",
+      "nonManaged": "leaveUntouched",
+      "spaces": [
+        [ ["Already Open"], ["Not Open Yet"], ["Not Open Yet"] ]
+      ]
+    },
+    {
       "name": "destroySpacesTest",
       "triggerKey": "t",
       "nonManaged": "allInOneSpace",

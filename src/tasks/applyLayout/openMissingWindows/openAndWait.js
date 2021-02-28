@@ -31,7 +31,6 @@ const openAndWait = async (yabaiAdapter, parallelExec, timerOpts, layoutConfig) 
         parallelExec(createOpenCommands(missingWindows));
         firstRun = false;
       }
-
       await wait(timerOpts.waitFor);
     }
   }
