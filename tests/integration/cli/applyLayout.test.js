@@ -179,7 +179,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('uses the layoutModeBinaryMap-Option to open apps with their mapped binary name.', async function () {
+  test('with option "layoutModeBinaryMap" to open apps with their mapped binary name.', async function () {
     this.timeout(5000);
 
     const windowsResultFirstCall = [];
@@ -204,6 +204,32 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     assertThat(output, isEmpty());
     assertThat(openLogs, is(equalTo([
       'open -n -g -a mappedBinaryName',
+    ])));
+  });
+
+  test('with option "layoutModeIgnoreWindows" ignores all specified windows by app or by title', async function () {
+    const windowsResult = [
+      { app: 'Managed App', display: 1, space: 1, id: 100, focused: 0 },
+      { app: 'Ignored App', display: 1, space: 1, id: 200, focused: 0 },
+      { app: 'Nonignored App', display: 1, space: 1, id: 300, focused: 0 },
+      { app: 'Nonignored App', title: 'butWithIgnoredTitle', display: 1, space: 1, id: 400, focused: 0 },
+    ];
+
+    const spacesResult = [{ display: 1, index: 1, focused: 1, windows: [100, 200, 300, 400] },];
+
+    const { executeYco, getYabaiLogs } = await setupTestEnvironment({
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
+      defaultTarget: true
+    });
+
+    const { output } = await executeYco('apply-layout --name ignoreWindowsTest', { windowsResult, spacesResult });
+
+    const yabaiLogs = await getYabaiLogs();
+    assertThat(output, isEmpty());
+    assertThat(yabaiLogs, is(equalTo([
+      'yabai -m display --focus 1',
+      'yabai -m space --create',
+      'yabai -m window 300 --space 2'
     ])));
   });
 
