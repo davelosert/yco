@@ -1,5 +1,8 @@
 const config = {
-  branches: ['main'],
+  branches: [
+    { name: 'main' },
+    { name: 'alpha', channel: 'alpha', prerelease: 'alpha' }
+  ],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
