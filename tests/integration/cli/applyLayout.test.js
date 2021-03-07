@@ -94,7 +94,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test.only('executes yabai commands to remove empty spaces (if it is not the last space on a display) in the end.', async () => {
+  test('executes yabai commands to remove empty spaces (if it is not the last space on a display) in the end.', async () => {
     const windowsResult = [
       { app: 'Display1Space1', display: 1, space: 1, id: 100, focused: 0 },
       { app: 'Display1Space2', display: 2, space: 4, id: 200, focused: 0 },
@@ -128,7 +128,7 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
   });
 
-  test('executes yabai commands to construct the desired window trees on all displays.', async function () {
+  test('opens all missing apps and windows of a given layout before applying the layout.', async function () {
     this.timeout(5000);
 
     const windowsResultFirstCall = [
@@ -176,6 +176,34 @@ suite('yco apply-layout --name "Layout To apply"', () => {
     ])));
     assertThat(yabaiLogs, is(equalTo([
       'yabai -m window 300 --space 3',
+    ])));
+  });
+
+  test('uses the layoutModeBinaryMap-Option to open apps with their mapped binary name.', async function () {
+    this.timeout(5000);
+
+    const windowsResultFirstCall = [];
+    const windowResultFinalCall = [{ app: 'mappedAppName', display: 1, space: 1, id: 100 }];
+
+    const windowsResult = [windowsResultFirstCall,
+      windowResultFinalCall,
+      // Needs to be inserted twice as it is called both by the open and by apply-layout
+      windowResultFinalCall
+    ];
+
+    const spacesResult = [{ display: 1, index: 1, focused: 1, windows: [100] },];
+
+    const { executeYco, getOpenLogs } = await setupTestEnvironment({
+      configSourcePath: path.resolve(__dirname, '..', '..', 'fixtures', 'layout.yco.config.json'),
+      defaultTarget: true
+    });
+
+    const { output } = await executeYco('apply-layout --name mapBinaryTest', { windowsResult, spacesResult });
+
+    const openLogs = await getOpenLogs();
+    assertThat(output, isEmpty());
+    assertThat(openLogs, is(equalTo([
+      'open -n -g -a mappedBinaryName',
     ])));
   });
 
