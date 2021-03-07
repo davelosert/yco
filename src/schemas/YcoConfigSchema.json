@@ -77,6 +77,23 @@
         }
       }
     },
+    "layoutModeIgnoreWindows": {
+      "type": "array",
+      "description": "You can ignore certain windows by their app and/or title when applying a layout. Ignored windows will just be taken completely out of the calculation - the algorithm will behave as if they wouldn't exist. Useful for notifaction-windows like Microsoft Teams has them when using any other unmanaged strategy than 'leaveUntouched'.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "app": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      }
+
+    },
     "layoutModeBinaryMap": {
       "type": "object",
       "description": "Sometimes the yabai app value does not equal the actualy binary to open the app with. You can use this map to mapp yabai app names to their actual binaries (e.g. {\"iTerm2\": \"iTerm\"}) in order for the open command to work."

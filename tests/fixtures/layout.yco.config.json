@@ -6,6 +6,10 @@
     { "triggerKey": "cmd - 2", "app": "Firefox" },
     { "triggerKey": "cmd - 3", "app": "iTerm2" }
   ],
+  "layoutModeIgnoreWindows": [
+    { "app": "Ignored App" },
+    { "app": "Nonignored App", "title": "butWithIgnoredTitle" } 
+  ],
   "layoutModeBinaryMap": {
     "mappedAppName": "mappedBinaryName"
   },
@@ -85,6 +89,14 @@
       "nonManaged": "leaveUntouched",
       "spaces": [
         [ ["mappedAppName"] ]
+      ]
+    },
+    {
+      "name": "ignoreWindowsTest",
+      "triggerKey": "i",
+      "nonManaged": "allInOwnSpace",
+      "spaces": [
+        [ ["Managed App"] ]
       ]
     }
   ]
