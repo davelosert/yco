@@ -5,9 +5,7 @@ const { getAllApps } = require('../domain/LayoutConfig');
 const { getMissingWindows } = require('./getMissingWindows');
 const { wait } = require('../../../shared/wait');
 
-
-
-const openAndWait = async (yabaiAdapter, parallelExec, timerOpts, layoutConfig) => {
+const openAndWait = async (yabaiAdapter, parallelExec, timerOpts, layoutConfig, generalConfigs = {}) => {
   const errorTimer = createErrorTimer(timerOpts.timeoutAfter, new Error('Opening windows took too long.'));
   await Promise.race([startWaitingLoop(), errorTimer.promise]);
   errorTimer.clear();
@@ -28,7 +26,7 @@ const openAndWait = async (yabaiAdapter, parallelExec, timerOpts, layoutConfig) 
         // Fire and forget here - we are not intersted in when the commands resolve
         // as there is a huge delay between the open command returning and the window
         // being actually open
-        parallelExec(createOpenCommands(missingWindows));
+        parallelExec(createOpenCommands(missingWindows, generalConfigs.layoutModeBinaryMap));
         firstRun = false;
       }
       await wait(timerOpts.waitFor);

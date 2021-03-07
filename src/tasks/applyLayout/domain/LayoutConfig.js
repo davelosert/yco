@@ -32,6 +32,8 @@ const getAllApps = (layoutConfig) => {
   )(layoutConfig);
 };
 
+const getBinaryMap = layoutConfig => layoutConfig.layoutModeBinaryMap;
+
 module.exports = {
   createLayoutConfig,
   getAllApps

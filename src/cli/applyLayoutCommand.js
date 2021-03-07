@@ -45,9 +45,14 @@ exports.applyLayoutCommand = {
       };
     }
 
+    const generalConfigs = {
+      layoutModeBinaryMap: ycoConfig.layoutModeBinaryMap,
+    };
+
     applyLayout({
       layoutConfig,
-      yabaiAdapter
+      yabaiAdapter,
+      generalConfigs
     });
   }
 };
