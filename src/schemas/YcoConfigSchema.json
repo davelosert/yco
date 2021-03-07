@@ -77,6 +77,11 @@
         }
       }
     },
+    "layoutModeBinaryMap": {
+      "type": "object",
+      "description": "Sometimes the yabai app value does not equal the actualy binary to open the app with. You can use this map to mapp yabai app names to their actual binaries (e.g. {\"iTerm2\": \"iTerm\"}) in order for the open command to work."
+
+    },
     "layoutModeTriggerKey": {
       "type": "string",
       "description": "Hotkey in SKHD Format which will trigger the apply-layout command."

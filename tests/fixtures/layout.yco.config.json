@@ -6,6 +6,9 @@
     { "triggerKey": "cmd - 2", "app": "Firefox" },
     { "triggerKey": "cmd - 3", "app": "iTerm2" }
   ],
+  "layoutModeBinaryMap": {
+    "mappedAppName": "mappedBinaryName"
+  },
   "layoutModeTriggerKey": "alt - s",
   "layouts": [
     {
@@ -74,6 +77,14 @@
       "spaces": [
         [ ["Managed 1"], ["Managed 2"] ],
         [ ["Managed 3"] ]
+      ]
+    },
+    {
+      "name": "mapBinaryTest",
+      "triggerKey": "m",
+      "nonManaged": "leaveUntouched",
+      "spaces": [
+        [ ["mappedAppName"] ]
       ]
     }
   ]

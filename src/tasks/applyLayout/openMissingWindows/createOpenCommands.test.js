@@ -2,7 +2,7 @@ const { createOpenCommands } = require('./createOpenCommands');
 const { describe } = require('riteway');
 
 
-describe('createOpenCommands(missingWindows: MissingWindows[]): Commands[]', async assert => {
+describe('createOpenCommands(missingWindows: MissingWindows[], binaryMap: BinaryMap): Commands[]', async assert => {
   assert({
     given: 'no missing windows',
     should: 'return an empty array',
@@ -36,6 +36,15 @@ describe('createOpenCommands(missingWindows: MissingWindows[]): Commands[]', asy
     expected: [
       'open -n -g -a "CustomApp"',
       'open -n -g -a "CustomApp 2"'
+    ]
+  });
+
+  assert({
+    given: 'a binary map mapping the app name to another binary',
+    should: 'return the open command with the mapped binary',
+    actual: createOpenCommands([{ app: 'AppName', times: 1 }], { 'AppName': 'BinaryName' }),
+    expected: [
+      'open -n -g -a "BinaryName"'
     ]
   });
 });
