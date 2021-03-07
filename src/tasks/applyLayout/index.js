@@ -1,6 +1,7 @@
 const { calculateCommands } = require('./calculateCommands');
 const { allSpaces, allWindows } = require('../../shared/yabaiCommands');
 const { openMissingWindows } = require('./openMissingWindows');
+const { filterIgnoredWindows } = require('./yabaiHelper/filterIgnoredWindows');
 
 exports.applyLayout = async ({ layoutConfig, yabaiAdapter, generalConfigs }) => {
   await openMissingWindows(yabaiAdapter, layoutConfig, generalConfigs);
@@ -10,7 +11,7 @@ exports.applyLayout = async ({ layoutConfig, yabaiAdapter, generalConfigs }) => 
   const commands = calculateCommands({
     layoutConfig,
     actualSpaces,
-    actualWindows
+    actualWindows: filterIgnoredWindows(actualWindows, generalConfigs.layoutModeIgnoreWindows)
   });
 
   await yabaiAdapter.apply(commands);

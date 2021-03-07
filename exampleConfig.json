@@ -11,6 +11,15 @@
     { "triggerKey": "cmd - 8", "app": "Spotify" }
   ],
   "layoutModeTriggerKey": "alt - s",
+  "layoutModeIgnoreWindows": [
+    {
+      "app": "Microsoft Teams",
+      "title": "Microsoft Teams-Benachrichtigung"
+    }
+  ],
+  "layoutModeBinaryMap": {
+    "iTerm2": "iTerm"
+  },
   "layouts": [
     {
       "name": "monitor",
@@ -50,7 +59,7 @@
       "spaces": [
         [
           [
-            { "split": "horizontal", "windows": ["iTerm2", "iTerm2"]},
+            { "split": "horizontal", "windows": ["Microsoft Word", "Firefox"]},
             "Code",
             "Firefox"
           ]

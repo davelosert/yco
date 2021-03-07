@@ -47,6 +47,7 @@ exports.applyLayoutCommand = {
 
     const generalConfigs = {
       layoutModeBinaryMap: ycoConfig.layoutModeBinaryMap,
+      layoutModeIgnoreWindows: ycoConfig.layoutModeIgnoreWindows
     };
 
     applyLayout({
