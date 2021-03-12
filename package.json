@@ -1,6 +1,6 @@
 {
   "name": "yco",
-  "version": "1.4.0",
+  "version": "1.5.0-alpha.1",
   "description": "A configurator to create a common .yabairc, .skhdrc and ubersicht configuration from one JSON config",
   "author": "David Losert",
   "bin": {
