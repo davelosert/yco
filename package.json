@@ -27,7 +27,7 @@
     "@semantic-release/npm": "7.1.0",
     "eslint": "7.23.0",
     "eslint-plugin-json-format": "2.0.1",
-    "hamjest": "3.7.1",
+    "hamjest": "3.7.2",
     "isolated": "3.0.15",
     "mocha": "8.3.2",
     "nyc": "15.1.0",
