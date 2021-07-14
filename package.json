@@ -28,7 +28,7 @@
     "eslint": "7.30.0",
     "eslint-plugin-json-format": "2.0.1",
     "hamjest": "3.7.2",
-    "isolated": "3.0.22",
+    "isolated": "3.0.23",
     "mocha": "9.0.2",
     "nyc": "15.1.0",
     "riteway": "6.2.1",
