@@ -31,7 +31,7 @@
     "isolated": "3.0.23",
     "mocha": "9.0.3",
     "nyc": "15.1.0",
-    "riteway": "6.2.1",
+    "riteway": "6.3.1",
     "semantic-release": "17.4.4",
     "tap-nirvana": "1.1.0",
     "watch": "1.0.2"
