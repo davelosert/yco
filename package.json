@@ -19,7 +19,7 @@
     "ajv": "6.12.6",
     "better-ajv-errors": "0.7.0",
     "buntstift": "4.0.34",
-    "command-line-interface": "4.0.19",
+    "command-line-interface": "4.0.20",
     "ramda": "0.27.1"
   },
   "devDependencies": {
