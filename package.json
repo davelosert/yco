@@ -25,7 +25,7 @@
   "devDependencies": {
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "9.0.1",
-    "eslint": "8.26.0",
+    "eslint": "8.27.0",
     "eslint-plugin-json-format": "2.0.1",
     "hamjest": "3.7.3",
     "isolated": "3.0.25",
