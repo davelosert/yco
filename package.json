@@ -32,7 +32,7 @@
     "mocha": "10.2.0",
     "nyc": "15.1.0",
     "riteway": "6.3.1",
-    "semantic-release": "20.0.3",
+    "semantic-release": "20.1.0",
     "tap-nirvana": "1.1.0",
     "watch": "1.0.2"
   },
