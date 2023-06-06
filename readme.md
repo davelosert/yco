@@ -1,6 +1,8 @@
 # Yabai Configurator
 
-**This is a heavy work in progress project.**
+> **Warning**
+> This repositpory is no longer maintained. I decided to use [Scriptkit](https://www.scriptkit.com/) as vehicle to automate my screen setup, so this repository is officially deprecated and I won't maintain it any longer.
+
 
 ## Idea
 
